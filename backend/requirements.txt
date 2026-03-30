@@ -1,0 +1,15 @@
+fastapi
+uvicorn
+lancedb
+google-genai
+python-dotenv
+python-multipart
+watchdog
+PyMuPDF
+python-docx
+pandas
+opencv-python
+requests
+keyring
+mcp
+mammoth

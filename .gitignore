@@ -1,0 +1,47 @@
+# Environment
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+
+# Node
+node_modules/
+frontend/dist/
+
+# Database & user data
+lancedb_data/
+brain_data/*
+!brain_data/.gitkeep
+
+# Logs
+scripts/*.log
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Misc
+supabase/
+HANDOFF.md
+tmp/
+handover_to_claude.md
+CLAUDE-CODE-BLUEPRINT.md
+canary_test.py
+mcp_output*.txt
+test_output.txt
+test_read.txt
+test_mcp_output.py
+Claudeloginbutton.png
+assets/docs/
