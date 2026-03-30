@@ -79,8 +79,8 @@ LanceDB runs entirely on your machine. No Supabase. No Pinecone. No cloud vector
 
 ```bash
 # 1. Clone the repo
-git clone https://github.com/your-username/my-second-brain.git
-cd my-second-brain
+git clone https://github.com/officialadityadesai/yoursecondbrain.git
+cd yoursecondbrain
 
 # 2. Run the installer (installs Python + Node deps, builds frontend)
 install.bat
@@ -95,11 +95,24 @@ run.bat
 # http://127.0.0.1:8000
 ```
 
-### Auto-start on Login (Optional)
+### Run Automatically on Every Login (Recommended)
+
+Set this up once and the app will always be running at `http://127.0.0.1:8000` whenever your computer is on — no terminal, no bat file, nothing.
+
 ```bash
-# Runs the app silently at every Windows login — no terminal needed
-powershell -File scripts\create-startup-task.ps1
+powershell -ExecutionPolicy Bypass -File scripts\create-startup-task.ps1
 ```
+
+This registers a Windows scheduled task (`MySecondBrain`) that silently starts the backend at login. After running it once, just open `http://127.0.0.1:8000` any time — it's always there.
+
+To remove the auto-start later:
+```bash
+schtasks /delete /tn MySecondBrain /f
+```
+
+### Use Claude Code to Set Up Everything Automatically
+
+If you'd rather have AI do the entire setup for you — install, build, API key, auto-start, MCP wiring — paste `CLAUDE-CODE-BLUEPRINT.md` into Claude Code and say *"follow this blueprint to set up My Second Brain for me."* Claude Code handles everything end to end.
 
 ---
 
@@ -125,15 +138,11 @@ Claude will show **My Second Brain** in its tools list. From any chat:
 ## Environment Variables
 
 ```env
-# Required
+# Required — get a free key at https://aistudio.google.com/app/apikey
 GEMINI_API_KEY=your_key_here
-
-# Optional — Claude OAuth (connect your Claude account as chat provider)
-CLAUDE_OAUTH_CLIENT_ID=...
-CLAUDE_OAUTH_CLIENT_SECRET=...
-CLAUDE_OAUTH_REDIRECT_URI=http://127.0.0.1:8000/api/auth/claude/callback
-CLAUDE_MODEL=claude-sonnet-4-20250514
 ```
+
+Copy `.env.example` to `.env` and fill in your Gemini API key. That's the only variable you need.
 
 ---
 
