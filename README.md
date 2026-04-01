@@ -2,10 +2,10 @@
 
 <img src="./Gradient%20lightning%20bolt%20design.png" alt="Your Second Brain" width="140" />
 
-# Your Second Brain: Multimodal RAG + Claude MCP
+# Your Second Brain: A Centralised Multimodal Knowledge Visualisation & Semantic Retrieval Framework
 
 <div align="center">
-        <img src="https://readme-typing-svg.herokuapp.com?font=Orbitron&size=24&duration=2800&pause=850&color=7A86C8&center=true&vCenter=true&width=960&lines=Welcome+to+Your+Second+Brain;Your+Local+Multimodal+RAG+Command+Center;Obsidian-Style+Knowledge+Graph+%2B+AI+Vision+%2B+Video+Clipping;Claude+MCP+Native+Integration+for+Persistent+Context" alt="Typing Animation" />
+        <img src="https://readme-typing-svg.herokuapp.com?font=Orbitron&size=24&duration=2800&pause=850&color=7A86C8&center=true&vCenter=true&width=1200&lines=Welcome+to+Your+Second+Brain;A+Centralised+Multimodal+Knowledge+Visualisation+Framework;Knowledge+Graph+Visualisation+%2B+Semantic+Retrieval+%2B+Video+Evidence;Claude+MCP+Integration+for+Source-Grounded+Retrieval" alt="Typing Animation" />
 </div>
 
 <div style="background: linear-gradient(135deg, #0b0d12 0%, #161b25 50%, #1e2432 100%); border-radius: 14px; padding: 18px; margin: 18px auto; max-width: 980px; border: 1px solid rgba(122, 134, 200, 0.38); box-shadow: 0 0 24px rgba(89, 102, 171, 0.18);">
@@ -54,7 +54,7 @@
 
 <div style="background: linear-gradient(135deg, #0d1117 0%, #1a1f2d 52%, #26213a 100%); border-radius: 16px; padding: 18px; border: 1px solid rgba(122, 134, 200, 0.40); box-shadow: 0 0 30px rgba(108, 92, 151, 0.16);">
 
-Simple idea: drop files in, ask questions, get cited answers and ready-to-watch clips.
+Simple idea: centralise messy data, visualise relationships, and retrieve grounded answers with evidence.
 
 </div>
 
@@ -124,14 +124,14 @@ flowchart LR
 
 <div style="background: linear-gradient(135deg, #0b0d12 0%, #191f2b 48%, #25253a 100%); border-radius: 16px; padding: 24px; border: 1px solid rgba(126, 111, 175, 0.38); box-shadow: 0 0 26px rgba(94, 103, 155, 0.16);">
 
-Your Second Brain is a local-first multimodal intelligence workspace that transforms raw files into a navigable knowledge network.
+Your Second Brain is a local-first, centralised multimodal knowledge visualisation and semantic retrieval framework.
 
-Unlike text-only RAG apps, this system can:
+Unlike text-only retrieval tools, this framework can:
 
 - ingest mixed media (documents, images, videos),
 - compute shared semantic representations,
 - surface cross-file relationships in a force-directed graph,
-- answer grounded questions through chat,
+- run grounded semantic retrieval across both the app and Claude MCP interfaces,
 - and generate timestamp-precise video clips through Claude MCP.
 
 This is designed for people who treat AI as persistent infrastructure, not disposable chat sessions.
@@ -142,7 +142,7 @@ This is designed for people who treat AI as persistent infrastructure, not dispo
 
 <div style="background: linear-gradient(135deg, #12151f 0%, #1d2230 100%); border-radius: 14px; padding: 22px; margin-top: 10px; border-left: 4px solid #6E78BF;">
 
-- 🔄 End-to-End Multimodal Pipeline: text, docs, images, and video chunks flow through one ingestion architecture.
+- 🔄 End-to-End Multimodal Framework: text, docs, images, and video chunks flow through one ingestion architecture.
 - 🧠 Obsidian-Style Knowledge Graph: every file and concept becomes a navigable node-link map with live interactions.
 - 👁 AI Vision + Video Transcription: visual media is semantically embedded; video chunks gain transcript context for retrieval.
 - ✂️ Auto Video Clipping: generate reusable clips from semantic queries with deterministic clip caching.
@@ -152,7 +152,7 @@ This is designed for people who treat AI as persistent infrastructure, not dispo
 
 </div>
 
-## ⚙️ Algorithm and Retrieval Pipeline
+## ⚙️ Algorithm and Semantic Retrieval Pipeline
 
 ### 1. Adaptive Ingestion Layer
 
@@ -177,7 +177,7 @@ This is designed for people who treat AI as persistent infrastructure, not dispo
 
 ### 5. Action Layer (Second Brain UX)
 
-- In-app chat streams answer + citation metadata.
+- In-app and MCP retrieval interfaces stream answers with citation metadata.
 - Claude MCP tools expose search, entity, connection, and clip-generation operations.
 
 ---
@@ -192,7 +192,7 @@ Claude is not just connected to an endpoint. It is wired into a purpose-built me
 
 The pipeline combines selective chunking, overlap control, and contextual embedding blend to reduce noisy token consumption while improving useful recall.
 
-3. Clip-First Video RAG
+3. Clip-First Video Retrieval
 
 Instead of returning timestamps only, the system can return directly playable clip URLs and cache them for repeat use.
 
@@ -212,7 +212,7 @@ Reference evaluation from internal local benchmark passes using mixed-media data
 
 ### Headline Numbers
 
-1. 2.3x faster median time-to-first-grounded-answer vs text-only baseline RAG stack.
+1. 2.3x faster median time-to-first-grounded-answer vs text-only baseline retrieval stack.
 2. +17.8 percentage points top-5 retrieval accuracy on multimodal queries.
 3. 91% clip localization hit-rate for intent-based video requests.
 4. 34% lower average prompt token load through retrieval and chunking optimization.
@@ -366,12 +366,12 @@ example-multimodal-rag/
 
 ---
 
-## 🥇 Why This Beats Classic RAG Workflows
+## 🥇 Why This Beats Classic Retrieval Workflows
 
 - You do not re-upload context every session.
 - You do not lose visual/video intelligence in text-only pipelines.
 - You do not manually scrub timelines to find evidence.
-- You get graph-based exploration, chat synthesis, and MCP-native action in one local system.
+- You get graph-based exploration, semantic synthesis, and MCP-native action in one local system.
 
 ---
 
