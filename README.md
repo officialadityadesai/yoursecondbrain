@@ -4,37 +4,52 @@
 
 # Your Second Brain: Multimodal RAG + Claude MCP
 
-<a href="https://opensource.org/license/mit">
-        <img src="https://img.shields.io/badge/License-MIT-21c9ff?style=for-the-badge&labelColor=0f172a" alt="MIT License" />
-</a>
-
 <div align="center">
-        <img src="https://readme-typing-svg.herokuapp.com?font=Orbitron&size=24&duration=2800&pause=850&color=00D9FF&center=true&vCenter=true&width=960&lines=Welcome+to+Your+Second+Brain;Your+Local+Multimodal+RAG+Command+Center;Obsidian-Style+Knowledge+Graph+%2B+AI+Vision+%2B+Video+Clipping;Claude+MCP+Native+Integration+for+Persistent+Context" alt="Typing Animation" />
+        <img src="https://readme-typing-svg.herokuapp.com?font=Orbitron&size=24&duration=2800&pause=850&color=7A86C8&center=true&vCenter=true&width=960&lines=Welcome+to+Your+Second+Brain;Your+Local+Multimodal+RAG+Command+Center;Obsidian-Style+Knowledge+Graph+%2B+AI+Vision+%2B+Video+Clipping;Claude+MCP+Native+Integration+for+Persistent+Context" alt="Typing Animation" />
 </div>
 
-<div style="background: linear-gradient(135deg, #0b1220 0%, #132238 100%); border-radius: 14px; padding: 18px; margin: 18px auto; max-width: 980px; border: 1px solid rgba(33, 201, 255, 0.35); box-shadow: 0 0 26px rgba(33, 201, 255, 0.16);">
+<div style="background: linear-gradient(135deg, #0b0d12 0%, #161b25 50%, #1e2432 100%); border-radius: 14px; padding: 18px; margin: 18px auto; max-width: 980px; border: 1px solid rgba(122, 134, 200, 0.38); box-shadow: 0 0 24px rgba(89, 102, 171, 0.18);">
         <p>
-                <img src="https://img.shields.io/badge/Mode-Local%20First-00d9ff?style=for-the-badge&logo=icloud&logoColor=white&labelColor=111827" alt="Local First" />
-                <img src="https://img.shields.io/badge/Embeddings-Gemini%20Embedding%202-4ade80?style=for-the-badge&logo=google&logoColor=white&labelColor=111827" alt="Embeddings" />
-                <img src="https://img.shields.io/badge/Vector%20DB-LanceDB-f97316?style=for-the-badge&logo=databricks&logoColor=white&labelColor=111827" alt="LanceDB" />
-                <img src="https://img.shields.io/badge/MCP-Claude%20Desktop%20Ready-a78bfa?style=for-the-badge&logo=anthropic&logoColor=white&labelColor=111827" alt="MCP Ready" />
+                <img src="https://img.shields.io/badge/Mode-Local%20First-5563A8?style=for-the-badge&logo=icloud&logoColor=white&labelColor=111827" alt="Local First" />
+                <a href="https://ai.google.dev/gemini-api/docs/embeddings">
+                        <img src="https://img.shields.io/badge/Embeddings-Gemini%20Embedding%202-6D77BA?style=for-the-badge&logo=google&logoColor=white&labelColor=111827" alt="Embeddings" />
+                </a>
+                <a href="https://lancedb.com">
+                        <img src="https://img.shields.io/badge/Vector%20DB-LanceDB-4E5A8A?style=for-the-badge&logo=databricks&logoColor=white&labelColor=111827" alt="LanceDB" />
+                </a>
+                <a href="https://docs.anthropic.com/en/docs/agents-and-tools/mcp">
+                        <img src="https://img.shields.io/badge/MCP-Claude%20Desktop%20Ready-7E6FAF?style=for-the-badge&logo=anthropic&logoColor=white&labelColor=111827" alt="MCP Ready" />
+                </a>
         </p>
         <p>
-                <img src="https://img.shields.io/badge/Python-3.10%2B-22c55e?style=for-the-badge&logo=python&logoColor=white&labelColor=111827" alt="Python" />
-                <img src="https://img.shields.io/badge/Frontend-React%2019%20%2B%20Vite-38bdf8?style=for-the-badge&logo=react&logoColor=white&labelColor=111827" alt="Frontend" />
-                <img src="https://img.shields.io/badge/API-FastAPI-14b8a6?style=for-the-badge&logo=fastapi&logoColor=white&labelColor=111827" alt="FastAPI" />
-                <img src="https://img.shields.io/badge/Video-FFmpeg%20Clipping-f43f5e?style=for-the-badge&logo=ffmpeg&logoColor=white&labelColor=111827" alt="Video Clipping" />
+                <a href="https://www.python.org/downloads/">
+                        <img src="https://img.shields.io/badge/Python-3.10%2B-48548A?style=for-the-badge&logo=python&logoColor=white&labelColor=111827" alt="Python" />
+                </a>
+                <a href="https://react.dev/">
+                        <img src="https://img.shields.io/badge/Frontend-React%2019%20%2B%20Vite-5A69A8?style=for-the-badge&logo=react&logoColor=white&labelColor=111827" alt="Frontend" />
+                </a>
+                <a href="https://fastapi.tiangolo.com/">
+                        <img src="https://img.shields.io/badge/API-FastAPI-4E5F95?style=for-the-badge&logo=fastapi&logoColor=white&labelColor=111827" alt="FastAPI" />
+                </a>
+                <a href="https://ffmpeg.org/">
+                        <img src="https://img.shields.io/badge/Video-FFmpeg%20Clipping-6C5C97?style=for-the-badge&logo=ffmpeg&logoColor=white&labelColor=111827" alt="Video Clipping" />
+                </a>
+        </p>
+        <p>
+                <a href="https://opensource.org/license/mit">
+                        <img src="https://img.shields.io/badge/License-MIT-5D5E81?style=for-the-badge&labelColor=111827" alt="MIT License" />
+                </a>
         </p>
 </div>
 
 <a href="#-quick-start">
-        <img src="https://img.shields.io/badge/Quick%20Start-Launch%20in%20Minutes-00d9ff?style=for-the-badge&logo=rocket&logoColor=white&labelColor=0f172a" alt="Quick Start" />
+        <img src="https://img.shields.io/badge/Quick%20Start-Launch%20in%20Minutes-5666A8?style=for-the-badge&logo=rocket&logoColor=white&labelColor=0f1117" alt="Quick Start" />
 </a>
 
 </div>
 
 <div align="center">
-        <div style="width: 100%; height: 2px; margin: 24px 0; background: linear-gradient(90deg, transparent, #00d9ff, transparent);"></div>
+        <div style="width: 100%; height: 2px; margin: 24px 0; background: linear-gradient(90deg, transparent, #6E78BF, transparent);"></div>
 </div>
 
 ## News
@@ -50,7 +65,7 @@
 
 ## System Overview
 
-<div style="background: linear-gradient(135deg, #0b1220 0%, #172554 55%, #0f766e 100%); border-radius: 16px; padding: 24px; border: 1px solid rgba(34, 211, 238, 0.35); box-shadow: 0 0 30px rgba(34, 211, 238, 0.14);">
+<div style="background: linear-gradient(135deg, #0b0d12 0%, #191f2b 48%, #25253a 100%); border-radius: 16px; padding: 24px; border: 1px solid rgba(126, 111, 175, 0.38); box-shadow: 0 0 26px rgba(94, 103, 155, 0.16);">
 
 Your Second Brain is a local-first multimodal intelligence workspace that transforms raw files into a navigable knowledge network.
 
@@ -68,7 +83,7 @@ This is designed for people who treat AI as persistent infrastructure, not dispo
 
 ### Key Features
 
-<div style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%); border-radius: 14px; padding: 22px; margin-top: 10px; border-left: 4px solid #22d3ee;">
+<div style="background: linear-gradient(135deg, #12151f 0%, #1d2230 100%); border-radius: 14px; padding: 22px; margin-top: 10px; border-left: 4px solid #6E78BF;">
 
 - 🔄 End-to-End Multimodal Pipeline: text, docs, images, and video chunks flow through one ingestion architecture.
 - 🧠 Obsidian-Style Knowledge Graph: every file and concept becomes a navigable node-link map with live interactions.
@@ -85,6 +100,7 @@ This is designed for people who treat AI as persistent infrastructure, not dispo
 ## Architecture
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#1F2535', 'primaryTextColor': '#D7DBF4', 'primaryBorderColor': '#6E78BF', 'lineColor': '#7E6FAF', 'secondaryColor': '#181C27', 'tertiaryColor': '#12151C', 'background': '#0B0D12'}}}%%
 flowchart LR
                 A[Multimodal Upload<br/>PDF DOCX TXT MD PNG JPG WEBP MP4 MOV AVI MKV] --> B[Ingestion Router]
                 B --> C[Text Chunking<br/>600 words / 100 overlap]
@@ -157,7 +173,7 @@ The force graph is not decorative. It is a first-class retrieval UX that enables
 
 ## Benchmarks
 
-<div style="background: linear-gradient(135deg, #0b1324 0%, #1f2937 100%); border-radius: 14px; padding: 20px; border: 1px solid rgba(45, 212, 191, 0.35);">
+<div style="background: linear-gradient(135deg, #0d1018 0%, #1b2030 100%); border-radius: 14px; padding: 20px; border: 1px solid rgba(110, 120, 191, 0.35);">
 
 Reference evaluation from internal local benchmark passes using mixed-media datasets and repeated retrieval workloads.
 
@@ -335,5 +351,5 @@ MIT
 ---
 
 <div align="center" style="margin-top: 16px;">
-        <img src="https://img.shields.io/badge/Built%20for-Persistent%20AI%20Memory-00d9ff?style=for-the-badge&labelColor=111827" alt="Persistent AI Memory" />
+        <img src="https://img.shields.io/badge/Built%20for-Persistent%20AI%20Memory-6E78BF?style=for-the-badge&labelColor=111827" alt="Persistent AI Memory" />
 </div>
