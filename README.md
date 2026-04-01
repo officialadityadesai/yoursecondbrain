@@ -5,7 +5,7 @@
 # Your Second Brain: A Centralised Multimodal Knowledge Visualisation & Semantic Retrieval Framework
 
 <div align="center">
-        <img src="https://readme-typing-svg.herokuapp.com?font=Orbitron&size=24&duration=2800&pause=850&color=7A86C8&center=true&vCenter=true&width=1200&lines=Welcome+to+Your+Second+Brain;A+Centralised+Multimodal+Knowledge+Visualisation+Framework;Knowledge+Graph+Visualisation+%2B+Semantic+Retrieval+%2B+Video+Evidence;Claude+MCP+Integration+for+Source-Grounded+Retrieval" alt="Typing Animation" />
+        <img src="https://readme-typing-svg.herokuapp.com?font=Orbitron&size=24&duration=2800&pause=850&color=7A86C8&center=true&vCenter=true&width=1200&lines=Multimodal+Knowledge+Retrieval+Reimagined;Semantic+Search+Across+Multimodal+Inputs+-+Text%2C+Images%2C+Video%2C+and+Documents;Visualise+Relationships+Between+Ideas+As+An+Interactive+Nodal+Network;Ingest+Once%2C+Query+Forever+Without+Re-uploading+Context;Retrieve+Trimmed+Video+Clips+From+Natural+Language+Queries;Cross-Modal+Intelligence%3A+Find+Connections+Across+All+Content+Types" alt="Typing Animation" />
 </div>
 
 <div style="background: linear-gradient(135deg, #0b0d12 0%, #161b25 50%, #1e2432 100%); border-radius: 14px; padding: 18px; margin: 18px auto; max-width: 980px; border: 1px solid rgba(122, 134, 200, 0.38); box-shadow: 0 0 24px rgba(89, 102, 171, 0.18);">
@@ -50,188 +50,159 @@
         <div style="width: 100%; height: 2px; margin: 24px 0; background: linear-gradient(90deg, transparent, #6E78BF, transparent);"></div>
 </div>
 
-## 🧭 Architecture
+## 🎯 The Problem
 
-<div style="background: linear-gradient(135deg, #0d1117 0%, #1a1f2d 52%, #26213a 100%); border-radius: 16px; padding: 18px; border: 1px solid rgba(122, 134, 200, 0.40); box-shadow: 0 0 30px rgba(108, 92, 151, 0.16);">
+You have **files scattered everywhere**: PDFs, Word docs, images, videos, notes. Every time you want to ask an AI about them, you re-upload context. You can't see how they relate. You lose citations. You lose time.
 
-Simple idea: centralise messy data, visualise relationships, and retrieve grounded answers with evidence.
+Your Second Brain fixes this.
 
-</div>
+---
 
+## 💡 Core Idea
+
+Upload your files **once**. The system:
+- **Centralizes** them in a unified workspace
+- **Understands** them semantically across all modalities (text, images, video)
+- **Visualizes** relationships in a knowledge graph
+- **Retrieves** grounded answers with evidence
+- **Integrates** with Claude via MCP for persistent, source-aware conversations
+
+This is a **framework**, not a rigid tool. It adapts to your workflows—research, product development, knowledge management, customer support, personal learning, team collaboration.
+
+---
+
+## 🏗️ How It Works
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#1F2535', 'primaryTextColor': '#D7DBF4', 'primaryBorderColor': '#6E78BF', 'lineColor': '#7E6FAF', 'secondaryColor': '#181C27', 'tertiaryColor': '#12151C', 'background': '#0B0D12'}}}%%
 flowchart LR
-                Q[User Files and Questions]:::entry
+                Q[Your Files & Questions]:::entry
 
                 subgraph S1[Stage 1: Ingestion]
-                        U1[Upload Panel and brain_data folder]
+                        U1[Upload Panel / brain_data folder]
                         U2[File Router by Type]
-                        U3[Text and Docs Parsing]
-                        U4[Image Processing]
-                        U5[Video Chunking and Transcript]
-                        U1 --> U2
-                        U2 --> U3
-                        U2 --> U4
-                        U2 --> U5
+                        U3[Parse & Chunk]
+                        U1 --> U2 --> U3
                 end
 
                 subgraph S2[Stage 2: Understanding]
-                        E1[Gemini Embedding 2]
-                        E2[Context and Token Optimization]
-                        E3[Entity and Topic Signals]
-                        E1 --> E2 --> E3
+                        E1[Semantic Embeddings]
+                        E2[Entity & Topic Extraction]
+                        E3[Video Transcription]
+                        E1 --> E2
+                        E1 --> E3
                 end
 
-                subgraph S3[Stage 3: Knowledge Memory]
-                        K1[LanceDB Vector Store]
-                        K2[Obsidian-Style Knowledge Graph]
-                        K3[Metadata and Citation Links]
+                subgraph S3[Stage 3: Memory]
+                        K1[Vector Index]
+                        K2[Knowledge Graph]
+                        K3[Citation Metadata]
                         K1 --> K2
                         K1 --> K3
-                        K2 --> K3
                 end
 
-                subgraph S4[Stage 4: Retrieval and Action]
-                        R1[Hybrid Retrieval: semantic plus keyword plus graph]
-                        R2[Chat Answer with Citations]
-                        R3[Claude MCP Tooling]
-                        R4[Auto Video Clip Endpoint]
+                subgraph S4[Stage 4: Retrieval & Action]
+                        R1[Semantic Search]
+                        R2[Chat with Citations]
+                        R3[Claude MCP Tools]
                         R1 --> R2
                         R1 --> R3
-                        R3 --> R4
                 end
 
                 Q --> U1
                 U3 --> E1
-                U4 --> E1
-                U5 --> E1
-                E3 --> K1
-                K3 --> R1
+                E2 --> K1
+                K2 --> R1
 
                 classDef entry fill:#2A3150,stroke:#8B79C4,color:#E6E9FF,stroke-width:2px;
 ```
 
-### 🪄 Why This Is Useful
-
-- You can search across mixed files like PDFs, screenshots, and video clips in one place.
-- You can see relationships in a graph before you even write the perfect prompt.
-- You can ask Claude and receive source-grounded answers from your own saved knowledge.
-- You can jump from answer to exact video moments without manually editing clips.
+**In Plain English:**
+1. Upload files (documents, images, videos) once
+2. System parses them, generates semantic embeddings, extracts entities and topics
+3. Everything is indexed and connected in a knowledge graph
+4. Ask questions—get answers grounded in your actual files with citations
+5. Use Claude MCP to extend it into your AI workflows
 
 ---
 
-## 🌌 System Overview
-
-<div style="background: linear-gradient(135deg, #0b0d12 0%, #191f2b 48%, #25253a 100%); border-radius: 16px; padding: 24px; border: 1px solid rgba(126, 111, 175, 0.38); box-shadow: 0 0 26px rgba(94, 103, 155, 0.16);">
-
-Your Second Brain is a local-first, centralised multimodal knowledge visualisation and semantic retrieval framework.
-
-Unlike text-only retrieval tools, this framework can:
-
-- ingest mixed media (documents, images, videos),
-- compute shared semantic representations,
-- surface cross-file relationships in a force-directed graph,
-- run grounded semantic retrieval across both the app and Claude MCP interfaces,
-- and generate timestamp-precise video clips through Claude MCP.
-
-This is designed for people who treat AI as persistent infrastructure, not disposable chat sessions.
-
-</div>
-
-### ✨ Key Features
+## ✨ Core Capabilities
 
 <div style="background: linear-gradient(135deg, #12151f 0%, #1d2230 100%); border-radius: 14px; padding: 22px; margin-top: 10px; border-left: 4px solid #6E78BF;">
 
-- 🔄 End-to-End Multimodal Framework: text, docs, images, and video chunks flow through one ingestion architecture.
-- 🧠 Obsidian-Style Knowledge Graph: every file and concept becomes a navigable node-link map with live interactions.
-- 👁 AI Vision + Video Transcription: visual media is semantically embedded; video chunks gain transcript context for retrieval.
-- ✂️ Auto Video Clipping: generate reusable clips from semantic queries with deterministic clip caching.
-- 🤝 Claude MCP Native Mode: Claude can retrieve, cite, connect, and clip from your local knowledge without re-uploading.
-- 🧮 Token Optimization Tooling: chunk strategy, overlap, context blending, and retrieval discipline reduce waste while preserving answer quality.
-- 🔒 Private by Design: LanceDB, assets, and search artifacts remain on your machine.
+- **🔄 Multimodal Ingestion**: Text, PDFs, Word docs, images, and videos—one unified pipeline
+- **🧠 Knowledge Graph Visualization**: See relationships between files and concepts in an interactive Obsidian-style graph
+- **🔍 Semantic Retrieval**: Find relevant content by meaning, not just keywords, across all file types
+- **📝 Citation-Grounded Answers**: Chat interface returns answers with linked sources and confidence
+- **🤝 Claude MCP Integration**: Claude Desktop can search, retrieve, cite, and generate clips directly from your workspace
+- **⚡ Token Optimization**: Intelligent chunking, context blending, and retrieval discipline minimize token waste
+- **🎬 Video-Aware Retrieval**: Transcript timestamps enable precise evidence and clip generation
+- **🔒 Private by Design**: Everything stays local—no re-uploading, no external indexing
 
 </div>
 
-## ⚙️ Algorithm and Semantic Retrieval Pipeline
+---
 
-### 1. Adaptive Ingestion Layer
+## 🎓 Key Concepts Behind This Framework
 
-- Documents are parsed and chunked for retrieval resilience.
-- Images are embedded directly for multimodal similarity.
-- Videos are split into overlapping windows for temporal precision.
+### Local-First Knowledge Ingestion
+Files are processed **once** and stored locally. No repeated re-uploads. No cloud dependency. Your context lives with you.
 
-### 2. Unified Semantic Space
+### Multimodal Semantic Space
+All content—whether text, image, or video—is projected into a unified embedding space. This means:
+- Images are searchable by meaning, not just filename
+- Videos are indexed by scene and transcript
+- Cross-modal queries work (e.g., "find documents related to this image")
 
-- All modalities are projected into a 1536-dimensional embedding space.
-- Upload context can be blended to boost semantic grounding.
+### Knowledge Graph as Sensemaking Tool
+Beyond search, the graph visualizes:
+- **Document-to-document relationships** (shared topics, entities, citations)
+- **Entity-based connections** (people, organizations, tools mentioned across files)
+- **Semantic similarity clusters** (conceptually related content)
 
-### 3. Knowledge Graph Construction
+This is **not decorative**—it's a first-class retrieval UX for exploration before you even formulate a query.
 
-- Entities and file relationships are incrementally built over time.
-- Graph physics and persistence preserve navigability across sessions.
+### Context Management & Token Efficiency
+The system is optimized to reduce token consumption without sacrificing answer quality:
+- **Adaptive chunking**: Documents are split with overlap for resilience
+- **Relevance-ranked retrieval**: Only top matches are included in the prompt
+- **Context blending**: Upload labels and metadata are merged to improve semantic grounding
+- **Prompt assembly**: The system assembles minimal sufficient context, not maximal
 
-### 4. Modality-Aware Retrieval
-
-- Queries combine semantic relevance, keyword support, and source metadata.
-- Transcript-aware evidence boosts video grounding quality.
-
-### 5. Action Layer (Second Brain UX)
-
-- In-app and MCP retrieval interfaces stream answers with citation metadata.
-- Claude MCP tools expose search, entity, connection, and clip-generation operations.
+### Claude MCP as Native Memory Interface
+Claude Desktop is not just calling an endpoint. It's wired into a purpose-built memory stack with:
+- **Source-disciplined responses**: Claude knows where evidence comes from
+- **Retrieval orchestration**: Multiple search strategies (semantic, keyword, graph) work together
+- **Video clip generation**: Semantic queries can directly produce timestamp-precise clips
+- **Connection tracing**: Explore entity relationships and document networks from chat
 
 ---
 
-## 🔥 Never-Before-Seen Capabilities
+## 🛠️ Applications & Use Cases
 
-1. Second-Brain Native Claude MCP
+This framework is **designed to morph into your specific needs**. Here are common applications:
 
-Claude is not just connected to an endpoint. It is wired into a purpose-built memory stack with source discipline, retrieval orchestration, and clip-ready media operations.
+### Research & Literature Management
+Upload papers, PDFs, notes. Visualize citation networks. Ask synthesis questions. Get grounded answers with source links. Perfect for literature reviews, thesis work, knowledge synthesis.
 
-2. Token-Efficient Multimodal Grounding
+### Product & Engineering Documentation
+Centralize design docs, specs, tickets, decision records, code comments. Search across modalities (diagrams, videos, text). Claude helps trace dependencies and explain decisions.
 
-The pipeline combines selective chunking, overlap control, and contextual embedding blend to reduce noisy token consumption while improving useful recall.
+### Customer Support & Knowledge Base
+Ingest ticket history, help articles, chat logs, videos. Semantic retrieval finds similar issues. MCP integration lets support agents chat with the knowledge base directly.
 
-3. Clip-First Video Retrieval
+### Personal Knowledge Management
+Build a living, interconnected brain for everything you read, learn, and create. The graph becomes your external memory. Chat with it to synthesize ideas.
 
-Instead of returning timestamps only, the system can return directly playable clip URLs and cache them for repeat use.
+### Team Collaboration
+Deploy locally in a team environment. Shared brain_data folder. Everyone uploads, everyone queries. Graph visualization reveals knowledge gaps and collaboration opportunities.
 
-4. Graph-Driven Sensemaking
+### Content & Media Analysis
+Upload videos, transcripts, images, articles. Retrieve by scene, sentiment, topic. Generate clips on demand. Ideal for content curation, research, journalism.
 
-The force graph is not decorative. It is a first-class retrieval UX that enables relationship exploration before query formulation.
+### Legal & Compliance
+Index contracts, regulations, policies, case studies. Semantic search finds relevant precedents. MCP integration enables source-grounded legal analysis.
 
----
-
-## 📊 Benchmarks
-
-<div style="background: linear-gradient(135deg, #0d1018 0%, #1b2030 100%); border-radius: 14px; padding: 20px; border: 1px solid rgba(110, 120, 191, 0.35);">
-
-Reference evaluation from internal local benchmark passes using mixed-media datasets and repeated retrieval workloads.
-
-</div>
-
-### Headline Numbers
-
-1. 2.3x faster median time-to-first-grounded-answer vs text-only baseline retrieval stack.
-2. +17.8 percentage points top-5 retrieval accuracy on multimodal queries.
-3. 91% clip localization hit-rate for intent-based video requests.
-4. 34% lower average prompt token load through retrieval and chunking optimization.
-
-### Comparative Table
-
-| Metric | Your Second Brain | Traditional RAG App (Text-Only) | Delta |
-|---|---:|---:|---:|
-| Median response latency (s) | 1.9 | 4.4 | 2.3x faster |
-| Top-5 retrieval accuracy | 87.6% | 69.8% | +17.8 pts |
-| Cross-modal query success | 84.1% | 28.7% | +55.4 pts |
-| Video evidence retrieval | 91.0% | 0.0% | +91.0 pts |
-| Avg prompt tokens/query | 2,420 | 3,684 | -34.3% |
-
-### Benchmark Notes
-
-- Hardware: single-machine local environment (consumer laptop profile).
-- Dataset shape: PDFs, DOCX, markdown notes, screenshots, and long-form videos.
-- Retrieval targets: factual QA, cross-file synthesis, and clip-worthy quote extraction.
+**The pattern**: Any domain with scattered, multimodal information + a need for persistent, grounded retrieval fits this framework. Customize the UI, adjust chunking strategies, extend the MCP tools—it adapts.
 
 ---
 
@@ -245,7 +216,6 @@ Reference evaluation from internal local benchmark passes using mixed-media data
 - FFmpeg available on PATH (required for video clipping)
 
 ### Windows
-
 ```bash
 git clone https://github.com/officialadityadesai/yoursecondbrain.git
 cd yoursecondbrain
@@ -261,13 +231,11 @@ run.bat
 Open http://127.0.0.1:8000
 
 Optional startup automation:
-
 ```bash
 powershell -ExecutionPolicy Bypass -File scripts\create-startup-task.ps1
 ```
 
 ### macOS
-
 ```bash
 git clone https://github.com/officialadityadesai/yoursecondbrain.git
 cd yoursecondbrain
@@ -290,7 +258,6 @@ uvicorn main:app --host 127.0.0.1 --port 8000
 ```
 
 In a second terminal (optional frontend dev mode):
-
 ```bash
 cd frontend
 npm run dev
@@ -298,22 +265,30 @@ npm run dev
 
 ---
 
-## 🤖 Claude MCP Setup
+## 🤖 Claude MCP Integration
 
-### Windows (Automated)
+Your Second Brain is a native MCP server. Claude Desktop can retrieve, search, connect, and generate clips directly from your local workspace.
 
+### Windows (Automated Setup)
 ```bash
 scripts\setup_mcp.bat
 ```
 
-Restart Claude Desktop, then call your Second Brain tools directly from chat.
+Restart Claude Desktop. Your Second Brain tools are now available in chat.
 
 ### What Claude Can Do via MCP
 
-- Holistic multimodal retrieval across your saved files
-- Connection tracing between entities and documents
-- Video clip creation from semantic intent
-- Source-cited answers grounded in your local knowledge base
+- **Holistic multimodal search**: Find relevant content across all your files by semantic meaning
+- **Entity & connection tracing**: Explore relationships between people, organizations, and concepts
+- **Grounded answering**: Retrieve context and return answers with source citations
+- **Video clip generation**: From a semantic query, generate timestamp-precise, playable clips
+- **File exploration**: Browse your knowledge base structure, topics, and relationships
+
+**Example MCP Workflows:**
+- *"Search my knowledge base for documents about machine learning and show me how they connect"*
+- *"Find a clip from my video where someone discusses authentication, and timestamp it"*
+- *"What are the main entities mentioned across my research files, and which are most connected?"*
+- *"Retrieve the top 3 documents relevant to this question and cite them in your answer"*
 
 ---
 
@@ -343,9 +318,8 @@ Restart Claude Desktop, then call your Second Brain tools directly from chat.
 ---
 
 ## 🗂️ Project Layout
-
 ```text
-example-multimodal-rag/
+yoursecondbrain/
 ├── backend/
 │   ├── main.py
 │   ├── ingest.py
@@ -363,15 +337,6 @@ example-multimodal-rag/
 ├── install.bat
 └── run.bat
 ```
-
----
-
-## 🥇 Why This Beats Classic Retrieval Workflows
-
-- You do not re-upload context every session.
-- You do not lose visual/video intelligence in text-only pipelines.
-- You do not manually scrub timelines to find evidence.
-- You get graph-based exploration, semantic synthesis, and MCP-native action in one local system.
 
 ---
 
