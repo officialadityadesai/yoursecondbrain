@@ -52,22 +52,26 @@
 
 ## 🎯 The Problem
 
-You have **files scattered everywhere**: PDFs, Word docs, images, videos, notes. Every time you want to ask an AI about them, you re-upload context. You can't see how they relate. You lose citations. You lose time.
+## 🎯 The Problem
 
-Your Second Brain fixes this.
+**Ever hit your AI usage limits mid-conversation and lose context about everything?** You have a confusing dump of **files scattered everywhere**: PDFs, Word docs, images, videos, notes, etc. Every time you want to ask an AI a question or request about them, you re-upload the same context and files over and over again. 
+
+Your scarce token budget bleeds away. You can't see how the files relate. You risk hallucinations and context rot with every message you send. You're trapped in a cycle of re-uploading, re-explaining, & re-spending.
+
+**With "Your Second Brain", these will be problems of the distant past.**
 
 ---
 
 ## 💡 Core Idea
 
 Upload your files **once**. The system:
-- **Centralizes** them in a unified workspace
-- **Understands** them semantically across all modalities (text, images, video)
-- **Visualizes** relationships in a knowledge graph
-- **Retrieves** grounded answers with evidence
-- **Integrates** with Claude via MCP for persistent, source-aware conversations
+- **Centralises** them in a unified workspace
+- **Understands** them semantically across all modalities (text, images, video, documents, etc)
+- **Visualises** relationships, ideas, and entities in an interactive nodal knowledge graph
+- **Retrieves** grounded answers and information only from your knowledge with neuron-level evidence
+- **Integrates** with Claude MCP to pinpoint forgotten files by natural-language description without remembering filenames, retrieve trimmed, timestamp-precise video clips, trace entity + nodal connections, all without leaving Claude
 
-This is a **framework**, not a rigid tool. It adapts to your workflows—research, product development, knowledge management, customer support, personal learning, team collaboration.
+This is a generously advanced, free **framework** that you can adapt to your projects, workflows, product development, knowledge management, customer support, personal learning, & team collaboration initatives.
 
 ---
 
@@ -116,11 +120,11 @@ flowchart LR
                 classDef entry fill:#2A3150,stroke:#8B79C4,color:#E6E9FF,stroke-width:2px;
 ```
 
-**In Plain English:**
+**Process:**
 1. Upload files (documents, images, videos) once
 2. System parses them, generates semantic embeddings, extracts entities and topics
-3. Everything is indexed and connected in a knowledge graph
-4. Ask questions—get answers grounded in your actual files with citations
+3. Everything is indexed and connected in a multimodal knowledge graph
+4. Ask questions, and get answers grounded in your actual files with citations
 5. Use Claude MCP to extend it into your AI workflows
 
 ---
@@ -148,7 +152,8 @@ flowchart LR
 Files are processed **once** and stored locally. No repeated re-uploads. No cloud dependency. Your context lives with you.
 
 ### Multimodal Semantic Space
-All content—whether text, image, or video—is projected into a unified embedding space. This means:
+All content—whether text, image, or video—is projected into a unified embedding space through the Gemini Embedding 2 model. 
+This means:
 - Images are searchable by meaning, not just filename
 - Videos are indexed by scene and transcript
 - Cross-modal queries work (e.g., "find documents related to this image")
