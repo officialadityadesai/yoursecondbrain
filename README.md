@@ -1,15 +1,15 @@
 <div align="center">
 
-<img src="frontend/src/assets/hero.png" alt="My Second Brain" width="140" />
+<img src="./Gradient%20lightning%20bolt%20design.png" alt="Your Second Brain" width="140" />
 
-# My Second Brain: Multimodal RAG + Claude MCP
+# Your Second Brain: Multimodal RAG + Claude MCP
 
 <a href="https://opensource.org/license/mit">
         <img src="https://img.shields.io/badge/License-MIT-21c9ff?style=for-the-badge&labelColor=0f172a" alt="MIT License" />
 </a>
 
 <div align="center">
-        <img src="https://readme-typing-svg.herokuapp.com?font=Orbitron&size=24&duration=2800&pause=850&color=00D9FF&center=true&vCenter=true&width=960&lines=Welcome+to+My+Second+Brain;Your+Local+Multimodal+RAG+Command+Center;Obsidian-Style+Knowledge+Graph+%2B+AI+Vision+%2B+Video+Clipping;Claude+MCP+Native+Integration+for+Persistent+Context" alt="Typing Animation" />
+        <img src="https://readme-typing-svg.herokuapp.com?font=Orbitron&size=24&duration=2800&pause=850&color=00D9FF&center=true&vCenter=true&width=960&lines=Welcome+to+Your+Second+Brain;Your+Local+Multimodal+RAG+Command+Center;Obsidian-Style+Knowledge+Graph+%2B+AI+Vision+%2B+Video+Clipping;Claude+MCP+Native+Integration+for+Persistent+Context" alt="Typing Animation" />
 </div>
 
 <div style="background: linear-gradient(135deg, #0b1220 0%, #132238 100%); border-radius: 14px; padding: 18px; margin: 18px auto; max-width: 980px; border: 1px solid rgba(33, 201, 255, 0.35); box-shadow: 0 0 26px rgba(33, 201, 255, 0.16);">
@@ -52,7 +52,7 @@
 
 <div style="background: linear-gradient(135deg, #0b1220 0%, #172554 55%, #0f766e 100%); border-radius: 16px; padding: 24px; border: 1px solid rgba(34, 211, 238, 0.35); box-shadow: 0 0 30px rgba(34, 211, 238, 0.14);">
 
-My Second Brain is a local-first multimodal intelligence workspace that transforms raw files into a navigable knowledge network.
+Your Second Brain is a local-first multimodal intelligence workspace that transforms raw files into a navigable knowledge network.
 
 Unlike text-only RAG apps, this system can:
 
@@ -172,7 +172,7 @@ Reference evaluation from internal local benchmark passes using mixed-media data
 
 ### Comparative Table
 
-| Metric | My Second Brain | Traditional RAG App (Text-Only) | Delta |
+| Metric | Your Second Brain | Traditional RAG App (Text-Only) | Delta |
 |---|---:|---:|---:|
 | Median response latency (s) | 1.9 | 4.4 | 2.3x faster |
 | Top-5 retrieval accuracy | 87.6% | 69.8% | +17.8 pts |
