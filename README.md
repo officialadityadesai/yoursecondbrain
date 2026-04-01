@@ -50,18 +50,7 @@
         <div style="width: 100%; height: 2px; margin: 24px 0; background: linear-gradient(90deg, transparent, #6E78BF, transparent);"></div>
 </div>
 
-## 🎉 News
-
-- [x] [2026.04] 🚀 README upgraded with richer visuals, smarter badge links, and a new architecture section.
-- [x] [2026.03] 🤝 Claude MCP workflow refined for holistic retrieval, strict source attribution, and direct video clipping.
-- [x] [2026.03] 🎬 Transcript backfill launched for existing video chunks with absolute timestamp support.
-- [x] [2026.02] 🕸️ Knowledge graph controls improved with smoother physics and stronger search usability.
-- [x] [2026.01] 📦 Upload flow upgraded with queue visibility, status polling, and contextual ingest metadata.
-- [x] [2025.12] 🧠 Multimodal ingest stabilized for documents, images, and videos in one unified vector space.
-
----
-
-## 🧭 Architecture Walkthrough
+## 🧭 Architecture
 
 <div style="background: linear-gradient(135deg, #0d1117 0%, #1a1f2d 52%, #26213a 100%); border-radius: 16px; padding: 18px; border: 1px solid rgba(122, 134, 200, 0.40); box-shadow: 0 0 30px rgba(108, 92, 151, 0.16);">
 
