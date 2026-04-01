@@ -50,30 +50,36 @@
         <div style="width: 100%; height: 2px; margin: 24px 0; background: linear-gradient(90deg, transparent, #6E78BF, transparent);"></div>
 </div>
 
-## 🎯 The Problem
+<div style="font-size: 0.96em; line-height: 1.58;">
 
-**Ever hit your AI usage limits mid-conversation and lose context about everything?** You have a confusing dump of **files scattered everywhere**: PDFs, Word docs, images, videos, notes, etc. Every time you want to ask an AI a question or request about them, you re-upload the same context and files over and over again. 
+<details open>
+<summary><h2>🎯 The Problem</h2></summary>
 
-Your scarce token budget bleeds away. You can't see how the files relate. You risk hallucinations and context rot with every message you send. You're trapped in a cycle of re-uploading, re-explaining, & re-spending.
+**Ever hit your AI usage limits mid-conversation and lose context about everything?** You have a confusing dump of **files scattered everywhere**: PDFs, Word docs, images, videos, notes, etc. Every time you want to ask an AI a question or request about them, you re-upload the same context and files over and over again.
+
+Your scarce token budget bleeds away. You can't see how the files relate. You risk hallucinations and context rot with every message you send. You're trapped in a cycle of re-uploading, re-explaining, and re-spending.
 
 **With "Your Second Brain", these will be problems of the distant past.**
 
----
+</details>
 
-## 💡 Core Idea
+<details open>
+<summary><h2>💡 Core Idea</h2></summary>
 
 Upload your files **once**. The system:
 - **Centralises** them in a unified workspace
 - **Understands** them semantically across all modalities (text, images, video, documents, etc)
 - **Visualises** relationships, ideas, and entities in an interactive nodal knowledge graph
 - **Retrieves** grounded answers and information only from your knowledge with neuron-level evidence
-- **Integrates** with Claude MCP to pinpoint forgotten files by natural-language description without remembering filenames, retrieve trimmed, timestamp-precise video clips, trace entity + nodal connections, all without leaving Claude
+- **Claude MCP Integration**: Claude is your voice — search by description, retrieve timestamp-precise clips, trace connections, and get grounded answers from your entire knowledge base in chat
 
-This is a generously advanced, free **framework** that you can adapt to your projects, workflows, product development, knowledge management, customer support, personal learning, & team collaboration initatives.
+This is a generously advanced, free **framework** that you can adapt to your projects, workflows, product development, knowledge management, customer support, personal learning, and team collaboration initiatives.
 
----
+</details>
 
-## 🏗️ How It Works
+<details open>
+<summary><h2>🏗️ How It Works</h2></summary>
+
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#1F2535', 'primaryTextColor': '#D7DBF4', 'primaryBorderColor': '#6E78BF', 'lineColor': '#7E6FAF', 'secondaryColor': '#181C27', 'tertiaryColor': '#12151C', 'background': '#0B0D12'}}}%%
 flowchart LR
@@ -119,38 +125,40 @@ flowchart LR
 ```
 
 **Process:**
-1. Upload files (documents, images, videos) once
-2. System parses them, generates semantic embeddings, extracts entities and topics
-3. Everything is indexed and connected in a multimodal knowledge graph
-4. Ask questions, and get answers grounded in your actual files with citations
-5. Use Claude MCP to extend it into your AI workflows
+1. Upload files (documents, images, videos) once.
+2. System parses them, generates semantic embeddings, and extracts entities and topics.
+3. Everything is indexed and connected in a multimodal knowledge graph.
+4. Ask questions, and get answers grounded in your actual files with citations.
+5. Use Claude MCP to extend it into your AI workflows.
 
----
+</details>
 
-## ✨ Core Capabilities
+<details open>
+<summary><h2>✨ Core Capabilities</h2></summary>
 
 <div style="background: linear-gradient(135deg, #12151f 0%, #1d2230 100%); border-radius: 14px; padding: 22px; margin-top: 10px; border-left: 4px solid #6E78BF;">
 
-- **🔄 Multimodal Ingestion**: Text, PDFs, Word docs, images, and videos—one unified pipeline
+- **🔄 Multimodal Ingestion**: Text, PDFs, Word docs, images, and videos — one unified pipeline
 - **🧠 Knowledge Graph Visualization**: See relationships between files and concepts in an interactive Obsidian-style graph
 - **🔍 Semantic Retrieval**: Find relevant content by meaning, not just keywords, across all file types
 - **📝 Citation-Grounded Answers**: Chat interface returns answers with linked sources and confidence
-- **🤝 Claude MCP Integration**: Claude Desktop can search, retrieve, cite, and generate clips directly from your workspace
+- **🤝 Claude MCP Integration**: Claude is your voice — search by description, retrieve timestamp-precise clips, trace connections, and get grounded answers from your entire knowledge base in chat
 - **⚡ Token Optimization**: Intelligent chunking, context blending, and retrieval discipline minimize token waste
 - **🎬 Video-Aware Retrieval**: Transcript timestamps enable precise evidence and clip generation
-- **🔒 Private by Design**: Everything stays local—no re-uploading, no external indexing
+- **🔒 Private by Design**: Everything stays local — no re-uploading, no external indexing
 
 </div>
 
----
+</details>
 
-## 🎓 Key Concepts Behind This Framework
+<details>
+<summary><h2>🎓 Key Concepts Behind This Framework</h2></summary>
 
 ### Local-First Knowledge Ingestion
 Files are processed **once** and stored locally. No repeated re-uploads. No cloud dependency. Your context lives with you.
 
 ### Multimodal Semantic Space
-All content—whether text, image, or video—is projected into a unified embedding space through the Gemini Embedding 2 model. 
+All content — whether text, image, or video — is projected into a unified embedding space through the Gemini Embedding 2 model.
 This means:
 - Images are searchable by meaning, not just filename
 - Videos are indexed by scene and transcript
@@ -162,7 +170,7 @@ Beyond search, the graph visualizes:
 - **Entity-based connections** (people, organizations, tools mentioned across files)
 - **Semantic similarity clusters** (conceptually related content)
 
-This is **not decorative**—it's a first-class retrieval UX for exploration before you even formulate a query.
+This is **not decorative** — it's a first-class retrieval UX for exploration before you even formulate a query.
 
 ### Context Management & Token Efficiency
 The system is optimized to reduce token consumption without sacrificing answer quality:
@@ -178,9 +186,10 @@ Claude Desktop is not just calling an endpoint. It's wired into a purpose-built 
 - **Video clip generation**: Semantic queries can directly produce timestamp-precise clips
 - **Connection tracing**: Explore entity relationships and document networks from chat
 
----
+</details>
 
-## 🛠️ Applications & Use Cases
+<details>
+<summary><h2>🛠️ Applications & Use Cases</h2></summary>
 
 This framework is **designed to morph into your specific needs**. Here are common applications:
 
@@ -205,11 +214,12 @@ Upload videos, transcripts, images, articles. Retrieve by scene, sentiment, topi
 ### Legal & Compliance
 Index contracts, regulations, policies, case studies. Semantic search finds relevant precedents. MCP integration enables source-grounded legal analysis.
 
-**The pattern**: Any domain with scattered, multimodal information + a need for persistent, grounded retrieval fits this framework. Customize the UI, adjust chunking strategies, extend the MCP tools—it adapts.
+**The pattern**: Any domain with scattered, multimodal information + a need for persistent, grounded retrieval fits this framework. Customize the UI, adjust chunking strategies, extend the MCP tools — it adapts.
 
----
+</details>
 
-## 🚀 Quick Start
+<details open>
+<summary><h2>🚀 Quick Start</h2></summary>
 
 ### Prerequisites
 
@@ -266,9 +276,10 @@ cd frontend
 npm run dev
 ```
 
----
+</details>
 
-## 🤖 Claude MCP Integration
+<details open>
+<summary><h2>🤖 Claude MCP Integration</h2></summary>
 
 Your Second Brain is a native MCP server. Claude Desktop can retrieve, search, connect, and generate clips directly from your local workspace.
 
@@ -293,9 +304,10 @@ Restart Claude Desktop. Your Second Brain tools are now available in chat.
 - *"What are the main entities mentioned across my research files, and which are most connected?"*
 - *"Retrieve the top 3 documents relevant to this question and cite them in your answer"*
 
----
+</details>
 
-## 🧩 Supported Content Types
+<details open>
+<summary><h2>🧩 Supported Content Types</h2></summary>
 
 | Category | Formats |
 |---|---|
@@ -303,9 +315,10 @@ Restart Claude Desktop. Your Second Brain tools are now available in chat.
 | Images | .png .jpg .jpeg .webp |
 | Videos | .mp4 .mov .avi .mkv |
 
----
+</details>
 
-## 🛠️ Tech Stack
+<details open>
+<summary><h2>🛠️ Tech Stack</h2></summary>
 
 | Layer | Technology |
 |---|---|
@@ -318,9 +331,11 @@ Restart Claude Desktop. Your Second Brain tools are now available in chat.
 | Graph Engine | react-force-graph-2d |
 | MCP Server | mcp + FastMCP |
 
----
+</details>
 
-## 🗂️ Project Layout
+<details open>
+<summary><h2>🗂️ Project Layout</h2></summary>
+
 ```text
 yoursecondbrain/
 ├── backend/
@@ -341,11 +356,16 @@ yoursecondbrain/
 └── run.bat
 ```
 
----
+</details>
 
-## 📄 License
+<details open>
+<summary><h2>📄 License</h2></summary>
 
 MIT
+
+</details>
+
+</div>
 
 ---
 
