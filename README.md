@@ -53,7 +53,7 @@
 <div style="font-size: 0.96em; line-height: 1.58;">
 
 <details open>
-<summary><strong style="font-size: 1.5em; font-weight: 700;">🎯 The Problem</strong></summary>
+<summary><span style="font-size: 1.55rem; font-weight: 700; line-height: 1.25; display: inline-block;">🎯 The Problem</span></summary>
 
 **Ever hit your AI usage limits mid-conversation and lose context about everything?** You have a confusing dump of **files scattered everywhere**: PDFs, Word docs, images, videos, notes, etc. Every time you want to ask an AI a question or request about them, you re-upload the same context and files over and over again.
 
@@ -64,7 +64,7 @@ Your scarce token budget bleeds away. You can't see how the files relate. You ri
 </details>
 
 <details open>
-<summary><strong style="font-size: 1.5em; font-weight: 700;">💡 Core Idea</strong></summary>
+<summary><span style="font-size: 1.55rem; font-weight: 700; line-height: 1.25; display: inline-block;">💡 Core Idea</span></summary>
 
 Upload your files **once**. The system:
 - **Centralises** them in a unified workspace
@@ -78,7 +78,7 @@ This is a generously advanced, free **framework** that you can adapt to your pro
 </details>
 
 <details open>
-<summary><strong style="font-size: 1.5em; font-weight: 700;">🏗️ How It Works</strong></summary>
+<summary><span style="font-size: 1.55rem; font-weight: 700; line-height: 1.25; display: inline-block;">🏗️ How It Works</span></summary>
 
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#1F2535', 'primaryTextColor': '#D7DBF4', 'primaryBorderColor': '#6E78BF', 'lineColor': '#7E6FAF', 'secondaryColor': '#181C27', 'tertiaryColor': '#12151C', 'background': '#0B0D12'}}}%%
@@ -134,7 +134,7 @@ flowchart LR
 </details>
 
 <details open>
-<summary><strong style="font-size: 1.5em; font-weight: 700;">✨ Core Capabilities</strong></summary>
+<summary><span style="font-size: 1.55rem; font-weight: 700; line-height: 1.25; display: inline-block;">✨ Core Capabilities</span></summary>
 
 <div style="background: linear-gradient(135deg, #12151f 0%, #1d2230 100%); border-radius: 14px; padding: 22px; margin-top: 10px; border-left: 4px solid #6E78BF;">
 
@@ -152,7 +152,7 @@ flowchart LR
 </details>
 
 <details>
-<summary><strong style="font-size: 1.5em; font-weight: 700;">🎓 Key Concepts Behind This Framework</strong></summary>
+<summary><span style="font-size: 1.55rem; font-weight: 700; line-height: 1.25; display: inline-block;">🎓 Key Concepts Behind This Framework</span></summary>
 
 ### Local-First Knowledge Ingestion
 Files are processed **once** and stored locally. No repeated re-uploads. No cloud dependency. Your context lives with you.
@@ -189,7 +189,7 @@ Claude Desktop is not just calling an endpoint. It's wired into a purpose-built 
 </details>
 
 <details>
-<summary><strong style="font-size: 1.5em; font-weight: 700;">🛠️ Applications & Use Cases</strong></summary>
+<summary><span style="font-size: 1.55rem; font-weight: 700; line-height: 1.25; display: inline-block;">🛠️ Applications & Use Cases</span></summary>
 
 This framework is **designed to morph into your specific needs**. Here are common applications:
 
@@ -219,7 +219,7 @@ Index contracts, regulations, policies, case studies. Semantic search finds rele
 </details>
 
 <details open>
-<summary><strong style="font-size: 1.5em; font-weight: 700;">🚀 Quick Start</strong></summary>
+<summary><span style="font-size: 1.55rem; font-weight: 700; line-height: 1.25; display: inline-block;">🚀 Quick Start</span></summary>
 
 ### Prerequisites
 
@@ -279,7 +279,7 @@ npm run dev
 </details>
 
 <details open>
-<summary><strong style="font-size: 1.5em; font-weight: 700;">🤖 Claude MCP Integration</strong></summary>
+<summary><span style="font-size: 1.55rem; font-weight: 700; line-height: 1.25; display: inline-block;">🤖 Claude MCP Integration</span></summary>
 
 Your Second Brain is a native MCP server. Claude Desktop can retrieve, search, connect, and generate clips directly from your local workspace.
 
@@ -307,7 +307,7 @@ Restart Claude Desktop. Your Second Brain tools are now available in chat.
 </details>
 
 <details open>
-<summary><strong style="font-size: 1.5em; font-weight: 700;">🧩 Supported Content Types</strong></summary>
+<summary><span style="font-size: 1.55rem; font-weight: 700; line-height: 1.25; display: inline-block;">🧩 Supported Content Types</span></summary>
 
 | Category | Formats |
 |---|---|
@@ -318,7 +318,7 @@ Restart Claude Desktop. Your Second Brain tools are now available in chat.
 </details>
 
 <details open>
-<summary><strong style="font-size: 1.5em; font-weight: 700;">🛠️ Tech Stack</strong></summary>
+<summary><span style="font-size: 1.55rem; font-weight: 700; line-height: 1.25; display: inline-block;">🛠️ Tech Stack</span></summary>
 
 | Layer | Technology |
 |---|---|
@@ -334,7 +334,7 @@ Restart Claude Desktop. Your Second Brain tools are now available in chat.
 </details>
 
 <details open>
-<summary><strong style="font-size: 1.5em; font-weight: 700;">🗂️ Project Layout</strong></summary>
+<summary><span style="font-size: 1.55rem; font-weight: 700; line-height: 1.25; display: inline-block;">🗂️ Project Layout</span></summary>
 
 ```text
 yoursecondbrain/
@@ -359,7 +359,7 @@ yoursecondbrain/
 </details>
 
 <details open>
-<summary><strong style="font-size: 1.5em; font-weight: 700;">📄 License</strong></summary>
+<summary><span style="font-size: 1.55rem; font-weight: 700; line-height: 1.25; display: inline-block;">📄 License</span></summary>
 
 MIT
 
