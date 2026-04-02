@@ -2,7 +2,7 @@
 
 <img src="./Gradient%20lightning%20bolt%20design.png" alt="Your Second Brain" width="140" />
 
-# Your Second Brain: The First Multimodal Knowledge Visualisation & Semantic Retrieval Framework
+# Your Second Brain: The First Multimodal Knowledge Visualisation & Semantic RAG Framework
 
 <div align="center">
         <img src="https://readme-typing-svg.herokuapp.com?font=Share+Tech+Mono&size=24&duration=2800&pause=850&color=7A86C8&center=true&vCenter=true&width=1200&lines=Multimodal+Knowledge+Retrieval+Reimagined;Semantic+Search+Across+Multimodal+Inputs+-+Text%2C+Images%2C+Video%2C+and+Documents;Visualise+Relationships+Between+Ideas+As+An+Interactive+Nodal+Network;Ingest+Once%2C+Query+Forever+Without+Re-uploading+Context;Retrieve+Trimmed+Video+Clips+From+Natural+Language+Queries;Cross-Modal+Intelligence%3A+Find+Connections+Across+All+Content+Types" alt="Typing Animation" />
@@ -52,9 +52,11 @@
 
 ## 🎯 The Problem
 
-**Hitting your AI/API usage limits mid-conversation and losing context about everything is a problem you can't avoid...** Until now. You have a confusing dump of **files scattered everywhere**: PDFs, Word docs, images, videos, notes, etc. Every time you want to ask an AI a question or request about those files, you re-upload the same context, prompts, and files over and over again. Your scarce token budget bleeds away. You can't see how the files relate. You risk hallucinations and context rot with every message you send. You're trapped in a cycle of re-uploading, re-explaining, and re-sending.
+**Ever hit your AI/API usage limits mid-conversation, then have to start a new conversation and lose context about everything?** 
 
-**With "Your Second Brain", these will be problems of the past.**
+You have a confusing dump of **files scattered everywhere**: PDFs, Word docs, images, videos, notes, etc. Every time you want to ask an AI a question or request about those files, you re-upload the same context, prompts, and files over and over again. Your scarce token budget bleeds away. You can't see how the files relate. You risk hallucinations and context rot with every message you send. You're trapped in a cycle of re-uploading, re-explaining, and re-sending.
+
+**With "Your Second Brain", these problems are fixed through a centralised free, local-first multimodal knowledge visualisation & semantic RAG framework - installed, and ready to go in just a few minutes.**
 
 ## 💡 Core Idea
 
