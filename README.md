@@ -293,7 +293,7 @@ Open **http://127.0.0.1:8000** and confirm the app loads.
 Open **PowerShell as Administrator**, then run:
 
 ```powershell
-cd "$env:USERPROFILE\yoursecondbrain"
+cd "C:\Users\YOURWINDOWSUSERNAME\yoursecondbrain"
 powershell -NoProfile -ExecutionPolicy Bypass -File ".\scripts\create-startup-task.ps1"
 ```
 
