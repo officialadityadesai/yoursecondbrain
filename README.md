@@ -34,7 +34,7 @@
                         <img src="https://img.shields.io/badge/API-FastAPI-5B669E?style=for-the-badge&logo=fastapi&logoColor=white&labelColor=111827" alt="FastAPI" />
                 </a>
                 <a href="https://ffmpeg.org/">
-                        <img src="https://img.shields.io/badge/Video-FFmpeg%20Clipping-8665A7?style=for-the-badge&logo=ffmpeg&logoColor=white&labelColor=111827" alt="Video Clipping" />
+                        <img src="https://img.shields.io/badge/Video Clipping-FFmpeg-8665A7?style=for-the-badge&logo=ffmpeg&logoColor=white&labelColor=111827" alt="Video Clipping" />
                 </a>
         </p>
         <p>
