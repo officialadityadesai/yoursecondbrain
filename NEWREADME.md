@@ -141,12 +141,12 @@ flowchart LR
 - **🤝 Claude MCP Integration**: The app becomes your second brain. Claude is your voice - search by description, retrieve timestamp-precise clips, trace connections, and get grounded answers from your entire knowledge base in chat
 - **🔁 Self-Healing Enrichment**: On startup, the system backfills missing entities/transcripts for previously ingested files
 - **⚡ Token Optimization**: Intelligent chunking, context blending, and retrieval discipline to minimise token waste and limit usage
-- **🎬 Video-Aware Retrieval**: Transcript timestamps, semantic line matching, and dense-window clip selection produce evidence-precise playable clips
+- **🎬 Video Retrieval**: Automated transcript timestamps, semantic line matching, and allows you to retrieve trimmed clips from longer video uploads to find specific moments with natural language
 - **🔒 Private by Design**: Everything stays local - no re-uploading, no external indexing
 
 </div>
 
-This framework is adaptable across research, engineering docs, customer support, personal knowledge management, team collaboration, media analysis, and compliance-heavy workflows where persistent multimodal retrieval and explainable evidence matter.
+This framework is adaptable across business IP, SOPs, research, studying, customer support, personal knowledge management, team collaboration, media analysis, and compliance-heavy workflows where persistent multimodal retrieval and explainable evidence matter.
 
 ### 🧩 Additional Power Features Already In The App
 
