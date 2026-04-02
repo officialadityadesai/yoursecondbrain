@@ -321,10 +321,17 @@ Your Second Brain is a native MCP server. Claude Desktop can retrieve, search, c
 
 ### Windows (Automated Setup)
 ```bash
+cd yoursecondbrain
 scripts\setup_mcp.bat
 ```
 
-Restart Claude Desktop. Your Second Brain tools are now available in chat.
+Restart Claude Desktop fully. 
+
+Check if the mcp server connected by asking Claude "Do you have access to my second brain mcp?".
+
+Your Second Brain is now available to talk to through Claude. 
+
+IMPORTANT: You can only use the Your Second Brain MCP through Claude Desktop, not claude.ai in your browser.
 
 ### What Claude Can Do via MCP
 
