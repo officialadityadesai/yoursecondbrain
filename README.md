@@ -55,25 +55,30 @@
 <details open>
 <summary><h2>🎯 The Problem</h2></summary>
 
-**Ever hit your AI usage limits mid-conversation and lose context about everything?** You have a confusing dump of **files scattered everywhere**: PDFs, Word docs, images, videos, notes, etc. Every time you want to ask an AI a question or request about them, you re-upload the same context and files over and over again.
+**Hitting your AI/API usage limits mid-conversation and losing context about everything is a problem you can't avoid...** 
+
+Until now.
+
+You have a confusing dump of **files scattered everywhere**: PDFs, Word docs, images, videos, notes, etc. Every time you want to ask an AI a question or request about those files, you re-upload the same context, prompts, and files over and over again.
 
 Your scarce token budget bleeds away. You can't see how the files relate. You risk hallucinations and context rot with every message you send. You're trapped in a cycle of re-uploading, re-explaining, and re-spending.
 
-**With "Your Second Brain", these will be problems of the distant past.**
+**With "Your Second Brain", these will be problems of the past.**
 
 </details>
 
 <details open>
 <summary><h2>💡 Core Idea</h2></summary>
 
-Upload your files **once**. The system:
-- **Centralises** them in a unified workspace
+**Upload your files once**. 
+The system:
+- **Centralises** them in a unified multimodal local vector database
 - **Understands** them semantically across all modalities (text, images, video, documents, etc)
 - **Visualises** relationships, ideas, and entities in an interactive nodal knowledge graph
 - **Retrieves** grounded answers and information only from your knowledge with neuron-level evidence
-- **Claude MCP Integration**: Claude is your voice — search by description, retrieve timestamp-precise clips, trace connections, and get grounded answers from your entire knowledge base in chat
+- **Integrates** with Claude MCP to find hidden information in files, retrieve trimmed timestamp-precise video clips, and get grounded answers from your knowledge base
 
-This is a generously advanced, free **framework** that you can adapt to your projects, workflows, product development, knowledge management, customer support, personal learning, and team collaboration initiatives.
+This is a generously feature-rich free **framework** that you can adapt to your projects, workflows, product development, knowledge management, customer support, personal learning, and team collaboration initiatives.
 
 </details>
 
@@ -126,10 +131,10 @@ flowchart LR
 
 **Process:**
 1. Upload files (documents, images, videos) once.
-2. System parses them, generates semantic embeddings, and extracts entities and topics.
-3. Everything is indexed and connected in a multimodal knowledge graph.
+2. System parses them, generates semantic embeddings, and extracts entities, topics, and ideas.
+3. Everything is indexed and connected in a multimodal nodal knowledge graph.
 4. Ask questions, and get answers grounded in your actual files with citations.
-5. Use Claude MCP to extend it into your AI workflows.
+5. Use Claude MCP to extend it into your current AI operations.
 
 </details>
 
@@ -138,14 +143,14 @@ flowchart LR
 
 <div style="background: linear-gradient(135deg, #12151f 0%, #1d2230 100%); border-radius: 14px; padding: 22px; margin-top: 10px; border-left: 4px solid #6E78BF;">
 
-- **🔄 Multimodal Ingestion**: Text, PDFs, Word docs, images, and videos — one unified pipeline
-- **🧠 Knowledge Graph Visualization**: See relationships between files and concepts in an interactive Obsidian-style graph
+- **🔄 Multimodal Ingestion**: Text, PDFs, Word docs, images, and videos - one unified pipeline
+- **🧠 Knowledge Graph Visualization**: See relationships between files and concepts in an interactive Obsidian-style nodal graph
 - **🔍 Semantic Retrieval**: Find relevant content by meaning, not just keywords, across all file types
-- **📝 Citation-Grounded Answers**: Chat interface returns answers with linked sources and confidence
-- **🤝 Claude MCP Integration**: Claude is your voice — search by description, retrieve timestamp-precise clips, trace connections, and get grounded answers from your entire knowledge base in chat
-- **⚡ Token Optimization**: Intelligent chunking, context blending, and retrieval discipline minimize token waste
+- **📝 Citation-Grounded Answers**: Chat interface returns answers with linked sources and citations
+- **🤝 Claude MCP Integration**: The app becomes your second brain. Claude is your voice - search by description, retrieve timestamp-precise clips, trace connections, and get grounded answers from your entire knowledge base in chat
+- **⚡ Token Optimization**: Intelligent chunking, context blending, and retrieval discipline to minimise token waste and limit usage
 - **🎬 Video-Aware Retrieval**: Transcript timestamps enable precise evidence and clip generation
-- **🔒 Private by Design**: Everything stays local — no re-uploading, no external indexing
+- **🔒 Private by Design**: Everything stays local - no re-uploading, no external indexing
 
 </div>
 
