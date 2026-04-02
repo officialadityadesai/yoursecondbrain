@@ -235,9 +235,8 @@ Goal: After all setup is over, you should be able to open **http://127.0.0.1:800
 1. Open PowerShell in the correct folder (normal PowerShell, not Admin for this step):
 
 ```powershell
-cd "$env:USERPROFILE"
 git clone https://github.com/officialadityadesai/yoursecondbrain.git
-cd .\yoursecondbrain
+cd yoursecondbrain
 ```
 
 Important: always run project commands from your repo folder (example: `C:\Users\YourName\yoursecondbrain`).
