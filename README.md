@@ -484,6 +484,30 @@ Restart Claude Desktop. Your Second Brain tools are now available in chat.
 - **Gemini mode**: Fast default local retrieval + generation path
 - **Connected Claude mode**: OAuth-connected Claude account support for chat responses inside the app
 
+### MCP-Only Advanced Query Features (Important)
+
+Advanced query orchestration features are available through **Claude Desktop + MCP tools**.
+
+This includes:
+- semantic video clip finding with auto-built watch links
+- holistic one-call retrieval (semantic + keyword + full-content + connected-topic)
+- deeper entity and relationship tracing workflows
+- tool-enforced source blocks and retrieval-grounded answer assembly
+
+The native in-app chat is still useful for fast Q&A and citations, but the full advanced query toolchain runs through MCP.
+
+To use these advanced features:
+1. Start the app backend and open `http://127.0.0.1:8000`.
+2. Run MCP setup once on Windows:
+
+```bash
+scripts\setup_mcp.bat
+```
+
+3. Fully quit and reopen Claude Desktop.
+4. Open a new Claude chat and confirm the tools icon is available.
+5. Ask queries there when you want clip generation, cross-mode retrieval orchestration, and advanced link tracing.
+
 **Example MCP Workflows:**
 - *"Search my knowledge base for documents about machine learning and show me how they connect"*
 - *"Find a clip from my video where someone discusses authentication, and timestamp it"*
