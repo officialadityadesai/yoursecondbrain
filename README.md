@@ -433,6 +433,57 @@ cd frontend
 npm run dev
 ```
 
+7. Optional: enable auto-start on login (so you do not run commands every time):
+
+```bash
+mkdir -p "$HOME/Library/LaunchAgents"
+cat > "$HOME/Library/LaunchAgents/com.yoursecondbrain.backend.plist" <<'PLIST'
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+        <key>Label</key>
+        <string>com.yoursecondbrain.backend</string>
+        <key>ProgramArguments</key>
+        <array>
+                <string>/bin/zsh</string>
+                <string>-lc</string>
+                <string>cd "$HOME/yoursecondbrain/backend"; source "$HOME/yoursecondbrain/.venv/bin/activate"; UVICORN_HOST=127.0.0.1 UVICORN_PORT=8000 python -m uvicorn main:app</string>
+        </array>
+        <key>RunAtLoad</key>
+        <true/>
+        <key>KeepAlive</key>
+        <true/>
+        <key>WorkingDirectory</key>
+        <string>$HOME/yoursecondbrain/backend</string>
+        <key>StandardOutPath</key>
+        <string>$HOME/yoursecondbrain/scripts/macos-backend.out.log</string>
+        <key>StandardErrorPath</key>
+        <string>$HOME/yoursecondbrain/scripts/macos-backend.err.log</string>
+</dict>
+</plist>
+PLIST
+
+launchctl bootout "gui/$(id -u)"/com.yoursecondbrain.backend 2>/dev/null || true
+launchctl bootstrap "gui/$(id -u)" "$HOME/Library/LaunchAgents/com.yoursecondbrain.backend.plist"
+launchctl enable "gui/$(id -u)"/com.yoursecondbrain.backend
+launchctl kickstart -k "gui/$(id -u)"/com.yoursecondbrain.backend
+```
+
+Verify auto-start service:
+
+```bash
+launchctl print "gui/$(id -u)/com.yoursecondbrain.backend" | grep state
+lsof -i :8000
+```
+
+To disable auto-start later:
+
+```bash
+launchctl bootout "gui/$(id -u)"/com.yoursecondbrain.backend
+rm "$HOME/Library/LaunchAgents/com.yoursecondbrain.backend.plist"
+```
+
 #### macOS troubleshooting (common issues)
 
 1. Error: `python3: command not found`
