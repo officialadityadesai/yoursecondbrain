@@ -169,7 +169,21 @@ PowerShell note: when running local scripts from the current folder, use the `./
 .\install.bat
 ```
 
-3. Add your Gemini API key:
+3. Verify frontend build exists:
+
+```powershell
+Test-Path ".\frontend\dist\index.html"
+```
+
+If it returns `False`, run:
+
+```powershell
+cd .\frontend
+npm run build
+cd ..
+```
+
+4. Add your Gemini API key:
 
 - Go to your `yoursecondbrain` folder.
 - Open `.env.example` in a text editor.
@@ -183,15 +197,18 @@ GEMINI_API_KEY=your_key_here
 - Save the file as `.env` in the same folder.
 - Delete the old `.env.example` file to avoid confusion.
 
-4. Start once now (quick check):
+5. Start once now (quick check):
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File ".\scripts\start-background.ps1"
 ```
 
+This starts the app for your current session only.
+For automatic start after future logins/reboots, complete Step 6 (scheduled task).
+
 Open **http://127.0.0.1:8000** and confirm the app loads.
 
-5. Enable auto-start on login (one-time, Admin PowerShell):
+6. Enable auto-start on login (one-time, Admin PowerShell):
 
 Open **PowerShell as Administrator**, then run:
 
@@ -206,7 +223,7 @@ Verify the scheduled task exists:
 Get-ScheduledTask -TaskName "MySecondBrain"
 ```
 
-6. Daily use:
+7. Daily use:
 
 - Log into Windows.
 - Wait a few seconds.
@@ -236,7 +253,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File ".\scripts\create-startup-ta
 
 Cause: task creation was run in a non-admin PowerShell window.
 
-Fix: reopen PowerShell as Administrator and rerun Step 5.
+Fix: reopen PowerShell as Administrator and rerun Step 6.
 
 3. Browser shows: `{"status":"frontend_not_built",...}`
 
