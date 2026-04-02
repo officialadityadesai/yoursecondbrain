@@ -20,7 +20,7 @@
                         <img src="https://img.shields.io/badge/Vector%20DB-LanceDB-58639B?style=for-the-badge&logo=databricks&logoColor=white&labelColor=111827" alt="LanceDB" />
                 </a>
                 <a href="https://docs.anthropic.com/en/docs/agents-and-tools/mcp">
-                        <img src="https://img.shields.io/badge/MCP-Claude%20MCP%20Integration-7B6AAE?style=for-the-badge&logo=anthropic&logoColor=white&labelColor=111827" alt="MCP Ready" />
+                        <img src="https://img.shields.io/badge/MCP-Claude%20Integration-7B6AAE?style=for-the-badge&logo=anthropic&logoColor=white&labelColor=111827" alt="MCP Ready" />
                 </a>
         </p>
         <p>
