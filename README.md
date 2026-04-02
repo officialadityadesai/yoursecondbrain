@@ -209,10 +209,10 @@ Open **http://127.0.0.1:8000** and confirm the app loads.
 
 6. Enable auto-start on login (one-time, Admin PowerShell):
 
-Open **PowerShell as Administrator**, then run:
+Open **PowerShell as Administrator**, then run (REMEMBER TO REPLACE ADI DESAI WITH YOUR WINDOWS USERNAME):
 
 ```powershell
-cd "$env:USERPROFILE\yoursecondbrain"
+cd "C:\Users\Adi Desai\yoursecondbrain"
 powershell -NoProfile -ExecutionPolicy Bypass -File ".\scripts\create-startup-task.ps1"
 ```
 
