@@ -658,5 +658,7 @@ MIT
 ---
 
 <div align="center" style="margin-top: 16px;">
-        <img src="https://img.shields.io/badge/Built%20for-Persistent%20AI%20Memory-6E78BF?style=for-the-badge&labelColor=111827" alt="Persistent AI Memory" />
+        <a href="https://www.instagram.com/officialadityadesai/">
+                <img src="https://img.shields.io/badge/Owner%20%26%20Creator-Aditya%20Desai-6E78BF?style=for-the-badge&logo=instagram&logoColor=white&labelColor=111827" alt="Owner and Creator: Aditya Desai" />
+        </a>
 </div>
