@@ -163,30 +163,25 @@ Important: always run project commands from your repo folder (example: `C:\Users
 
 2. Install backend/frontend dependencies and build frontend (one-time):
 
-```powershell
-install.bat
-```
-
-If you skipped `install.bat`, run this manually:
+PowerShell note: when running local scripts from the current folder, use the `./` or `.\` prefix.
 
 ```powershell
-cd .\frontend
-npm install
-npm run build
-cd ..
+.\install.bat
 ```
 
 3. Add your Gemini API key:
 
-```powershell
-Copy-Item .env.example .env
-```
-
-Then edit `.env` and set:
+- Go to your `yoursecondbrain` folder.
+- Open `.env.example` in a text editor.
+- Go to Google AI Studio and create/copy your Gemini API key (make sure your Google account profile is 18+).
+- Paste your key into the file as:
 
 ```env
 GEMINI_API_KEY=your_key_here
 ```
+
+- Save the file as `.env` in the same folder.
+- Delete the old `.env.example` file to avoid confusion.
 
 4. Start once now (quick check):
 
@@ -218,6 +213,11 @@ Get-ScheduledTask -TaskName "MySecondBrain"
 - Open **http://127.0.0.1:8000**.
 
 No manual `run.bat` should be needed for normal use.
+If you want to start it manually, run:
+
+```powershell
+.\run.bat
+```
 
 #### Windows troubleshooting (common issues)
 
@@ -263,6 +263,17 @@ Expected:
 
 - `Test-Path` returns `True`
 - port `8000` is in `Listen` state
+
+5. Error: `install.bat : The term 'install.bat' is not recognized...`
+
+Cause: in PowerShell, commands in the current directory are not executed unless prefixed.
+
+Fix:
+
+```powershell
+cd "$env:USERPROFILE\yoursecondbrain"
+.\install.bat
+```
 
 ### macOS
 ```bash
