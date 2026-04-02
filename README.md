@@ -339,32 +339,102 @@ cd "$env:USERPROFILE\yoursecondbrain"
 .\install.bat
 ```
 
-### macOS
+### macOS (Step-by-step)
+
+1. Open Terminal and clone the repo:
+
 ```bash
+cd "$HOME"
 git clone https://github.com/officialadityadesai/yoursecondbrain.git
 cd yoursecondbrain
+```
 
+2. Create and activate a virtual environment:
+
+```bash
 python3 -m venv .venv
 source .venv/bin/activate
+```
 
-pip install -r backend/requirements.txt
+3. Install backend dependencies:
 
+```bash
+python3 -m pip install -r backend/requirements.txt
+```
+
+4. Install frontend dependencies and build:
+
+```bash
 cd frontend
 npm install
 npm run build
 cd ..
-
-cp .env.example .env
-# add GEMINI_API_KEY=your_key_here
-
-cd backend
-uvicorn main:app --host 127.0.0.1 --port 8000
 ```
 
+5. Add your Gemini API key:
+
+```bash
+cp .env.example .env
+```
+
+Then edit `.env` and set:
+
+```env
+GEMINI_API_KEY=your_key_here
+```
+
+6. Start the backend:
+
+```bash
+cd backend
+python -m uvicorn main:app --host 127.0.0.1 --port 8000
+```
+
+Open **http://127.0.0.1:8000** and confirm the app loads.
+
 In a second terminal (optional frontend dev mode):
+
 ```bash
 cd frontend
 npm run dev
+```
+
+#### macOS troubleshooting (common issues)
+
+1. Error: `python3: command not found`
+
+Fix:
+
+```bash
+brew install python
+```
+
+2. Error: `node: command not found` or `npm: command not found`
+
+Fix:
+
+```bash
+brew install node
+```
+
+3. Browser shows: `{"status":"frontend_not_built",...}`
+
+Fix:
+
+```bash
+cd "$HOME/yoursecondbrain/frontend"
+npm install
+npm run build
+cd ..
+cd backend
+python -m uvicorn main:app --host 127.0.0.1 --port 8000
+```
+
+4. Optional health checks:
+
+```bash
+test -f ./frontend/dist/index.html && echo "frontend build exists"
+lsof -i :8000
 ```
 
 ## 🤖 Claude MCP Integration
