@@ -151,15 +151,14 @@ This framework is adaptable across research, engineering docs, customer support,
 
 Goal: after setup, open **http://127.0.0.1:8000** any time and the app should be running after Windows login, without manually running `run.bat`.
 
-1. Open PowerShell in the correct folder (normal PowerShell, not Admin for this step):
+1. Open PowerShell in the correct folder (Go to File Explorer, Click Local Disk c:, Click Users, then double click your windows username. Mine is "Adi Desai". That's where you should be in your terminal, which is usually where you are on default):
 
 ```powershell
-cd "$env:USERPROFILE"
 git clone https://github.com/officialadityadesai/yoursecondbrain.git
-cd .\yoursecondbrain
+cd yoursecondbrain
 ```
 
-Important: always run project commands from your repo folder (example: `C:\Users\YourName\yoursecondbrain`).
+Important: always run project commands from your repo folder (example: `C:\Users\Adi Desai\yoursecondbrain`).
 
 2. Install backend/frontend dependencies and build frontend (one-time):
 
