@@ -50,8 +50,6 @@
         <div style="width: 100%; height: 2px; margin: 24px 0; background: linear-gradient(90deg, transparent, #6E78BF, transparent);"></div>
 </div>
 
-<div style="font-size: 0.96em; line-height: 1.58;">
-
 ## 🎯 The Problem
 
 **Hitting your AI/API usage limits mid-conversation and losing context about everything is a problem you can't avoid...** Until now. You have a confusing dump of **files scattered everywhere**: PDFs, Word docs, images, videos, notes, etc. Every time you want to ask an AI a question or request about those files, you re-upload the same context, prompts, and files over and over again. Your scarce token budget bleeds away. You can't see how the files relate. You risk hallucinations and context rot with every message you send. You're trapped in a cycle of re-uploading, re-explaining, and re-sending.
@@ -149,54 +147,72 @@ This framework is adaptable across research, engineering docs, customer support,
 - Gemini API key: https://aistudio.google.com/app/apikey
 - FFmpeg available on PATH (required for video clipping)
 
-### Windows (Thorough Step-by-Step: one-time setup + always-on URL)
+### Windows (Step-by-step setup + auto-start on login)
 
 Goal: after setup, open **http://127.0.0.1:8000** any time and the app should be running after Windows login, without manually running `run.bat`.
 
-#### Step 1) Open PowerShell in the correct folder
-Use a normal PowerShell window for setup.
+1. Open PowerShell in the correct folder (normal PowerShell, not Admin for this step):
 
 ```powershell
-cd "C:\Users\Adi Desai" (REMEMBER TO REPLACE "Adi Desai" WITH YOUR OWN WINDOWS USERNAME)
+cd "$env:USERPROFILE"
 git clone https://github.com/officialadityadesai/yoursecondbrain.git
-cd yoursecondbrain
+cd .\yoursecondbrain
 ```
 
-Important: always run project commands from `C:\Users\Adi Desai\yoursecondbrain` (REMEMBER TO REPLACE "Adi Desai" WITH YOUR OWN WINDOWS USERNAME).
+Important: always run project commands from your repo folder (example: `C:\Users\YourName\yoursecondbrain`).
 
-#### Step 2) Set up environment variables and install dependencies
+2. Install backend/frontend dependencies and build frontend (one-time):
 
-1. Navigate to your project folder `yoursecondbrain`.
-2. Copy the `.env.example` file to the same folder.
-3. Open the copied file (`.env.example`) in a text editor.
-4. Paste your API key from [Google AI Studio](https://ai.google.com/studio) (make sure your Google account is **18+**).
-5. Save the file as `.env`.
-6. Delete the old `.env.example` file to avoid confusion.
-7. Install backend/frontend dependencies and build the frontend by running:
+```powershell
+install.bat
 ```
 
+If you skipped `install.bat`, run this manually:
+
+```powershell
+cd .\frontend
+npm install
+npm run build
+cd ..
 ```
-#### Step 4) Start once now (important check)
+
+3. Add your Gemini API key:
+
+```powershell
+Copy-Item .env.example .env
+```
+
+Then edit `.env` and set:
+
+```env
+GEMINI_API_KEY=your_key_here
+```
+
+4. Start once now (quick check):
+
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File ".\scripts\start-background.ps1"
 ```
 
 Open **http://127.0.0.1:8000** and confirm the app loads.
 
-#### Step 5) Enable auto-start on login (one-time, Admin PowerShell)
+5. Enable auto-start on login (one-time, Admin PowerShell):
+
 Open **PowerShell as Administrator**, then run:
 
 ```powershell
-cd "C:\Users\Adi Desai\yoursecondbrain"
+cd "$env:USERPROFILE\yoursecondbrain"
 powershell -NoProfile -ExecutionPolicy Bypass -File ".\scripts\create-startup-task.ps1"
 ```
 
-Verify the task exists:
+Verify the scheduled task exists:
+
 ```powershell
 Get-ScheduledTask -TaskName "MySecondBrain"
 ```
 
-#### Step 6) Daily use
+6. Daily use:
+
 - Log into Windows.
 - Wait a few seconds.
 - Open **http://127.0.0.1:8000**.
@@ -205,36 +221,46 @@ No manual `run.bat` should be needed for normal use.
 
 #### Windows troubleshooting (common issues)
 
-1) Error: `The argument 'scripts\create-startup-task.ps1' ... does not exist`
-- Cause: running command from the wrong folder (for example `C:\Windows\System32`).
-- Fix:
+1. Error: `The argument 'scripts\create-startup-task.ps1' ... does not exist`
+
+Cause: you ran the command from the wrong folder (for example `C:\Windows\System32`).
+
+Fix:
+
 ```powershell
-cd "C:\Users\Adi Desai\yoursecondbrain"
+cd "$env:USERPROFILE\yoursecondbrain"
 powershell -NoProfile -ExecutionPolicy Bypass -File ".\scripts\create-startup-task.ps1"
 ```
 
-2) Error: `Register-ScheduledTask : Access is denied`
-- Cause: task creation was run in non-admin PowerShell.
-- Fix: reopen PowerShell as Administrator and rerun Step 5.
+2. Error: `Register-ScheduledTask : Access is denied`
 
-3) Browser shows: `{"status":"frontend_not_built",...}`
-- Cause: frontend build files are missing.
-- Fix:
+Cause: task creation was run in a non-admin PowerShell window.
+
+Fix: reopen PowerShell as Administrator and rerun Step 5.
+
+3. Browser shows: `{"status":"frontend_not_built",...}`
+
+Cause: frontend build files are missing.
+
+Fix:
+
 ```powershell
-cd "C:\Users\Adi Desai\yoursecondbrain\frontend"
+cd "$env:USERPROFILE\yoursecondbrain\frontend"
 npm install
 npm run build
 cd ..
 powershell -NoProfile -ExecutionPolicy Bypass -File ".\scripts\start-background.ps1"
 ```
 
-4) Optional health checks
+4. Optional health checks:
+
 ```powershell
 Test-Path ".\frontend\dist\index.html"
 Get-NetTCPConnection -LocalPort 8000 -State Listen
 ```
 
 Expected:
+
 - `Test-Path` returns `True`
 - port `8000` is in `Listen` state
 
@@ -337,8 +363,6 @@ yoursecondbrain/
 ## 📄 License
 
 MIT
-
-</div>
 
 ---
 
