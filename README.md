@@ -257,7 +257,7 @@ Cause: frontend build files are missing.
 Fix:
 
 ```powershell
-cd "$env:USERPROFILE\yoursecondbrain\frontend"
+cd yoursecondbrain\frontend
 npm install
 npm run build
 cd ..
@@ -283,7 +283,7 @@ Cause: in PowerShell, commands in the current directory are not executed unless 
 Fix:
 
 ```powershell
-cd "$env:USERPROFILE\yoursecondbrain"
+cd yoursecondbrain
 .\install.bat
 ```
 
