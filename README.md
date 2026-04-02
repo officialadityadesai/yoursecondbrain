@@ -52,8 +52,7 @@
 
 <div style="font-size: 0.96em; line-height: 1.58;">
 
-<details open>
-<summary><h2>🎯 The Problem</h2></summary>
+## 🎯 The Problem
 
 **Hitting your AI/API usage limits mid-conversation and losing context about everything is a problem you can't avoid...** 
 
@@ -65,10 +64,7 @@ Your scarce token budget bleeds away. You can't see how the files relate. You ri
 
 **With "Your Second Brain", these will be problems of the past.**
 
-</details>
-
-<details open>
-<summary><h2>💡 Core Idea</h2></summary>
+## 💡 Core Idea
 
 **Upload your files once**. 
 The system:
@@ -80,10 +76,41 @@ The system:
 
 This is a generously feature-rich free **framework** that you can adapt to your projects, workflows, product development, knowledge management, customer support, personal learning, and team collaboration initiatives.
 
-</details>
+### 🎓 Key Concepts Behind This Framework
 
-<details open>
-<summary><h2>🏗️ How It Works</h2></summary>
+#### Local-First Knowledge Ingestion
+Files are processed **once** and stored locally. No repeated re-uploads. No cloud dependency. Your context lives with you.
+
+#### Multimodal Semantic Space
+All content — whether text, image, or video — is projected into a unified embedding space through the Gemini Embedding 2 model.
+This means:
+- Images are searchable by meaning, not just filename
+- Videos are indexed by scene and transcript
+- Cross-modal queries work (e.g., "find documents related to this image")
+
+#### Knowledge Graph as Sensemaking Tool
+Beyond search, the graph visualizes:
+- **Document-to-document relationships** (shared topics, entities, citations)
+- **Entity-based connections** (people, organizations, tools mentioned across files)
+- **Semantic similarity clusters** (conceptually related content)
+
+This is **not decorative** — it's a first-class retrieval UX for exploration before you even formulate a query.
+
+#### Context Management & Token Efficiency
+The system is optimized to reduce token consumption without sacrificing answer quality:
+- **Adaptive chunking**: Documents are split with overlap for resilience
+- **Relevance-ranked retrieval**: Only top matches are included in the prompt
+- **Context blending**: Upload labels and metadata are merged to improve semantic grounding
+- **Prompt assembly**: The system assembles minimal sufficient context, not maximal
+
+#### Claude MCP as Native Memory Interface
+Claude Desktop is not just calling an endpoint. It's wired into a purpose-built memory stack with:
+- **Source-disciplined responses**: Claude knows where evidence comes from
+- **Retrieval orchestration**: Multiple search strategies (semantic, keyword, graph) work together
+- **Video clip generation**: Semantic queries can directly produce timestamp-precise clips
+- **Connection tracing**: Explore entity relationships and document networks from chat
+
+## 🏗️ How It Works
 
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#1F2535', 'primaryTextColor': '#D7DBF4', 'primaryBorderColor': '#6E78BF', 'lineColor': '#7E6FAF', 'secondaryColor': '#181C27', 'tertiaryColor': '#12151C', 'background': '#0B0D12'}}}%%
@@ -136,10 +163,7 @@ flowchart LR
 4. Ask questions, and get answers grounded in your actual files with citations.
 5. Use Claude MCP to extend it into your current AI operations.
 
-</details>
-
-<details open>
-<summary><h2>✨ Core Capabilities</h2></summary>
+## ✨ Core Capabilities
 
 <div style="background: linear-gradient(135deg, #12151f 0%, #1d2230 100%); border-radius: 14px; padding: 22px; margin-top: 10px; border-left: 4px solid #6E78BF;">
 
@@ -154,47 +178,7 @@ flowchart LR
 
 </div>
 
-</details>
-
-<details>
-<summary><h2>🎓 Key Concepts Behind This Framework</h2></summary>
-
-### Local-First Knowledge Ingestion
-Files are processed **once** and stored locally. No repeated re-uploads. No cloud dependency. Your context lives with you.
-
-### Multimodal Semantic Space
-All content — whether text, image, or video — is projected into a unified embedding space through the Gemini Embedding 2 model.
-This means:
-- Images are searchable by meaning, not just filename
-- Videos are indexed by scene and transcript
-- Cross-modal queries work (e.g., "find documents related to this image")
-
-### Knowledge Graph as Sensemaking Tool
-Beyond search, the graph visualizes:
-- **Document-to-document relationships** (shared topics, entities, citations)
-- **Entity-based connections** (people, organizations, tools mentioned across files)
-- **Semantic similarity clusters** (conceptually related content)
-
-This is **not decorative** — it's a first-class retrieval UX for exploration before you even formulate a query.
-
-### Context Management & Token Efficiency
-The system is optimized to reduce token consumption without sacrificing answer quality:
-- **Adaptive chunking**: Documents are split with overlap for resilience
-- **Relevance-ranked retrieval**: Only top matches are included in the prompt
-- **Context blending**: Upload labels and metadata are merged to improve semantic grounding
-- **Prompt assembly**: The system assembles minimal sufficient context, not maximal
-
-### Claude MCP as Native Memory Interface
-Claude Desktop is not just calling an endpoint. It's wired into a purpose-built memory stack with:
-- **Source-disciplined responses**: Claude knows where evidence comes from
-- **Retrieval orchestration**: Multiple search strategies (semantic, keyword, graph) work together
-- **Video clip generation**: Semantic queries can directly produce timestamp-precise clips
-- **Connection tracing**: Explore entity relationships and document networks from chat
-
-</details>
-
-<details>
-<summary><h2>🛠️ Applications & Use Cases</h2></summary>
+### 🛠️ Applications & Use Cases
 
 This framework is **designed to morph into your specific needs**. Here are common applications:
 
@@ -221,10 +205,7 @@ Index contracts, regulations, policies, case studies. Semantic search finds rele
 
 **The pattern**: Any domain with scattered, multimodal information + a need for persistent, grounded retrieval fits this framework. Customize the UI, adjust chunking strategies, extend the MCP tools — it adapts.
 
-</details>
-
-<details open>
-<summary><h2>🚀 Quick Start</h2></summary>
+## 🚀 Quick Start
 
 ### Prerequisites
 
@@ -281,10 +262,7 @@ cd frontend
 npm run dev
 ```
 
-</details>
-
-<details open>
-<summary><h2>🤖 Claude MCP Integration</h2></summary>
+## 🤖 Claude MCP Integration
 
 Your Second Brain is a native MCP server. Claude Desktop can retrieve, search, connect, and generate clips directly from your local workspace.
 
@@ -309,10 +287,7 @@ Restart Claude Desktop. Your Second Brain tools are now available in chat.
 - *"What are the main entities mentioned across my research files, and which are most connected?"*
 - *"Retrieve the top 3 documents relevant to this question and cite them in your answer"*
 
-</details>
-
-<details open>
-<summary><h2>🧩 Supported Content Types</h2></summary>
+## 🧩 Supported Content Types
 
 | Category | Formats |
 |---|---|
@@ -320,10 +295,7 @@ Restart Claude Desktop. Your Second Brain tools are now available in chat.
 | Images | .png .jpg .jpeg .webp |
 | Videos | .mp4 .mov .avi .mkv |
 
-</details>
-
-<details open>
-<summary><h2>🛠️ Tech Stack</h2></summary>
+## 🛠️ Tech Stack
 
 | Layer | Technology |
 |---|---|
@@ -336,10 +308,7 @@ Restart Claude Desktop. Your Second Brain tools are now available in chat.
 | Graph Engine | react-force-graph-2d |
 | MCP Server | mcp + FastMCP |
 
-</details>
-
-<details open>
-<summary><h2>🗂️ Project Layout</h2></summary>
+## 🗂️ Project Layout
 
 ```text
 yoursecondbrain/
@@ -361,14 +330,9 @@ yoursecondbrain/
 └── run.bat
 ```
 
-</details>
-
-<details open>
-<summary><h2>📄 License</h2></summary>
+## 📄 License
 
 MIT
-
-</details>
 
 </div>
 
