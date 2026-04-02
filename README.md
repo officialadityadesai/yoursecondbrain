@@ -149,25 +149,105 @@ This framework is adaptable across research, engineering docs, customer support,
 - Gemini API key: https://aistudio.google.com/app/apikey
 - FFmpeg available on PATH (required for video clipping)
 
-### Windows
-```bash
+### Windows (Thorough Step-by-Step: one-time setup + always-on URL)
+
+Goal: after setup, open **http://127.0.0.1:8000** any time and the app should be running after Windows login, without manually running `run.bat`.
+
+#### Step 1) Open PowerShell in the correct folder
+Use a normal PowerShell window for setup.
+
+```powershell
+cd "C:\Users\Adi Desai"
 git clone https://github.com/officialadityadesai/yoursecondbrain.git
-cd yoursecondbrain
+cd .\yoursecondbrain
+```
 
+Important: always run project commands from `C:\Users\Adi Desai\yoursecondbrain`.
+
+#### Step 2) Install backend/frontend dependencies and build frontend (one-time)
+```powershell
 install.bat
+```
 
+If you skipped `install.bat`, run this manually:
+```powershell
+cd .\frontend
+npm install
+npm run build
+cd ..
+```
+
+#### Step 3) Add your Gemini API key
+```powershell
 copy .env.example .env
-# add GEMINI_API_KEY=your_key_here
-
-run.bat
 ```
 
-Open http://127.0.0.1:8000
-
-Optional startup automation:
-```bash
-powershell -ExecutionPolicy Bypass -File scripts\create-startup-task.ps1
+Then edit `.env` and set:
+```env
+GEMINI_API_KEY=your_key_here
 ```
+
+#### Step 4) Start once now (quick check)
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File ".\scripts\start-background.ps1"
+```
+
+Open **http://127.0.0.1:8000** and confirm the app loads.
+
+#### Step 5) Enable auto-start on login (one-time, Admin PowerShell)
+Open **PowerShell as Administrator**, then run:
+
+```powershell
+cd "C:\Users\Adi Desai\yoursecondbrain"
+powershell -NoProfile -ExecutionPolicy Bypass -File ".\scripts\create-startup-task.ps1"
+```
+
+Verify the task exists:
+```powershell
+Get-ScheduledTask -TaskName "MySecondBrain"
+```
+
+#### Step 6) Daily use
+- Log into Windows.
+- Wait a few seconds.
+- Open **http://127.0.0.1:8000**.
+
+No manual `run.bat` should be needed for normal use.
+
+#### Windows troubleshooting (common issues)
+
+1) Error: `The argument 'scripts\create-startup-task.ps1' ... does not exist`
+- Cause: running command from the wrong folder (for example `C:\Windows\System32`).
+- Fix:
+```powershell
+cd "C:\Users\Adi Desai\yoursecondbrain"
+powershell -NoProfile -ExecutionPolicy Bypass -File ".\scripts\create-startup-task.ps1"
+```
+
+2) Error: `Register-ScheduledTask : Access is denied`
+- Cause: task creation was run in non-admin PowerShell.
+- Fix: reopen PowerShell as Administrator and rerun Step 5.
+
+3) Browser shows: `{"status":"frontend_not_built",...}`
+- Cause: frontend build files are missing.
+- Fix:
+```powershell
+cd "C:\Users\Adi Desai\yoursecondbrain\frontend"
+npm install
+npm run build
+cd ..
+powershell -NoProfile -ExecutionPolicy Bypass -File ".\scripts\start-background.ps1"
+```
+
+4) Optional health checks
+```powershell
+Test-Path ".\frontend\dist\index.html"
+Get-NetTCPConnection -LocalPort 8000 -State Listen
+```
+
+Expected:
+- `Test-Path` returns `True`
+- port `8000` is in `Listen` state
 
 ### macOS
 ```bash
