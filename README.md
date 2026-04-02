@@ -156,6 +156,20 @@ This framework is adaptable across business IP, SOPs, research, studying, custom
 - **Rich multimodal preview layer**: PDF, DOCX (HTML conversion), image, and video previews in a single modal workspace
 - **Evidence explorer UX**: citations open source previews with highlighted quotes for rapid verification
 
+### ⚠️ Important: Where Advanced Query Features Run
+
+The most advanced query capabilities run through **Claude Desktop + MCP tools**, not the default native Gemini chat pane.
+
+MCP-only advanced workflows include:
+- semantic video clip finding with auto-generated watch links
+- holistic one-call retrieval across semantic, keyword, full-content, and connected-topic paths
+- deeper entity and relationship tracing workflows with tool-level source discipline
+
+What users need to do:
+1. Start the app backend and open `http://127.0.0.1:8000`.
+2. Run `scripts\setup_mcp.bat` once.
+3. Fully quit and reopen Claude Desktop, then use tools-enabled chats for advanced retrieval flows.
+
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -483,30 +497,6 @@ Restart Claude Desktop. Your Second Brain tools are now available in chat.
 
 - **Gemini mode**: Fast default local retrieval + generation path
 - **Connected Claude mode**: OAuth-connected Claude account support for chat responses inside the app
-
-### MCP-Only Advanced Query Features (Important)
-
-Advanced query orchestration features are available through **Claude Desktop + MCP tools**.
-
-This includes:
-- semantic video clip finding with auto-built watch links
-- holistic one-call retrieval (semantic + keyword + full-content + connected-topic)
-- deeper entity and relationship tracing workflows
-- tool-enforced source blocks and retrieval-grounded answer assembly
-
-The native in-app chat is still useful for fast Q&A and citations, but the full advanced query toolchain runs through MCP.
-
-To use these advanced features:
-1. Start the app backend and open `http://127.0.0.1:8000`.
-2. Run MCP setup once on Windows:
-
-```bash
-scripts\setup_mcp.bat
-```
-
-3. Fully quit and reopen Claude Desktop.
-4. Open a new Claude chat and confirm the tools icon is available.
-5. Ask queries there when you want clip generation, cross-mode retrieval orchestration, and advanced link tracing.
 
 **Example MCP Workflows:**
 - *"Search my knowledge base for documents about machine learning and show me how they connect"*
