@@ -147,22 +147,70 @@ This framework is adaptable across research, engineering docs, customer support,
 - Gemini API key: https://aistudio.google.com/app/apikey
 - FFmpeg available on PATH (required for video clipping)
 
+If you do not have these installed yet, use the quick setup below.
+
+### Install prerequisites (Windows)
+
+1. Install Python 3.10+:
+        - Download from: https://www.python.org/downloads/windows/
+        - During install, tick **Add Python to PATH**.
+
+2. Install Node.js 18+:
+        - Download LTS from: https://nodejs.org/en/download
+
+3. Install FFmpeg (for video clip generation):
+        - Easiest: install via winget in PowerShell:
+
+```powershell
+winget install Gyan.FFmpeg
+```
+
+4. Restart PowerShell, then verify:
+
+```powershell
+python --version
+node --version
+ffmpeg -version
+```
+
+### Install prerequisites (macOS)
+
+1. Install Homebrew (if not already installed):
+        - https://brew.sh
+
+2. Install Python, Node.js, and FFmpeg:
+
+```bash
+brew install python node ffmpeg
+```
+
+3. Verify installation:
+
+```bash
+python3 --version
+node --version
+ffmpeg -version
+```
+
+If any command is not found, close and reopen Terminal and run the verify commands again.
+
 ### Windows (Step-by-step setup + auto-start on login)
 
 Goal: after setup, open **http://127.0.0.1:8000** any time and the app should be running after Windows login, without manually running `run.bat`.
 
-1. Open PowerShell in the correct folder (Go to File Explorer, Click "Local Disk C:", Click "Users", then double click your windows username. Mine is "Adi Desai". That's where you should be in your terminal - which is usually where you are on default):
+1. Open PowerShell in the correct folder (normal PowerShell, not Admin for this step):
 
 ```powershell
+cd "$env:USERPROFILE"
 git clone https://github.com/officialadityadesai/yoursecondbrain.git
-cd yoursecondbrain
+cd .\yoursecondbrain
 ```
 
-Important: always run project commands from your repo folder (example: `C:\Users\Adi Desai\yoursecondbrain`).
+Important: always run project commands from your repo folder (example: `C:\Users\YourName\yoursecondbrain`).
 
 2. Install backend/frontend dependencies and build frontend (one-time):
 
-PowerShell note: when running local scripts from the current folder, use the `.\` prefix.
+PowerShell note: when running local scripts from the current folder, use the `./` or `.\` prefix.
 
 ```powershell
 .\install.bat
@@ -209,10 +257,10 @@ Open **http://127.0.0.1:8000** and confirm the app loads.
 
 6. Enable auto-start on login (one-time, Admin PowerShell):
 
-Open **PowerShell as Administrator**, then run (REMEMBER TO REPLACE ADI DESAI WITH YOUR WINDOWS USERNAME):
+Open **PowerShell as Administrator**, then run:
 
 ```powershell
-cd "C:\Users\Adi Desai\yoursecondbrain"
+cd "$env:USERPROFILE\yoursecondbrain"
 powershell -NoProfile -ExecutionPolicy Bypass -File ".\scripts\create-startup-task.ps1"
 ```
 
@@ -222,10 +270,14 @@ Verify the scheduled task exists:
 Get-ScheduledTask -TaskName "MySecondBrain"
 ```
 
-Now, you can just open **http://127.0.0.1:8000** whenever you want to use the app.
+7. Daily use:
 
-No manual `run.bat` will be needed for normal use anymore.
-If you want to start it manually, run this in your project directly in your terminal:
+- Log into Windows.
+- Wait a few seconds.
+- Open **http://127.0.0.1:8000**.
+
+No manual `run.bat` should be needed for normal use.
+If you want to start it manually, run:
 
 ```powershell
 .\run.bat
@@ -257,7 +309,7 @@ Cause: frontend build files are missing.
 Fix:
 
 ```powershell
-cd yoursecondbrain\frontend
+cd "$env:USERPROFILE\yoursecondbrain\frontend"
 npm install
 npm run build
 cd ..
@@ -283,7 +335,7 @@ Cause: in PowerShell, commands in the current directory are not executed unless 
 Fix:
 
 ```powershell
-cd yoursecondbrain
+cd "$env:USERPROFILE\yoursecondbrain"
 .\install.bat
 ```
 
@@ -321,17 +373,10 @@ Your Second Brain is a native MCP server. Claude Desktop can retrieve, search, c
 
 ### Windows (Automated Setup)
 ```bash
-cd yoursecondbrain
 scripts\setup_mcp.bat
 ```
 
-Restart Claude Desktop fully. 
-
-Check if the mcp server connected by asking Claude "Do you have access to my second brain mcp?".
-
-Your Second Brain is now available to talk to through Claude. 
-
-IMPORTANT: You can only use the Your Second Brain MCP through Claude Desktop, not claude.ai in your browser.
+Restart Claude Desktop. Your Second Brain tools are now available in chat.
 
 ### What Claude Can Do via MCP
 
