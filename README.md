@@ -157,37 +157,26 @@ Goal: after setup, open **http://127.0.0.1:8000** any time and the app should be
 Use a normal PowerShell window for setup.
 
 ```powershell
-cd "C:\Users\Adi Desai"
+cd "C:\Users\Adi Desai" (REMEMBER TO REPLACE "Adi Desai" WITH YOUR OWN WINDOWS USERNAME)
 git clone https://github.com/officialadityadesai/yoursecondbrain.git
-cd .\yoursecondbrain
+cd yoursecondbrain
 ```
 
-Important: always run project commands from `C:\Users\Adi Desai\yoursecondbrain`.
+Important: always run project commands from `C:\Users\Adi Desai\yoursecondbrain` (REMEMBER TO REPLACE "Adi Desai" WITH YOUR OWN WINDOWS USERNAME).
 
-#### Step 2) Install backend/frontend dependencies and build frontend (one-time)
-```powershell
-install.bat
+#### Step 2) Set up environment variables and install dependencies
+
+1. Navigate to your project folder `yoursecondbrain`.
+2. Copy the `.env.example` file to the same folder.
+3. Open the copied file (`.env.example`) in a text editor.
+4. Paste your API key from [Google AI Studio](https://ai.google.com/studio) (make sure your Google account is **18+**).
+5. Save the file as `.env`.
+6. Delete the old `.env.example` file to avoid confusion.
+7. Install backend/frontend dependencies and build the frontend by running:
 ```
 
-If you skipped `install.bat`, run this manually:
-```powershell
-cd .\frontend
-npm install
-npm run build
-cd ..
 ```
-
-#### Step 3) Add your Gemini API key
-```powershell
-copy .env.example .env
-```
-
-Then edit `.env` and set:
-```env
-GEMINI_API_KEY=your_key_here
-```
-
-#### Step 4) Start once now (quick check)
+#### Step 4) Start once now (important check)
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File ".\scripts\start-background.ps1"
 ```
