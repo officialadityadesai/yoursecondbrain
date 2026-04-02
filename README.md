@@ -169,7 +169,7 @@ What users need to do:
 1. Start the app backend and open `http://127.0.0.1:8000`.
 2. Set up MCP based on your OS:
         - **Windows**: run `scripts\setup_mcp.bat` once.
-        - **macOS**: add a manual MCP server entry in Claude Desktop config (see MCP section below).
+        - **macOS**: add a manual MCP server entry in Claude Desktop config (see MCP section by scrolling down).
 3. Fully quit and reopen Claude Desktop, then use tools-enabled chats for advanced retrieval flows.
 
 ## 🚀 Quick Start
@@ -230,7 +230,7 @@ If any command is not found, close and reopen Terminal and run the verify comman
 
 ### Windows (Step-by-step setup + auto-start on login)
 
-Goal: after setup, open **http://127.0.0.1:8000** any time and the app should be running after Windows login, without manually running `run.bat`.
+Goal: After all setup is over, you should be able to open **http://127.0.0.1:8000** any time and the app should be running after login, without manually running `run.bat` every time.
 
 1. Open PowerShell in the correct folder (normal PowerShell, not Admin for this step):
 
