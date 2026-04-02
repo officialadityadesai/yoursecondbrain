@@ -2,7 +2,7 @@
 
 <img src="./Gradient%20lightning%20bolt%20design.png" alt="Your Second Brain" width="140" />
 
-# Your Second Brain: The First Multimodal Knowledge Visualisation & Semantic RAG Framework
+# Your Second Brain: The First Multimodal Knowledge Visualisation & Semantic Retrieval Framework
 
 <div align="center">
         <img src="https://readme-typing-svg.herokuapp.com?font=Share+Tech+Mono&size=24&duration=2800&pause=850&color=7A86C8&center=true&vCenter=true&width=1200&lines=Multimodal+Knowledge+Retrieval+Reimagined;Semantic+Search+Across+Multimodal+Inputs+-+Text%2C+Images%2C+Video%2C+and+Documents;Visualise+Relationships+Between+Ideas+As+An+Interactive+Nodal+Network;Ingest+Once%2C+Query+Forever+Without+Re-uploading+Context;Retrieve+Trimmed+Video+Clips+From+Natural+Language+Queries;Cross-Modal+Intelligence%3A+Find+Connections+Across+All+Content+Types" alt="Typing Animation" />
@@ -11,35 +11,35 @@
 <div style="background: linear-gradient(135deg, #0b0d12 0%, #161b25 50%, #1e2432 100%); border-radius: 14px; padding: 18px; margin: 18px auto; max-width: 980px; border: 1px solid rgba(122, 134, 200, 0.38); box-shadow: 0 0 24px rgba(89, 102, 171, 0.18);">
         <p>
                 <a href="https://github.com/officialadityadesai/yoursecondbrain/tree/main">
-                        <img src="https://img.shields.io/badge/Mode-Local-4A568F?style=for-the-badge&logo=icloud&logoColor=white&labelColor=111827" alt="Local First" />
+                        <img src="https://img.shields.io/badge/Mode-Local-6D77BA?style=for-the-badge&logo=icloud&logoColor=white&labelColor=111827" alt="Local First" />
                 </a>
                 <a href="https://ai.google.dev/gemini-api/docs/embeddings">
                         <img src="https://img.shields.io/badge/Embeddings-Gemini%20Embedding%202-6D77BA?style=for-the-badge&logo=google&logoColor=white&labelColor=111827" alt="Embeddings" />
                 </a>
                 <a href="https://lancedb.com">
-                        <img src="https://img.shields.io/badge/Vector%20DB-LanceDB-58639B?style=for-the-badge&logo=databricks&logoColor=white&labelColor=111827" alt="LanceDB" />
+                        <img src="https://img.shields.io/badge/Vector%20DB-LanceDB-6D77BA?style=for-the-badge&logo=databricks&logoColor=white&labelColor=111827" alt="LanceDB" />
                 </a>
         </p>
         <p>
                 <a href="https://www.python.org/downloads/">
-                        <img src="https://img.shields.io/badge/Python-3.10%2B-4F5B8F?style=for-the-badge&logo=python&logoColor=white&labelColor=111827" alt="Python" />
+                        <img src="https://img.shields.io/badge/Python-3.10%2B-6D77BA?style=for-the-badge&logo=python&logoColor=white&labelColor=111827" alt="Python" />
                 </a>
                 <a href="https://vite.dev/">
-                        <img src="https://img.shields.io/badge/Frontend-React%2019%20%2B%20Vite-636FB2?style=for-the-badge&logo=react&logoColor=white&labelColor=111827" alt="Frontend" />
+                        <img src="https://img.shields.io/badge/Frontend-React%2019%20%2B%20Vite-6D77BA?style=for-the-badge&logo=react&logoColor=white&labelColor=111827" alt="Frontend" />
                 </a>
                 <a href="https://fastapi.tiangolo.com/">
-                        <img src="https://img.shields.io/badge/API-FastAPI-5B669E?style=for-the-badge&logo=fastapi&logoColor=white&labelColor=111827" alt="FastAPI" />
+                        <img src="https://img.shields.io/badge/API-FastAPI-6D77BA?style=for-the-badge&logo=fastapi&logoColor=white&labelColor=111827" alt="FastAPI" />
                 </a>
                 <a href="https://ffmpeg.org/">
-                        <img src="https://img.shields.io/badge/Video Clipping-FFmpeg-8665A7?style=for-the-badge&logo=ffmpeg&logoColor=white&labelColor=111827" alt="Video Clipping" />
+                        <img src="https://img.shields.io/badge/Video Clipping-FFmpeg-6D77BA?style=for-the-badge&logo=ffmpeg&logoColor=white&labelColor=111827" alt="Video Clipping" />
                 </a>
         </p>
         <p>
                 <a href="https://support.claude.com/en/articles/10949351-getting-started-with-local-mcp-servers-on-claude-desktop">
-                        <img src="https://img.shields.io/badge/MCP-Claude%20Integration-7B6AAE?style=for-the-badge&logo=anthropic&logoColor=white&labelColor=111827" alt="MCP Ready" />
+                        <img src="https://img.shields.io/badge/MCP-Claude%20Integration-6D77BA?style=for-the-badge&logo=anthropic&logoColor=white&labelColor=111827" alt="MCP Ready" />
                 </a>
                 <a href="https://opensource.org/license/mit">
-                        <img src="https://img.shields.io/badge/License-MIT-5A5F7F?style=for-the-badge&labelColor=111827" alt="MIT License" />
+                        <img src="https://img.shields.io/badge/License-MIT-6D77BA?style=for-the-badge&labelColor=111827" alt="MIT License" />
                 </a>
         </p>
 </div>
@@ -52,11 +52,9 @@
 
 ## 🎯 The Problem
 
-**Ever hit your AI/API usage limits mid-conversation, then have to start a new conversation and lose context about everything?** 
+**Hitting your AI/API usage limits mid-conversation and losing context about everything is a problem you can't avoid...** Until now. You have a confusing dump of **files scattered everywhere**: PDFs, Word docs, images, videos, notes, etc. Every time you want to ask an AI a question or request about those files, you re-upload the same context, prompts, and files over and over again. Your scarce token budget bleeds away. You can't see how the files relate. You risk hallucinations and context rot with every message you send. You're trapped in a cycle of re-uploading, re-explaining, and re-sending.
 
-You have a confusing dump of **files scattered everywhere**: PDFs, Word docs, images, videos, notes, etc. Every time you want to ask an AI a question or request about those files, you re-upload the same context, prompts, and files over and over again. Your scarce token budget bleeds away. You can't see how the files relate. You risk hallucinations and context rot with every message you send. You're trapped in a cycle of re-uploading, re-explaining, and re-sending.
-
-**With "Your Second Brain", these problems are fixed through a centralised free, local-first multimodal knowledge visualisation & semantic RAG framework - installed, and ready to go in just a few minutes.**
+**With "Your Second Brain", these will be problems of the past.**
 
 ## 💡 Core Idea
 
