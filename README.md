@@ -167,7 +167,9 @@ MCP-only advanced workflows include:
 
 What users need to do:
 1. Start the app backend and open `http://127.0.0.1:8000`.
-2. Run `scripts\setup_mcp.bat` once.
+2. Set up MCP based on your OS:
+        - **Windows**: run `scripts\setup_mcp.bat` once.
+        - **macOS**: add a manual MCP server entry in Claude Desktop config (see MCP section below).
 3. Fully quit and reopen Claude Desktop, then use tools-enabled chats for advanced retrieval flows.
 
 ## 🚀 Quick Start
@@ -484,6 +486,29 @@ scripts\setup_mcp.bat
 ```
 
 Restart Claude Desktop. Your Second Brain tools are now available in chat.
+
+### macOS (Manual Setup)
+
+Automated MCP setup script is currently Windows-only.
+
+On macOS, add a `my-second-brain` entry manually in Claude Desktop MCP config that points to:
+- your Python executable
+- your absolute path to `backend/mcp_server.py`
+
+Example shape:
+
+```json
+{
+        "mcpServers": {
+                "my-second-brain": {
+                        "command": "/absolute/path/to/python3",
+                        "args": ["/absolute/path/to/yoursecondbrain/backend/mcp_server.py"]
+                }
+        }
+}
+```
+
+Then fully quit and reopen Claude Desktop.
 
 ### What Claude Can Do via MCP
 
