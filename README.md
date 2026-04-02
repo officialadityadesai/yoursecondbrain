@@ -76,39 +76,7 @@ The system:
 
 This is a generously feature-rich free **framework** that you can adapt to your projects, workflows, product development, knowledge management, customer support, personal learning, and team collaboration initiatives.
 
-### 🎓 Key Concepts Behind This Framework
-
-#### Local-First Knowledge Ingestion
-Files are processed **once** and stored locally. No repeated re-uploads. No cloud dependency. Your context lives with you.
-
-#### Multimodal Semantic Space
-All content — whether text, image, or video — is projected into a unified embedding space through the Gemini Embedding 2 model.
-This means:
-- Images are searchable by meaning, not just filename
-- Videos are indexed by scene and transcript
-- Cross-modal queries work (e.g., "find documents related to this image")
-
-#### Knowledge Graph as Sensemaking Tool
-Beyond search, the graph visualizes:
-- **Document-to-document relationships** (shared topics, entities, citations)
-- **Entity-based connections** (people, organizations, tools mentioned across files)
-- **Semantic similarity clusters** (conceptually related content)
-
-This is **not decorative** — it's a first-class retrieval UX for exploration before you even formulate a query.
-
-#### Context Management & Token Efficiency
-The system is optimized to reduce token consumption without sacrificing answer quality:
-- **Adaptive chunking**: Documents are split with overlap for resilience
-- **Relevance-ranked retrieval**: Only top matches are included in the prompt
-- **Context blending**: Upload labels and metadata are merged to improve semantic grounding
-- **Prompt assembly**: The system assembles minimal sufficient context, not maximal
-
-#### Claude MCP as Native Memory Interface
-Claude Desktop is not just calling an endpoint. It's wired into a purpose-built memory stack with:
-- **Source-disciplined responses**: Claude knows where evidence comes from
-- **Retrieval orchestration**: Multiple search strategies (semantic, keyword, graph) work together
-- **Video clip generation**: Semantic queries can directly produce timestamp-precise clips
-- **Connection tracing**: Explore entity relationships and document networks from chat
+In practice, this means local-first ingestion, a unified multimodal semantic space, graph-first sensemaking, token-efficient retrieval assembly, and Claude MCP as a native memory interface with source-disciplined answers.
 
 ## 🏗️ How It Works
 
@@ -178,32 +146,7 @@ flowchart LR
 
 </div>
 
-### 🛠️ Applications & Use Cases
-
-This framework is **designed to morph into your specific needs**. Here are common applications:
-
-### Research & Literature Management
-Upload papers, PDFs, notes. Visualize citation networks. Ask synthesis questions. Get grounded answers with source links. Perfect for literature reviews, thesis work, knowledge synthesis.
-
-### Product & Engineering Documentation
-Centralize design docs, specs, tickets, decision records, code comments. Search across modalities (diagrams, videos, text). Claude helps trace dependencies and explain decisions.
-
-### Customer Support & Knowledge Base
-Ingest ticket history, help articles, chat logs, videos. Semantic retrieval finds similar issues. MCP integration lets support agents chat with the knowledge base directly.
-
-### Personal Knowledge Management
-Build a living, interconnected brain for everything you read, learn, and create. The graph becomes your external memory. Chat with it to synthesize ideas.
-
-### Team Collaboration
-Deploy locally in a team environment. Shared brain_data folder. Everyone uploads, everyone queries. Graph visualization reveals knowledge gaps and collaboration opportunities.
-
-### Content & Media Analysis
-Upload videos, transcripts, images, articles. Retrieve by scene, sentiment, topic. Generate clips on demand. Ideal for content curation, research, journalism.
-
-### Legal & Compliance
-Index contracts, regulations, policies, case studies. Semantic search finds relevant precedents. MCP integration enables source-grounded legal analysis.
-
-**The pattern**: Any domain with scattered, multimodal information + a need for persistent, grounded retrieval fits this framework. Customize the UI, adjust chunking strategies, extend the MCP tools — it adapts.
+This framework is adaptable across research, engineering docs, customer support, personal knowledge management, team collaboration, media analysis, and compliance-heavy workflows where persistent multimodal retrieval and explainable evidence matter.
 
 ## 🚀 Quick Start
 
