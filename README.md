@@ -60,23 +60,23 @@ Until now.
 
 You have a confusing dump of **files scattered everywhere**: PDFs, Word docs, images, videos, notes, etc. Every time you want to ask an AI a question or request about those files, you re-upload the same context, prompts, and files over and over again.
 
-Your scarce token budget bleeds away. You can't see how the files relate. You risk hallucinations and context rot with every message you send. You're trapped in a cycle of re-uploading, re-explaining, and re-spending.
+Your scarce token budget bleeds away. You can't see how the files relate. You risk hallucinations and context rot with every message you send. You're trapped in a cycle of re-uploading, re-explaining, and re-sending.
 
 **With "Your Second Brain", these will be problems of the past.**
 
 ## 💡 Core Idea
 
 **Upload your files once**. 
-The system:
+The framework:
 - **Centralises** them in a unified multimodal local vector database
 - **Understands** them semantically across all modalities (text, images, video, documents, etc)
 - **Visualises** relationships, ideas, and entities in an interactive nodal knowledge graph
 - **Retrieves** grounded answers and information only from your knowledge with neuron-level evidence
 - **Integrates** with Claude MCP to find hidden information in files, retrieve trimmed timestamp-precise video clips, and get grounded answers from your knowledge base
 
-This is a generously feature-rich free **framework** that you can adapt to your projects, workflows, product development, knowledge management, customer support, personal learning, and team collaboration initiatives.
+This is a **generously feature-rich free framework that you can adapt** to your projects, workflows, product development, knowledge management, customer support, personal learning, and team collaboration initiatives.
 
-In practice, this means local-first ingestion, a unified multimodal semantic space, graph-first sensemaking, token-efficient retrieval assembly, and Claude MCP as a native memory interface with source-disciplined answers.
+In practice, this means local, unlimited ingestion, a unified multimodal semantic space, node-focused knowedge visualisation, token-efficient retrieval assembly, and Claude MCP as a native memory interface with source-based answers.
 
 ## 🏗️ How It Works
 
