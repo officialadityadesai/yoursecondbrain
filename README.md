@@ -222,14 +222,10 @@ Verify the scheduled task exists:
 Get-ScheduledTask -TaskName "MySecondBrain"
 ```
 
-7. Daily use:
+Now, you can just open **http://127.0.0.1:8000** whenever you want to use the app.
 
-- Log into Windows.
-- Wait a few seconds.
-- Open **http://127.0.0.1:8000**.
-
-No manual `run.bat` should be needed for normal use.
-If you want to start it manually, run:
+No manual `run.bat` will be needed for normal use anymore.
+If you want to start it manually, run this in your project directly in your terminal:
 
 ```powershell
 .\run.bat
