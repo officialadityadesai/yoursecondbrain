@@ -167,9 +167,7 @@ MCP-only advanced workflows include:
 
 What users need to do:
 1. Start the app backend and open `http://127.0.0.1:8000`.
-2. Set up MCP based on your OS:
-        - **Windows**: run `scripts\setup_mcp.bat` once.
-        - **macOS**: add a manual MCP server entry in Claude Desktop config (see MCP section by scrolling down).
+2. Set up MCP: open Claude Desktop → **Settings → Developer → Edit Config** and add the `my-second-brain` server entry (see MCP section below for exact config).
 3. Fully quit and reopen Claude Desktop, then use tools-enabled chats for advanced retrieval flows.
 
 ## 🚀 Quick Start
@@ -235,8 +233,9 @@ Goal: After all setup is over, you should be able to open **http://127.0.0.1:800
 1. Open PowerShell in the correct folder (normal PowerShell, not Admin for this step):
 
 ```powershell
+cd "$env:USERPROFILE"
 git clone https://github.com/officialadityadesai/yoursecondbrain.git
-cd yoursecondbrain
+cd .\yoursecondbrain
 ```
 
 Important: always run project commands from your repo folder (example: `C:\Users\YourName\yoursecondbrain`).
@@ -293,7 +292,7 @@ Open **http://127.0.0.1:8000** and confirm the app loads.
 Open **PowerShell as Administrator**, then run:
 
 ```powershell
-cd "C:\Users\YOURWINDOWSUSERNAME\yoursecondbrain"
+cd "$env:USERPROFILE\yoursecondbrain"
 powershell -NoProfile -ExecutionPolicy Bypass -File ".\scripts\create-startup-task.ps1"
 ```
 
@@ -530,62 +529,67 @@ It is designed as a retrieval-first MCP layer with orchestration depth:
 - strict source-block response discipline in tool outputs
 - dedicated clip-finding tool that builds watch-ready URLs from transcript evidence
 
-### Windows (Automated Setup)
-```bash
-scripts\setup_mcp.bat
-```
+> **Important**: This only works with the **Claude Desktop app** (downloaded from claude.ai/download). It does not work with the Claude.ai website — the web version cannot access local MCP servers.
 
-Restart Claude Desktop. Your Second Brain tools are now available in chat.
+### Windows Setup
 
-### macOS (Manual Setup)
+1. Make sure the backend is running at `http://127.0.0.1:8000`
 
-Automated MCP setup script is currently Windows-only.
+2. Open Claude Desktop → **Settings → Developer** → click **Edit Config**
 
-Follow these steps exactly:
-
-1. Fully quit Claude Desktop.
-
-2. In Terminal, get your Python path and project path:
-
-```bash
-which python3
-cd "$HOME/yoursecondbrain"
-pwd
-```
-
-Keep both outputs. You will paste them in the config in Step 4.
-
-3. Open Claude Desktop config file:
-
-```bash
-mkdir -p "$HOME/Library/Application Support/Claude"
-open -e "$HOME/Library/Application Support/Claude/claude_desktop_config.json"
-```
-
-If the file is empty, that is okay.
-
-4. Add this MCP server entry (replace both placeholder paths):
+3. This opens the config file Claude Desktop actually reads. Replace the contents with:
 
 ```json
 {
-        "mcpServers": {
-                "my-second-brain": {
-                        "command": "/absolute/path/from-which-python3",
-                        "args": ["/absolute/path/to/yoursecondbrain/backend/mcp_server.py"]
-                }
-        }
+  "mcpServers": {
+    "my-second-brain": {
+      "command": "C:\\Users\\YourName\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+      "args": ["C:\\Users\\YourName\\yoursecondbrain\\backend\\mcp_server.py"]
+    }
+  }
 }
 ```
 
-Example only:
+Replace `YourName` with your Windows username. To find your exact Python path, run `where python` in PowerShell.
+
+> If your config already has other keys (like `preferences`), keep them — only add the `mcpServers` block, don't replace the whole file.
+
+4. Save the file, then fully quit Claude Desktop — right-click the Claude icon in the system tray → **Quit** (closing the window is not enough, it keeps running in the background).
+
+5. Reopen Claude Desktop and start a new chat. Look for the hammer/tools icon near the message box — **My Second Brain** tools will be listed there.
+
+### macOS Setup
+
+1. Make sure the backend is running at `http://127.0.0.1:8000`
+
+2. Open Claude Desktop → **Settings → Developer** → click **Edit Config**
+
+3. Replace the contents with:
+
+```json
+{
+  "mcpServers": {
+    "my-second-brain": {
+      "command": "/absolute/path/to/python3",
+      "args": ["/absolute/path/to/yoursecondbrain/backend/mcp_server.py"]
+    }
+  }
+}
+```
+
+To find your paths, run in Terminal:
+```bash
+which python3
+pwd  # run this from inside the yoursecondbrain folder
+```
+
+Example:
 - command: `/opt/homebrew/bin/python3`
 - args: `/Users/YourName/yoursecondbrain/backend/mcp_server.py`
 
-5. Save the file, reopen Claude Desktop, and start a new chat.
+4. Save the file, fully quit Claude Desktop (Cmd+Q or Claude menu → Quit), then reopen it.
 
-6. Verify tools are connected:
-- look for the tools icon near the message box
-- you should see My Second Brain tools available
+5. Start a new chat and look for the hammer/tools icon near the message box.
 
 ### What Claude Can Do via MCP
 
