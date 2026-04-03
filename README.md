@@ -554,9 +554,9 @@ Replace `YourName` with your Windows username. To find your exact Python path, r
 
 > If your config already has other keys (like `preferences`), keep them — only add the `mcpServers` block, don't replace the whole file.
 
-4. Save the file, then fully quit Claude Desktop — right-click the Claude icon in the system tray → **Quit** (closing the window is not enough, it keeps running in the background).
+4. Save the file, then fully quit Claude Desktop - Close Claude Desktop, then open Task Manager, then search for Claude, then right click Claude, then click end task
 
-5. Reopen Claude Desktop and start a new chat. Look for the hammer/tools icon near the message box — **My Second Brain** tools will be listed there.
+5. Reopen Claude Desktop and start a new chat. Go to settings, then developer. In the list, **My Second Brain** MCP will be listed there, and it should say "running"
 
 ### macOS Setup
 
@@ -589,7 +589,7 @@ Example:
 
 4. Save the file, fully quit Claude Desktop (Cmd+Q or Claude menu → Quit), then reopen it.
 
-5. Start a new chat and look for the hammer/tools icon near the message box.
+5. Reopen Claude Desktop and start a new chat. Go to settings, then developer. In the list, **My Second Brain** MCP will be listed there, and it should say "running"
 
 ### What Claude Can Do via MCP
 
