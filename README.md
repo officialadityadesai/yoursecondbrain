@@ -134,6 +134,8 @@ The easiest way to get set up - Claude Code installs everything, configures the 
 
 **A Claude plan that includes Claude Code** - Pro, Max, Team, or Enterprise. Claude Code is not available on the free plan. If you're not sure which plan you have, go to [claude.ai](https://claude.ai) and check your account. To upgrade, visit [claude.ai/upgrade](https://claude.ai/upgrade).
 
+If you don't have a paid Claude Plan, scroll down to the Manual Installation section.
+
 ### Get Claude Code
 
 Claude Code works inside VS Code - install it as an extension:
