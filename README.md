@@ -30,7 +30,7 @@
 
 ## 🎯 The Problem
 
-**Hitting your AI/API usage limits mid-conversation and losing context about everything is the biggest problem about Chat GPT, Claude, Gemini, and other AI tools.** You also have a confusing dump of **files scattered everywhere**: PDFs, Word docs, images, videos, notes. Every time you want to ask an AI a question or request about those files, you re-upload the same context, prompts, and files over and over again. Your token budget bleeds away. You can't see how the files relate. You risk hallucinations and context rot with every message you send. You're trapped in a cycle of re-uploading, re-explaining, and re-sending.
+**Hitting your AI/API usage limits mid-conversation and losing context about everything is the biggest problem about ChatGPT, Claude, Gemini, and other AI tools.** You also have a confusing dump of **files scattered everywhere**: PDFs, Word docs, images, videos, notes. Every time you want to ask an AI a question or request about those files, you re-upload the same context, prompts, and files over and over again. Your token budget bleeds away. You can't see how the files relate. You risk hallucinations and context rot with every message you send. You're trapped in a cycle of re-uploading, re-explaining, and re-sending.
 
 **With "Your Second Brain", these will be problems of the past.**
 
