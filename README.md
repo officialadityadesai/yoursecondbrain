@@ -107,7 +107,7 @@ flowchart LR
 
 <div style="background: linear-gradient(135deg, #12151f 0%, #1d2230 100%); border-radius: 14px; padding: 22px; margin-top: 10px; border-left: 4px solid #6E78BF;">
 
-- **One Pipeline for Everything**: Upload text files, PDFs, Word docs, images, and videos together - the system processes each one correctly without any setup changes per file type
+- **Multimodal Ingestion Pipeline**: Upload text files, PDFs, Word docs, images, and videos together - the system processes each one correctly without any setup changes per file type
 - **Context-Steered Indexing**: Attach a label to any upload batch describing what the files are for, and the system indexes them with that intent baked in, so searches return results that match your meaning, not just your words
 - **Knowledge Graph Visualisation**: Every file, concept, person, and relationship in your knowledge base is mapped as an interactive visual graph you can explore and navigate, making it easy to see how ideas and files connect across your entire library
 - **Intelligent Retrieval**: Ask a question and the system searches by meaning across all file types at once, pulling the most relevant content whether it lives in a PDF, an image description, or a video transcript
