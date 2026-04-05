@@ -49,7 +49,7 @@ os.makedirs(claude_dir, exist_ok=True)
 existing_config: dict = {}
 if os.path.isfile(config_path):
     try:
-        with open(config_path, "r", encoding="utf-8") as f:
+        with open(config_path, "r", encoding="utf-8-sig") as f:
             existing_config = json.load(f)
         print(f"\nFound existing Claude Desktop config at:\n  {config_path}")
     except Exception as e:

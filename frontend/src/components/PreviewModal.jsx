@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
-import { X, FileText, Share2, Loader2, Quote, Layout, ChevronRight, Users, Building2, Wrench, Lightbulb, GitBranch } from 'lucide-react';
+import { X, FileText, Share2, Loader2, Quote, Layout, ChevronRight, Users, Building2, Wrench, Lightbulb, GitBranch, Pencil, Check, AlertCircle } from 'lucide-react';
 import axios from 'axios';
 
 function sanitizeContent(content) {
@@ -21,18 +21,31 @@ function sanitizeContent(content) {
   return cleaned || '_This file contains binary data. Re-upload it to re-index with clean content._';
 }
 
-export function PreviewModal({ nodeId, highlight, onClose, onPreview }) {
+export function PreviewModal({ nodeId, onClose, onPreview, onRename }) {
   const [details, setDetails] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [renaming, setRenaming] = useState(false);
+  const [renameValue, setRenameValue] = useState('');
+  const [renameError, setRenameError] = useState('');
+  const [renameSaving, setRenameSaving] = useState(false);
+  const renameInputRef = useRef(null);
+  const lastRenamedTo = useRef(null);
 
   useEffect(() => {
     if (!nodeId) return;
+    // If nodeId changed because of a rename we just did, skip re-fetching —
+    // details are already up to date and re-fetching causes a loading flash.
+    if (lastRenamedTo.current === nodeId) {
+      lastRenamedTo.current = null;
+      return;
+    }
+    lastRenamedTo.current = null;
     const fetchDetails = async () => {
       setLoading(true);
       try {
         const res = await axios.get(`/api/nodes/${encodeURIComponent(nodeId)}`);
         setDetails(res.data);
-      } catch (err) {
+      } catch {
         setDetails({ error: "Node metadata synchronization failed. Ensure indexing is complete." });
       } finally {
         setLoading(false);
@@ -40,6 +53,48 @@ export function PreviewModal({ nodeId, highlight, onClose, onPreview }) {
     };
     fetchDetails();
   }, [nodeId]);
+
+  const startRename = () => {
+    const baseName = details?.name || '';
+    const ext = baseName.includes('.') ? baseName.substring(baseName.lastIndexOf('.')) : '';
+    const nameWithoutExt = ext ? baseName.slice(0, -ext.length) : baseName;
+    setRenameValue(nameWithoutExt);
+    setRenameError('');
+    setRenaming(true);
+    setTimeout(() => renameInputRef.current?.select(), 50);
+  };
+
+  const cancelRename = () => {
+    setRenaming(false);
+    setRenameError('');
+  };
+
+  const commitRename = async () => {
+    if (!renameValue.trim()) return;
+    const ext = details?.name?.includes('.') ? details.name.substring(details.name.lastIndexOf('.')) : '';
+    const newName = renameValue.trim() + ext;
+    if (newName === details?.name) { cancelRename(); return; }
+    setRenameSaving(true);
+    setRenameError('');
+    try {
+      const res = await axios.post(`/api/files/${encodeURIComponent(details.name)}/rename`, { new_name: newName });
+      if (res.data.status === 'success' || res.data.status === 'partial') {
+        const oldName = details.name;
+        const finalName = res.data.new_name;
+        // Mark so the useEffect skips re-fetching when nodeId prop updates
+        lastRenamedTo.current = finalName;
+        setDetails(d => ({ ...d, name: finalName }));
+        setRenaming(false);
+        if (onRename) onRename(oldName, finalName);
+      } else {
+        setRenameError(res.data.message || 'Rename failed');
+      }
+    } catch (e) {
+      setRenameError(e?.response?.data?.message || 'Rename failed');
+    } finally {
+      setRenameSaving(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -62,18 +117,70 @@ export function PreviewModal({ nodeId, highlight, onClose, onPreview }) {
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/60 pointer-events-auto animate-in fade-in duration-500">
       <div className="relative w-full max-w-6xl max-h-[88vh] flex flex-col glass-panel rounded-3xl overflow-hidden animate-spring-pop shadow-[0_0_100px_rgba(0,0,0,0.8)] border border-white/10">
         
-        {/* Header: Simplified & Premium */}
+        {/* Header */}
         <div className="flex items-center justify-between px-8 py-5 bg-white/5 border-b border-white/5">
-          <div className="flex items-center gap-4 truncate">
-            <div className="p-2.5 bg-accent-main/10 rounded-xl text-accent-main">
+          <div className="flex items-center gap-4 min-w-0 flex-1 mr-4">
+            <div className="p-2.5 bg-accent-main/10 rounded-xl text-accent-main flex-shrink-0">
               {details?.type === 'topic' ? <Share2 size={20} /> : <FileText size={20} />}
             </div>
-            <div className="truncate">
+            <div className="min-w-0 flex-1">
               <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest leading-none mb-1.5">Intelligence Node</p>
-              <h3 className="font-bold text-xl text-white truncate tracking-tight">{details?.name || "Discovery"}</h3>
+              {/* Title row — always rendered, input shown/hidden via display */}
+              <div className="flex items-center gap-2 min-w-0">
+                {/* Static title + pencil button (hidden while renaming) */}
+                {!renaming && (
+                  <>
+                    <h3 style={{ color: '#ffffff', fontWeight: 700, fontSize: '1.25rem', letterSpacing: '-0.015em', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', minWidth: 0 }}>
+                      {details?.name || 'Discovery'}
+                    </h3>
+                    {details?.name && (
+                      <button
+                        onClick={startRename}
+                        style={{ color: '#9ca3af', background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', padding: '6px', flexShrink: 0, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.15s' }}
+                        title="Rename"
+                        onMouseEnter={e => { e.currentTarget.style.background = 'rgba(10,132,255,0.25)'; e.currentTarget.style.color = '#ffffff'; }}
+                        onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#9ca3af'; }}
+                      >
+                        <Pencil size={13} />
+                      </button>
+                    )}
+                  </>
+                )}
+                {/* Rename input row (shown only while renaming) */}
+                {renaming && (
+                  <>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 4, flex: 1, minWidth: 0 }}>
+                      <input
+                        ref={renameInputRef}
+                        value={renameValue}
+                        onChange={e => { setRenameValue(e.target.value); setRenameError(''); }}
+                        onKeyDown={e => { if (e.key === 'Enter') commitRename(); if (e.key === 'Escape') cancelRename(); }}
+                        style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(10,132,255,0.5)', borderRadius: '8px', padding: '4px 12px', color: '#ffffff', fontSize: '1.1rem', fontWeight: 700, width: '100%', outline: 'none' }}
+                        disabled={renameSaving}
+                        autoFocus
+                      />
+                      <span style={{ color: '#6b7280', fontSize: '0.875rem', flexShrink: 0 }}>
+                        {details?.name?.includes('.') ? details.name.substring(details.name.lastIndexOf('.')) : ''}
+                      </span>
+                    </div>
+                    <button onClick={commitRename} disabled={renameSaving} style={{ padding: '6px', borderRadius: '8px', background: 'rgba(10,132,255,0.2)', border: 'none', color: '#0a84ff', cursor: 'pointer', flexShrink: 0, display: 'flex' }} title="Save">
+                      {renameSaving ? <Loader2 size={14} className="animate-spin" /> : <Check size={14} />}
+                    </button>
+                    <button onClick={cancelRename} disabled={renameSaving} style={{ padding: '6px', borderRadius: '8px', background: 'transparent', border: 'none', color: '#6b7280', cursor: 'pointer', flexShrink: 0, display: 'flex' }} title="Cancel">
+                      <X size={14} />
+                    </button>
+                  </>
+                )}
+              </div>
+              {renameError && (
+                <div className="flex items-center gap-1 mt-1">
+                  <AlertCircle size={11} className="text-red-400" />
+                  <p className="text-[11px] text-red-400">{renameError}</p>
+                </div>
+              )}
             </div>
           </div>
-          <button onClick={onClose} className="p-2.5 rounded-xl hover:bg-white/10 text-gray-500 hover:text-white transition-all active:scale-95">
+          <button onClick={onClose} className="p-2.5 rounded-xl hover:bg-white/10 text-gray-500 hover:text-white transition-all active:scale-95 flex-shrink-0">
             <X size={20} />
           </button>
         </div>
@@ -240,15 +347,15 @@ export function PreviewModal({ nodeId, highlight, onClose, onPreview }) {
                    <div className="text-[16px] text-gray-300 leading-[1.8] font-normal font-sans p-10 bg-white/5 border border-white/5 rounded-3xl shadow-inner-lg prose prose-invert max-w-none">
                      <ReactMarkdown 
                         components={{
-                          h1: ({node, ...props}) => <h1 className="text-2xl font-bold text-white mb-4 mt-6 border-b border-white/10 pb-2" {...props} />,
-                          h2: ({node, ...props}) => <h2 className="text-xl font-semibold text-white mb-3 mt-5" {...props} />,
-                          h3: ({node, ...props}) => <h3 className="text-lg font-medium text-gray-200 mb-2 mt-4" {...props} />,
-                          p: ({node, ...props}) => <p className="mb-4 text-gray-300 leading-relaxed" {...props} />,
-                          ul: ({node, ...props}) => <ul className="list-disc pl-6 mb-4 space-y-2" {...props} />,
-                          ol: ({node, ...props}) => <ol className="list-decimal pl-6 mb-4 space-y-2" {...props} />,
-                          li: ({node, ...props}) => <li className="pl-1" {...props} />,
-                          blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-accent-main/50 pl-4 italic text-gray-400 my-4" {...props} />,
-                          code: ({node, inline, ...props}) => inline 
+                          h1: ({...props}) => <h1 className="text-2xl font-bold text-white mb-4 mt-6 border-b border-white/10 pb-2" {...props} />,
+                          h2: ({...props}) => <h2 className="text-xl font-semibold text-white mb-3 mt-5" {...props} />,
+                          h3: ({...props}) => <h3 className="text-lg font-medium text-gray-200 mb-2 mt-4" {...props} />,
+                          p: ({...props}) => <p className="mb-4 text-gray-300 leading-relaxed" {...props} />,
+                          ul: ({...props}) => <ul className="list-disc pl-6 mb-4 space-y-2" {...props} />,
+                          ol: ({...props}) => <ol className="list-decimal pl-6 mb-4 space-y-2" {...props} />,
+                          li: ({...props}) => <li className="pl-1" {...props} />,
+                          blockquote: ({...props}) => <blockquote className="border-l-4 border-accent-main/50 pl-4 italic text-gray-400 my-4" {...props} />,
+                          code: ({inline, ...props}) => inline 
                             ? <code className="bg-white/10 rounded px-1.5 py-0.5 text-sm font-mono text-accent-main" {...props} />
                             : <pre className="bg-black/30 rounded-lg p-4 overflow-x-auto border border-white/10 my-4"><code className="text-sm font-mono text-gray-300" {...props} /></pre>
                         }}

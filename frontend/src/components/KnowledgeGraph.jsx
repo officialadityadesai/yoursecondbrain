@@ -4,7 +4,7 @@ import { Search, SlidersHorizontal, ChevronDown, ChevronRight, Eye, EyeOff, X, F
 import axios from 'axios';
 
 const GRAPH_LAYOUT_STORAGE_KEY = 'spatial_graph_layout_v2';
-const GRAPH_SETTINGS_KEY       = 'spatial_graph_settings_v5'; // v5 — new nodeDistance default (5.0)
+const GRAPH_SETTINGS_KEY       = 'spatial_graph_settings_v4';
 
 const LINK_DISTANCE_BASE = 25;  // px — multiplied by settings.nodeDistance
 const LINK_STRENGTH      = 0.1;  // soft springs — connected nodes follow hub gently, never dominate
@@ -36,6 +36,7 @@ const DEFAULT_SETTINGS = {
   centerForce:   0.57,
   repelForce:    188,
   nodeDistance:  2.0,
+  showLinks:     true,
 };
 
 function createGravityForce(gravityRef) {
@@ -149,6 +150,7 @@ function BreathingSphere({ onClick }) {
 
 export function KnowledgeGraph({
   onPreview,
+  onOpenBrainDumpNote,
   showNodeLabels = true,
   onShowNodeLabelsChange,
   agentName = '',
@@ -201,7 +203,7 @@ export function KnowledgeGraph({
   useEffect(() => {
     settingsRef.current = settings;
     gravityRef.current  = settings.centerForce;
-    try { localStorage.setItem(GRAPH_SETTINGS_KEY, JSON.stringify(settings)); } catch {}
+    try { localStorage.setItem(GRAPH_SETTINGS_KEY, JSON.stringify(settings)); } catch { /* Ignore storage persistence failures. */ }
   }, [settings]);
 
   const updateSetting = useCallback((k, v) => setSettings(p => ({ ...p, [k]: v })), []);
@@ -223,9 +225,9 @@ export function KnowledgeGraph({
       const c = fgRef.current.centerAt(), z = fgRef.current.zoom();
       if (c && Number.isFinite(c.x) && Number.isFinite(c.y) && Number.isFinite(z))
         cameraStateRef.current = { x: c.x, y: c.y, k: z };
-    } catch {}
+    } catch { /* Ignore camera read failures from graph instance. */ }
     try { localStorage.setItem(GRAPH_LAYOUT_STORAGE_KEY, JSON.stringify({ nodePositions: pos, camera: cameraStateRef.current })); }
-    catch {}
+    catch { /* Ignore storage persistence failures. */ }
   }, [graphData]);
 
   // ── Data ──────────────────────────────────────────────────────────────────
@@ -248,7 +250,10 @@ export function KnowledgeGraph({
       if (requested && !deepLinkHandledRef.current) {
         deepLinkHandledRef.current = true;
         deepLinkNodeRef.current = null;
-        const target = nodes.find(n => (n.name || '').toLowerCase() === requested.toLowerCase());
+        const target = nodes.find(n =>
+          (n.name || '').toLowerCase() === requested.toLowerCase() ||
+          (n.source_file || '').toLowerCase() === requested.toLowerCase()
+        );
         if (!target) {
           setDeletedNodeName(requested);
         } else {
@@ -431,7 +436,7 @@ export function KnowledgeGraph({
     const rect = containerRef.current.getBoundingClientRect();
     const x = Math.min(rect.width - 196, Math.max(8, event.clientX - rect.left));
     const y = Math.min(rect.height - 100, Math.max(8, event.clientY - rect.top));
-    setContextMenu({ x, y, nodeGroup: node.group, fileName: String(node.name || node.source_file || ''), label: String(node.name || '') });
+    setContextMenu({ x, y, nodeGroup: node.group, fileName: String(node.source_file || node.name || ''), label: String(node.name || '') });
   }, []);
 
   const confirmDelete = useCallback(async () => {
@@ -527,6 +532,23 @@ export function KnowledgeGraph({
                 <SliderRow label="Label opacity" value={settings.textOpacity}  min={0}   max={1}   step={0.01} onChange={v => updateSetting('textOpacity', v)}  fmt={v => v.toFixed(2)} />
                 <SliderRow label="Node size"      value={settings.nodeSize}      min={0.2} max={2.5} step={0.05} onChange={v => updateSetting('nodeSize', v)}      fmt={v => v.toFixed(2)} />
                 <SliderRow label="Link thickness" value={settings.linkThickness} min={0.1} max={3.0} step={0.1}  onChange={v => updateSetting('linkThickness', v)} fmt={v => v.toFixed(1)} />
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] text-gray-400">Show links</span>
+                  <button
+                    onClick={() => updateSetting('showLinks', !settings.showLinks)}
+                    style={{
+                      width: 36, height: 20, borderRadius: 10, border: 'none', cursor: 'pointer',
+                      background: settings.showLinks ? 'var(--color-accent-main)' : 'rgba(255,255,255,0.12)',
+                      position: 'relative', transition: 'background 0.2s',
+                    }}
+                  >
+                    <span style={{
+                      position: 'absolute', top: 3, left: settings.showLinks ? 18 : 3,
+                      width: 14, height: 14, borderRadius: '50%', background: '#fff',
+                      transition: 'left 0.2s',
+                    }} />
+                  </button>
+                </div>
               </div>
             )}
 
@@ -559,7 +581,13 @@ export function KnowledgeGraph({
         height={dimensions.height}
         graphData={graphData}
         nodeLabel=""
-        onNodeClick={node => onPreview(node.id)}
+        onNodeClick={node => {
+          if (node?.is_brain_dump_note && node?.note_id && onOpenBrainDumpNote) {
+            onOpenBrainDumpNote(node.note_id);
+            return;
+          }
+          onPreview(node.id);
+        }}
         onNodeRightClick={handleNodeRightClick}
         onBackgroundRightClick={e => { e?.preventDefault?.(); setContextMenu(null); }}
         onBackgroundClick={() => setContextMenu(null)}
@@ -581,12 +609,13 @@ export function KnowledgeGraph({
         }}
         onNodeHover={node => setHoverNode(node || null)}
         linkColor={link => {
+          if (!settings.showLinks) return 'rgba(0,0,0,0)';
           const w = link.weight || 0.5;
-          if (link.type === 'entity') return `rgba(66,120,196,${0.2 + w * 0.4})`; // muted steel blue
-          if (link.type === 'semantic') return `rgba(167,139,250,${0.08 + w * 0.25})`; // violet
+          if (link.type === 'entity') return `rgba(66,120,196,${0.2 + w * 0.4})`;
+          if (link.type === 'semantic') return `rgba(167,139,250,${0.08 + w * 0.25})`;
           return `rgba(255,255,255,${0.04 + w * 0.15})`;
         }}
-        linkWidth={link => (link.weight || 0.5) * 1.0 * settings.linkThickness}
+        linkWidth={link => settings.showLinks ? (link.weight || 0.5) * 1.0 * settings.linkThickness : 0}
         backgroundColor="rgba(0,0,0,0)"
         nodeCanvasObject={nodeCanvasObject}
         d3VelocityDecay={0.55}

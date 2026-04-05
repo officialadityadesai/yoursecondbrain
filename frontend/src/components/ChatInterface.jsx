@@ -45,7 +45,7 @@ function VideoClipPlayer({ href, label }) {
   );
 }
 
-export function ChatInterface({ onPreview, messages, setMessages, isThinking, setIsThinking, agentName, onSendRequest, chatProvider = 'gemini' }) {
+export function ChatInterface({ onPreview, messages, setMessages, setIsThinking, agentName, onSendRequest, chatProvider = 'gemini' }) {
   const [input, setInput] = useState('');
   const [isStreaming, setIsStreaming] = useState(false);
   const endOfMessagesRef = useRef(null);
@@ -119,7 +119,7 @@ export function ChatInterface({ onPreview, messages, setMessages, isThinking, se
           }
         }
       }
-    } catch (err) {
+    } catch {
       setMessages(prev => prev.map(m => m.id === msgId ? { ...m, answer: "Error connecting to brain. Ensure the backend is running.", status: 'complete' } : m));
     } finally {
       setIsStreaming(false);
@@ -128,12 +128,25 @@ export function ChatInterface({ onPreview, messages, setMessages, isThinking, se
 
   return (
     <div className="flex flex-col h-full glass-panel rounded-3xl overflow-hidden font-sans animate-spring-pop">
-      <div className="px-6 py-4 border-b border-white/5 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <BrainCircuit className="text-accent-main animate-pulse" size={18} />
-          <h2 className="text-sm font-semibold tracking-tight text-white/90">{agentName}</h2>
+      <div className="px-6 py-4 border-b border-white/5 flex items-start justify-between gap-3">
+        <div className="flex items-start gap-3 min-w-0">
+          <BrainCircuit className="text-accent-main animate-pulse shrink-0 mt-0.5" size={18} />
+          <div className="min-w-0">
+            <h2 className="text-sm font-semibold tracking-tight text-white/90 truncate">{agentName}</h2>
+            <p className="mt-1 text-[11px] leading-snug text-gray-500">
+              Native chat is limited. For full capabilities, use Claude MCP.{' '}
+              <a
+                href="https://github.com/officialadityadesai/yoursecondbrain/blob/main/README.md#claude-mcp-integration"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-accent-main/80 hover:text-accent-main underline"
+              >
+                Open README and scroll to the Claude MCP section.
+              </a>
+            </p>
+          </div>
         </div>
-        {isStreaming && <Sparkles size={14} className="text-accent-main animate-bounce" />}
+        {isStreaming && <Sparkles size={14} className="text-accent-main animate-bounce shrink-0 mt-0.5" />}
       </div>
       
       <div className="flex-1 overflow-y-auto p-5 space-y-8 scrollbar-none scroll-smooth">
@@ -187,7 +200,7 @@ export function ChatInterface({ onPreview, messages, setMessages, isThinking, se
                      {msg.citations.map((cite, idx) => (
                         <button 
                           key={idx} 
-                          onClick={() => onPreview && onPreview(cite.file, cite.relevant_quote)}
+                          onClick={() => onPreview && onPreview(cite.source_file || cite.file, cite.relevant_quote)}
                           className="group flex items-center gap-2 px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/5 rounded-full transition-all active:scale-95"
                         >
                           <Quote size={10} className="text-accent-main" />

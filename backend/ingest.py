@@ -7,7 +7,8 @@ import shutil
 import hashlib
 import subprocess
 import tempfile
-import concurrent.futures
+import random
+import threading
 import fitz # PyMuPDF
 import docx # python-docx
 from google import genai
@@ -28,6 +29,11 @@ EMBEDDING_MODEL   = "gemini-embedding-2-preview"
 EMBEDDING_DIM     = 1536
 LLM_MODEL         = "gemini-3.1-flash-lite-preview"
 SUPPORTED_EXTENSIONS = {".txt", ".md", ".pdf", ".docx", ".png", ".jpg", ".jpeg", ".webp", ".mp4", ".mov", ".avi", ".mkv"}
+DOC_EMBED_WORKERS = max(2, min(8, int(os.getenv("DOC_EMBED_WORKERS", "4"))))
+DOC_EMBED_BATCH_SIZE = max(1, min(16, int(os.getenv("DOC_EMBED_BATCH_SIZE", "6"))))
+GEMINI_MAX_INFLIGHT_CALLS = max(1, min(6, int(os.getenv("GEMINI_MAX_INFLIGHT_CALLS", "3"))))
+GEMINI_BASE_BACKOFF_SECONDS = max(1, int(os.getenv("GEMINI_BASE_BACKOFF_SECONDS", "2")))
+GEMINI_MAX_BACKOFF_SECONDS = max(GEMINI_BASE_BACKOFF_SECONDS, int(os.getenv("GEMINI_MAX_BACKOFF_SECONDS", "45")))
 
 # ── Chunking constants ───────────────────────────────────────────────────────
 CHUNK_SIZE      = 600   # target words per chunk
@@ -49,6 +55,11 @@ TOPIC_NOISE_SUBSTRINGS = (
 )
 
 import time
+
+_gemini_inflight_limiter = threading.Semaphore(GEMINI_MAX_INFLIGHT_CALLS)
+_gemini_backoff_lock = threading.Lock()
+_gemini_backoff_until = 0.0
+_gemini_backoff_level = 0
 
 # ── Video chunking ────────────────────────────────────────────────────────────
 VIDEO_CHUNK_DURATION = 120  # seconds per chunk
@@ -116,20 +127,49 @@ def chunk_text(text: str, chunk_size: int = CHUNK_SIZE, overlap: int = CHUNK_OVE
         start = end - overlap
     return chunks if chunks else [text]
 
+def _is_rate_limit_error(err: Exception) -> bool:
+    s = str(err).lower()
+    return "429" in s or "resource_exhausted" in s or "exhausted" in s or "quota" in s
+
+def _wait_for_gemini_cooldown():
+    while True:
+        with _gemini_backoff_lock:
+            wait_for = _gemini_backoff_until - time.time()
+        if wait_for <= 0:
+            return
+        time.sleep(min(wait_for, 1.0))
+
+def _register_rate_limit_hit() -> float:
+    global _gemini_backoff_level, _gemini_backoff_until
+    with _gemini_backoff_lock:
+        _gemini_backoff_level = min(_gemini_backoff_level + 1, 6)
+        delay = min(GEMINI_MAX_BACKOFF_SECONDS, GEMINI_BASE_BACKOFF_SECONDS * (2 ** (_gemini_backoff_level - 1)))
+        delay += random.uniform(0.1, 0.8)
+        _gemini_backoff_until = max(_gemini_backoff_until, time.time() + delay)
+        return delay
+
+def _register_successful_gemini_call():
+    global _gemini_backoff_level
+    with _gemini_backoff_lock:
+        if _gemini_backoff_level > 0:
+            _gemini_backoff_level -= 1
+
 def robust_gemini_call(func, *args, **kwargs):
-    max_retries = 6
-    base_delay = 2
+    max_retries = 7
     for attempt in range(max_retries):
+        _wait_for_gemini_cooldown()
         try:
-            return func(*args, **kwargs)
+            with _gemini_inflight_limiter:
+                result = func(*args, **kwargs)
+            _register_successful_gemini_call()
+            return result
         except Exception as e:
-            if "429" in str(e) or "exhausted" in str(e).lower() or "quota" in str(e).lower():
-                print(f"Gemini Rate Limit Hit. Waiting {base_delay}s... (Attempt {attempt+1}/{max_retries})")
-                time.sleep(base_delay)
-                base_delay *= 2
-            else:
-                raise e
-    raise Exception("Max retries exceeded on Gemini API due to free-tier rate limits.")
+            if _is_rate_limit_error(e):
+                delay = _register_rate_limit_hit()
+                print(f"Gemini Rate Limit Hit. Cooling down for ~{int(delay)}s (Attempt {attempt+1}/{max_retries})")
+                continue
+            raise e
+    raise Exception("Max retries exceeded on Gemini API due to rate limits.")
 
 def embed_text(text: str) -> list[float]:
     def _call():
@@ -143,6 +183,31 @@ def embed_text(text: str) -> list[float]:
         )
     result = robust_gemini_call(_call)
     return result.embeddings[0].values
+
+def embed_texts(texts: list[str]) -> list[list[float]]:
+    if not texts:
+        return []
+    payload = [t if (isinstance(t, str) and t.strip()) else " " for t in texts]
+
+    def _call():
+        return gemini.models.embed_content(
+            model=EMBEDDING_MODEL,
+            contents=payload,
+            config=types.EmbedContentConfig(
+                task_type="RETRIEVAL_DOCUMENT",
+                output_dimensionality=EMBEDDING_DIM,
+            ),
+        )
+
+    try:
+        result = robust_gemini_call(_call)
+        embeddings = getattr(result, "embeddings", None) or []
+        if len(embeddings) != len(payload):
+            raise Exception(f"Unexpected embedding count: got {len(embeddings)} expected {len(payload)}")
+        return [e.values for e in embeddings]
+    except Exception as e:
+        print(f"Batch embed fallback (size={len(payload)}): {e}")
+        return [embed_text(t) for t in payload]
 
 def strip_binary_content(text: str) -> str:
     """
@@ -210,13 +275,14 @@ def describe_content(file_path: str, mime_type: str) -> str:
             contents=types.Content(parts=[
                 types.Part.from_bytes(data=data, mime_type=mime_type),
                 types.Part.from_text(text=
-                    "Analyze this image for a personal knowledge base. Respond in four sections:\n\n"
-                    "NAMED ENTITIES: List every specific name visible or inferable — "
-                    "people (use their name if shown on screen, badge, slide, or caption), "
-                    "organisations (company names, team names, logos), "
-                    "tools and software (exact product/app names visible on screen), "
-                    "and locations. If a name is clearly visible, use it exactly. "
-                    "Do not say 'a person' or 'an application' — use the actual name if present.\n\n"
+                    f"Analyze this image for a personal knowledge base. Filename: {os.path.basename(file_path)}\n\n"
+                    "NAMED ENTITIES: List only names that are explicitly visible as text in the image — "
+                    "on screen, in a caption, badge, watermark, slide, or overlay. "
+                    "This includes organisations (logos with readable names), tools/software (product names on screen), and locations (signage). "
+                    "For people: ONLY use a name if it appears as readable text in the image (caption, name tag, lower-third, slide). "
+                    "Do NOT attempt to identify people by their appearance or face — do not guess or infer who someone is from how they look. "
+                    "If no name is visible for a person, write 'Unidentified person'. "
+                    "It is far better to leave a name blank than to guess wrong.\n\n"
                     "VISUAL DESCRIPTION: Describe what is shown in detail — layout, content, objects, people, text visible.\n\n"
                     "CONTEXT & THEMES: What is the purpose or topic of this image? What concepts does it relate to?\n\n"
                     "CONNECTIONS: How might this connect to other documents about work, projects, people, or tools?"
@@ -265,20 +331,23 @@ def describe_video(file_path: str, mime_type: str) -> tuple[str, str]:
                 model=LLM_MODEL,
                 contents=[
                     video_file,
-                    "Analyze this video for a personal knowledge base.\n\n"
+                    f"Analyze this video for a personal knowledge base. Filename: {os.path.basename(file_path)}\n\n"
                     "=== CONTENT ANALYSIS ===\n"
-                    "NAMED ENTITIES: List every specific name mentioned or shown — "
-                    "people who introduce themselves or are named, organisations mentioned by name, "
-                    "tools and software shown on screen (use exact product names), projects or initiatives named. "
-                    "Use real names, not generic descriptions.\n\n"
+                    "NAMED ENTITIES: List only names that are explicitly stated or shown as text — "
+                    "people who are directly named in speech (e.g. 'I'm Mark Cuban') or shown via on-screen text, captions, or lower-thirds; "
+                    "organisations mentioned by name in speech or shown on screen; "
+                    "tools and software shown on screen (exact product names). "
+                    "Do NOT attempt to identify people by their appearance or face — do not guess who someone is from how they look. "
+                    "If a person is not named in the audio or on-screen text, label them 'Unidentified speaker'. "
+                    "It is far better to leave a name blank than to guess wrong.\n\n"
                     "SUMMARY: What is this video about? What is the main topic or purpose?\n\n"
-                    "SPOKEN CONTENT: Transcribe or closely summarize what is said, noting who said what if people identify themselves.\n\n"
+                    "SPOKEN CONTENT: Transcribe or closely summarize what is said, noting who said what only if they are explicitly named.\n\n"
                     "KEY POINTS: The most important facts, decisions, or insights from this video.\n\n"
                     "VISUAL DETAILS: What is shown on screen — slides, interfaces, environments, demos.\n\n"
                     "=== TIMESTAMPED TRANSCRIPT ===\n"
                     "List every spoken line with its exact timestamp relative to the start of this clip.\n"
-                    "Format each line as: [MM:SS] Name (if known): exact words spoken\n"
-                    "Example: [00:05] Mark: \"Young people should learn to prompt AI...\"\n"
+                    "Format each line as: [MM:SS] Name (if explicitly named, else 'Speaker'): exact words spoken\n"
+                    "Example: [00:05] Mark Cuban: \"I never invest in something I don't understand.\"\n"
                     "Be precise — these timestamps will be used to cut exact video clips.\n"
                     "If no speech is detected, write: [00:00] No spoken content."
                 ]
@@ -493,18 +562,8 @@ def extract_entities(text: str) -> dict:
         "- If no clear named entities exist, return {\"entities\": [], \"relationships\": []}\n\n"
         f"Document:\n{truncated}"
     )
-    try:
-        def _call():
-            return gemini.models.generate_content(model=LLM_MODEL, contents=prompt)
-        response = robust_gemini_call(_call)
-        raw = response.text.strip()
-        # Strip markdown code fences if model wraps output in them
-        raw = re.sub(r"^```(?:json)?\s*", "", raw)
-        raw = re.sub(r"\s*```$", "", raw)
-        result = json.loads(raw)
-        # Validate and sanitise
-        entities = result.get("entities", [])
-        relationships = result.get("relationships", [])
+
+    def _clean_entities_payload(entities, relationships):
         if not isinstance(entities, list):
             entities = []
         if not isinstance(relationships, list):
@@ -530,14 +589,137 @@ def extract_entities(text: str) -> dict:
             frm = str(r.get("from", "")).strip()
             rel = str(r.get("relationship", "")).strip()
             to  = str(r.get("to", "")).strip()
-            # Only include if both ends exist in our entity list
             if frm and rel and to and frm.lower() in entity_names_lower and to.lower() in entity_names_lower:
                 cleaned_rels.append({"from": frm, "relationship": rel, "to": to})
+        return {"entities": cleaned_entities, "relationships": cleaned_rels}
+
+    try:
+        def _call():
+            return gemini.models.generate_content(model=LLM_MODEL, contents=prompt)
+        response = robust_gemini_call(_call)
+        raw = response.text.strip()
+        # Strip markdown code fences if model wraps output in them
+        raw = re.sub(r"^```(?:json)?\s*", "", raw)
+        raw = re.sub(r"\s*```$", "", raw)
+        result = json.loads(raw)
+        # Validate and sanitise
+        cleaned = _clean_entities_payload(result.get("entities", []), result.get("relationships", []))
+        cleaned_entities = cleaned.get("entities", [])
+        cleaned_rels = cleaned.get("relationships", [])
         print(f"  -> Entities: {len(cleaned_entities)} extracted, {len(cleaned_rels)} relationships")
         return {"entities": cleaned_entities, "relationships": cleaned_rels}
     except Exception as ex:
         print(f"  Entity extraction failed (non-critical): {ex}")
         return {"entities": [], "relationships": []}
+
+
+def extract_document_metadata(text: str, upload_context: str | None = None) -> tuple[list[str], dict]:
+    """
+    Extract topics + entities in one LLM roundtrip for document-heavy batches.
+    Falls back to existing per-feature extraction if combined parsing fails.
+    """
+    topic_source = contextualize_text(text, upload_context)
+    if not gemini or not text or not text.strip():
+        return (extract_topics_fallback(topic_source), {"entities": [], "relationships": []})
+
+    words = text.split()
+    truncated = " ".join(words[:4500])
+    context_note = f"User upload context: {normalize_upload_context(upload_context)}\n\n" if upload_context else ""
+    prompt = (
+        "You are a strict JSON extraction engine for a knowledge base.\n"
+        "Return ONLY valid JSON with this exact shape:\n"
+        '{"topics":["..."],"entities":[{"name":"...","type":"person|organisation|tool|concept","description":"..."}],"relationships":[{"from":"...","relationship":"...","to":"..."}]}\n\n'
+        "Rules:\n"
+        "1) topics: 6-12 concise tags, 1-4 words each, retrieval-oriented, no sentences.\n"
+        "2) entities: only explicit named entities in the document.\n"
+        "3) relationships: only explicit relationships stated in text; no inference.\n"
+        "4) Do not include markdown code fences or explanations.\n\n"
+        f"{context_note}"
+        f"Document:\n{truncated}"
+    )
+
+    try:
+        def _call():
+            return gemini.models.generate_content(model=LLM_MODEL, contents=prompt)
+
+        response = robust_gemini_call(_call)
+        raw = (response.text or "").strip()
+        raw = re.sub(r"^```(?:json)?\s*", "", raw)
+        raw = re.sub(r"\s*```$", "", raw)
+        parsed = json.loads(raw)
+
+        topics = sanitize_topics(parsed.get("topics", []))
+        if not topics:
+            topics = extract_topics_fallback(topic_source)
+
+        valid_types = {"person", "organisation", "organization", "tool", "concept"}
+        candidate_entities = []
+        for e in (parsed.get("entities") or []):
+            if not isinstance(e, dict):
+                continue
+            name = str(e.get("name", "")).strip()
+            if not name:
+                continue
+            ent_type = str(e.get("type", "concept")).lower().replace("organization", "organisation")
+            if ent_type not in valid_types:
+                ent_type = "concept"
+            candidate_entities.append(
+                {
+                    "name": name,
+                    "type": ent_type,
+                    "description": str(e.get("description", "")).strip(),
+                }
+            )
+
+        known = {e["name"].lower() for e in candidate_entities}
+        candidate_relationships = []
+        for r in (parsed.get("relationships") or []):
+            if not isinstance(r, dict):
+                continue
+            frm = str(r.get("from", "")).strip()
+            rel = str(r.get("relationship", "")).strip()
+            to = str(r.get("to", "")).strip()
+            if frm and rel and to and frm.lower() in known and to.lower() in known:
+                candidate_relationships.append({"from": frm, "relationship": rel, "to": to})
+
+        entities = {"entities": candidate_entities, "relationships": candidate_relationships}
+
+        print(f"  -> Metadata: {len(topics)} topics, {len(entities.get('entities', []))} entities")
+        return topics, entities
+    except Exception as ex:
+        print(f"  Combined metadata extraction failed for doc; falling back: {ex}")
+        topics = extract_topics(topic_source) or extract_topics_fallback(topic_source)
+        entities = extract_entities(text)
+        return topics, entities
+
+
+def _embed_document_chunks(chunks: list[str], upload_context: str | None) -> list[list[float]]:
+    embed_sources = [contextualize_text(c, upload_context) for c in chunks]
+    vectors: list[list[float]] = []
+    for start in range(0, len(embed_sources), DOC_EMBED_BATCH_SIZE):
+        batch = embed_sources[start:start + DOC_EMBED_BATCH_SIZE]
+        vectors.extend(embed_texts(batch))
+    return vectors
+
+
+def _index_document_text(text: str, source_type: str, filename: str, upload_context: str | None, content_hash: str | None, table):
+    chunks = chunk_text(text)
+    print(f"  -> {len(chunks)} chunk(s) for {filename}")
+    topics, entities = extract_document_metadata(text, upload_context)
+    vectors = _embed_document_chunks(chunks, upload_context)
+    for i, (chunk, vec) in enumerate(zip(chunks, vectors)):
+        insert_document(
+            chunk,
+            vec,
+            source_type,
+            filename,
+            chunk_index=i,
+            meta={"topics": topics},
+            upload_context=upload_context,
+            content_hash=content_hash if i == 0 else None,
+            entities=entities,
+            table=table,
+        )
 
 
 def derive_video_topics(filename: str, description: str, upload_context: str | None = None) -> list[str]:
@@ -552,9 +734,10 @@ def derive_video_topics(filename: str, description: str, upload_context: str | N
         topics = sanitize_topics(tokens)
     return sanitize_topics(topics)
 
-def _process_video_single(filepath, filename, mime, upload_context, content_hash):
+def _process_video_single(filepath, filename, mime, upload_context, content_hash, table=None):
     """Original single-description approach (fallback when ffmpeg is not available)."""
     transcript = ""
+    context_vec = embed_text(upload_context) if upload_context else None
     try:
         description, transcript = describe_video(filepath, mime)
     except Exception as e:
@@ -565,9 +748,8 @@ def _process_video_single(filepath, filename, mime, upload_context, content_hash
     except Exception as e:
         print(f"Video byte-embedding failed for {filename}, falling back to text embedding: {e}")
         video_vector = embed_text(contextualize_text(description, upload_context))
-    if upload_context:
-        ctx_vec = embed_text(upload_context)
-        video_vector = blend_vectors(video_vector, ctx_vec)
+    if context_vec:
+        video_vector = blend_vectors(video_vector, context_vec)
     video_topics = derive_video_topics(filename, description, upload_context=upload_context)
     entity_source = f"User context: {upload_context}\n\n{description}" if upload_context else description
     entities = extract_entities(entity_source)
@@ -575,10 +757,10 @@ def _process_video_single(filepath, filename, mime, upload_context, content_hash
     if transcript:
         meta["transcript"] = transcript
     insert_document(description, video_vector, "video", filename, meta=meta,
-                    upload_context=upload_context, content_hash=content_hash, entities=entities)
+                    upload_context=upload_context, content_hash=content_hash, entities=entities, table=table)
 
 
-def _process_video_chunked(filepath, filename, mime, upload_context, content_hash):
+def _process_video_chunked(filepath, filename, mime, upload_context, content_hash, table=None):
     """
     Chunked video processing: splits into 120-second segments, describes and embeds each chunk,
     stores timestamp_start/timestamp_end in metadata for scene-level search and clip serving.
@@ -589,15 +771,16 @@ def _process_video_chunked(filepath, filename, mime, upload_context, content_has
         chunks = _split_video(filepath)
     except Exception as e:
         print(f"  Video split failed for {filename}: {e} — falling back to single processing")
-        _process_video_single(filepath, filename, mime, upload_context, content_hash)
+        _process_video_single(filepath, filename, mime, upload_context, content_hash, table=table)
         return
 
     if not chunks:
         print(f"  No chunks generated — falling back to single processing")
-        _process_video_single(filepath, filename, mime, upload_context, content_hash)
+        _process_video_single(filepath, filename, mime, upload_context, content_hash, table=table)
         return
 
     print(f"  -> {len(chunks)} chunk(s) for {filename}")
+    context_vec = embed_text(upload_context) if upload_context else None
 
     # Step 1: describe and embed each chunk sequentially
     chunk_records: list[tuple[int, float, float, str, str, list]] = []  # idx, t_start, t_end, description, transcript, vec
@@ -608,9 +791,8 @@ def _process_video_chunked(filepath, filename, mime, upload_context, content_has
                 vec = embed_media(chunk_path, "video/mp4")
             except Exception:
                 vec = embed_text(contextualize_text(description, upload_context))
-            if upload_context:
-                ctx_vec = embed_text(upload_context)
-                vec = blend_vectors(vec, ctx_vec)
+            if context_vec:
+                vec = blend_vectors(vec, context_vec)
             chunk_records.append((idx, t_start, t_end, description, transcript, vec))
             print(f"  -> Chunk {idx}: {int(t_start)//60}:{int(t_start)%60:02d}–{int(t_end)//60}:{int(t_end)%60:02d}")
         except Exception as e:
@@ -627,13 +809,13 @@ def _process_video_chunked(filepath, filename, mime, upload_context, content_has
 
     # Step 2: extract entities once across all chunk descriptions (saves Gemini quota)
     full_text = "\n\n".join(desc for _, _, _, desc, _, _ in chunk_records)
+    shared_topics = derive_video_topics(filename, full_text, upload_context=upload_context)
     entity_source = f"User context: {upload_context}\n\n{full_text}" if upload_context else full_text
     entities = extract_entities(entity_source)
 
     # Step 3: insert all chunks with timestamp + transcript metadata
     for idx, t_start, t_end, description, transcript, vec in chunk_records:
-        topics = derive_video_topics(filename, description, upload_context=upload_context)
-        meta = {"topics": topics, "timestamp_start": t_start, "timestamp_end": t_end}
+        meta = {"topics": shared_topics, "timestamp_start": t_start, "timestamp_end": t_end}
         if transcript:
             meta["transcript"] = transcript
         insert_document(
@@ -643,10 +825,11 @@ def _process_video_chunked(filepath, filename, mime, upload_context, content_has
             upload_context=upload_context,
             content_hash=content_hash if idx == 0 else None,
             entities=entities,
+            table=table,
         )
 
 
-def insert_document(content, embedding, source_type, source_file, chunk_index=-1, meta=None, upload_context: str | None = None, content_hash: str | None = None, entities: dict | None = None):
+def insert_document(content, embedding, source_type, source_file, chunk_index=-1, meta=None, upload_context: str | None = None, content_hash: str | None = None, entities: dict | None = None, table=None):
     if meta is None: meta = {}
     upload_context = normalize_upload_context(upload_context)
     if upload_context:
@@ -664,7 +847,7 @@ def insert_document(content, embedding, source_type, source_file, chunk_index=-1
         topics = extract_topics_fallback(contextualize_text(content, upload_context))
     meta["topics"] = sanitize_topics(topics)
     
-    tbl = get_table()
+    tbl = table or get_table()
     doc_id = str(uuid.uuid4())
     tbl.add([{"id": doc_id, "content": content, "vector": embedding, 
              "source_type": source_type, "source_file": source_file, 
@@ -683,10 +866,14 @@ def process_file(filepath: str, upload_context: str | None = None, content_hash:
     if ext not in SUPPORTED_EXTENSIONS:
         raise Exception(f"Unsupported file type: {ext}. Supported types: {', '.join(sorted(SUPPORTED_EXTENSIONS))}")
     
+    tbl = get_table()
     # Clean up existing entries for this file to avoid duplicates
     try:
-        tbl = get_table()
-        existing = tbl.search().limit(20000).to_list()
+        safe_filename = filename.replace("'", "''")
+        try:
+            existing = tbl.search().where(f"source_file = '{safe_filename}'").limit(20000).to_list()
+        except Exception:
+            existing = tbl.search().limit(20000).to_list()
         ids_to_delete = [r.get("id") for r in existing if r.get("source_file") == filename and r.get("id")]
         for row_id in ids_to_delete:
             tbl.delete(f"id = '{row_id}'")
@@ -712,28 +899,12 @@ def process_file(filepath: str, upload_context: str | None = None, content_hash:
             # Strip binary garbage if the file contains non-printable content
             # (e.g. files with .md/.txt extension that are actually binary containers)
             text = strip_binary_content(text)
-            chunks = chunk_text(text)
-            print(f"  -> {len(chunks)} chunk(s) for {filename}")
-            # Run topics, entities, and all chunk embeddings in parallel
-            embed_sources = [contextualize_text(c, upload_context) for c in chunks]
-            with concurrent.futures.ThreadPoolExecutor(max_workers=6) as ex:
-                topics_fut   = ex.submit(lambda: extract_topics(contextualize_text(text, upload_context)) or extract_topics_fallback(text))
-                entities_fut = ex.submit(extract_entities, text)
-                vec_futs     = [ex.submit(embed_text, src) for src in embed_sources]
-                topics   = topics_fut.result()
-                entities = entities_fut.result()
-                vectors  = [f.result() for f in vec_futs]
-            for i, (chunk, vec) in enumerate(zip(chunks, vectors)):
-                insert_document(chunk, vec, "text", filename,
-                                chunk_index=i, meta={"topics": topics},
-                                upload_context=upload_context,
-                                content_hash=content_hash if i == 0 else None,
-                                entities=entities)
+            _index_document_text(text, "text", filename, upload_context, content_hash, tbl)
 
         elif ext == ".pdf":
-            doc = fitz.open(filepath)
-            page_count = len(doc)
-            raw_text = "\x0c".join([page.get_text() for page in doc])
+            with fitz.open(filepath) as doc:
+                page_count = len(doc)
+                raw_text = "\x0c".join([page.get_text() for page in doc])
             is_usable, reason = _assess_pdf_text_quality(raw_text, page_count)
             if is_usable:
                 print(f"  PDF text quality: {reason} — using raw text directly (exact attributions preserved)")
@@ -741,44 +912,12 @@ def process_file(filepath: str, upload_context: str | None = None, content_hash:
             else:
                 print(f"  PDF text quality: {reason} — using Gemini vision extraction")
                 clean_text = _describe_scanned_pdf(filepath, upload_context)
-            chunks = chunk_text(clean_text)
-            print(f"  -> {len(chunks)} chunk(s) for {filename}")
-            # Run topics, entities, and all chunk embeddings in parallel
-            embed_sources = [contextualize_text(c, upload_context) for c in chunks]
-            with concurrent.futures.ThreadPoolExecutor(max_workers=6) as ex:
-                topics_fut   = ex.submit(lambda: extract_topics(contextualize_text(clean_text, upload_context)) or extract_topics_fallback(clean_text))
-                entities_fut = ex.submit(extract_entities, clean_text)
-                vec_futs     = [ex.submit(embed_text, src) for src in embed_sources]
-                topics   = topics_fut.result()
-                entities = entities_fut.result()
-                vectors  = [f.result() for f in vec_futs]
-            for i, (chunk, vec) in enumerate(zip(chunks, vectors)):
-                insert_document(chunk, vec, "pdf", filename,
-                                chunk_index=i, meta={"topics": topics},
-                                upload_context=upload_context,
-                                content_hash=content_hash if i == 0 else None,
-                                entities=entities)
+            _index_document_text(clean_text, "pdf", filename, upload_context, content_hash, tbl)
 
         elif ext == ".docx":
             doc = docx.Document(filepath)
             text = "\n".join([para.text for para in doc.paragraphs])
-            chunks = chunk_text(text)
-            print(f"  -> {len(chunks)} chunk(s) for {filename}")
-            # Run topics, entities, and all chunk embeddings in parallel
-            embed_sources = [contextualize_text(c, upload_context) for c in chunks]
-            with concurrent.futures.ThreadPoolExecutor(max_workers=6) as ex:
-                topics_fut   = ex.submit(lambda: extract_topics(contextualize_text(text, upload_context)) or extract_topics_fallback(text))
-                entities_fut = ex.submit(extract_entities, text)
-                vec_futs     = [ex.submit(embed_text, src) for src in embed_sources]
-                topics   = topics_fut.result()
-                entities = entities_fut.result()
-                vectors  = [f.result() for f in vec_futs]
-            for i, (chunk, vec) in enumerate(zip(chunks, vectors)):
-                insert_document(chunk, vec, "docx", filename,
-                                chunk_index=i, meta={"topics": topics},
-                                upload_context=upload_context,
-                                content_hash=content_hash if i == 0 else None,
-                                entities=entities)
+            _index_document_text(text, "docx", filename, upload_context, content_hash, tbl)
 
         elif ext in (".png", ".jpg", ".jpeg", ".webp"):
             mime = "image/png" if ext == ".png" else "image/jpeg"
@@ -790,17 +929,17 @@ def process_file(filepath: str, upload_context: str | None = None, content_hash:
             if upload_context:
                 ctx_vec = embed_text(upload_context)
                 image_vec = blend_vectors(image_vec, ctx_vec)
-            insert_document(description, image_vec, "image", filename, upload_context=upload_context, content_hash=content_hash, entities=entities)
+            insert_document(description, image_vec, "image", filename, upload_context=upload_context, content_hash=content_hash, entities=entities, table=tbl)
             
         elif ext in (".mp4", ".mov", ".avi", ".mkv"):
             mime = "video/mp4"
             if ext == ".mov": mime = "video/quicktime"
             if ext == ".avi": mime = "video/x-msvideo"
             if _ffmpeg_available():
-                _process_video_chunked(filepath, filename, mime, upload_context, content_hash)
+                _process_video_chunked(filepath, filename, mime, upload_context, content_hash, table=tbl)
             else:
                 print(f"  ffmpeg not found — processing {filename} as single unit (install ffmpeg for scene-level search)")
-                _process_video_single(filepath, filename, mime, upload_context, content_hash)
+                _process_video_single(filepath, filename, mime, upload_context, content_hash, table=tbl)
             
         else:
             print(f"Skipping unsupported file type: {ext}")

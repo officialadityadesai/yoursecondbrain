@@ -2,7 +2,9 @@ import { useState, useEffect, useRef } from 'react';
 import { Database, Trash2, FileText, FileVideo, FileImage, UploadCloud, Loader2, CheckCircle, XCircle } from 'lucide-react';
 import axios from 'axios';
 
-export function FileManager({ onPreview, onDataChanged }) {
+const NOTE_FILENAME_RE = /^note_[a-f0-9]{10,32}\.md$/i;
+
+export function FileManager({ onPreview, onDataChanged, onOpenBrainDumpNote, refreshKey = 0 }) {
   const [files, setFiles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isUploading, setIsUploading] = useState(false);
@@ -36,6 +38,7 @@ export function FileManager({ onPreview, onDataChanged }) {
   };
 
   useEffect(() => { fetchFiles(); }, []);
+  useEffect(() => { if (refreshKey > 0) fetchFiles(); }, [refreshKey]);
 
   // Poll pending uploads
   useEffect(() => {
@@ -127,10 +130,12 @@ export function FileManager({ onPreview, onDataChanged }) {
 
   const handleUploadClick = () => fileInputRef.current?.click();
 
-  const hashFile = async (file) => {
-    const buf = await file.arrayBuffer();
-    const digest = await crypto.subtle.digest('SHA-256', buf);
-    return Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, '0')).join('');
+  const quickFingerprint = async (file) => {
+    const headSize = Math.min(file.size, 65536);
+    const head = await file.slice(0, headSize).arrayBuffer();
+    const digest = await crypto.subtle.digest('SHA-256', head);
+    const shortHash = Array.from(new Uint8Array(digest)).slice(0, 8).map(b => b.toString(16).padStart(2, '0')).join('');
+    return `${file.size}:${file.lastModified}:${shortHash}`;
   };
 
   const queueFilesForIngest = async (e) => {
@@ -163,12 +168,11 @@ export function FileManager({ onPreview, onDataChanged }) {
     const alreadyExists = selectedFiles.filter(f => existingNames.has((f.name || '').toLowerCase()));
     const newFiles      = selectedFiles.filter(f => !existingNames.has((f.name || '').toLowerCase()));
 
-    // Exact content duplicate check — only on the new files
-    const hashes = [];
-    for (const f of newFiles) {
-      try { hashes.push(await hashFile(f)); }
-      catch { hashes.push(''); }
-    }
+    // Lightweight within-selection duplicate check for batch speed.
+    const hashes = await Promise.all(newFiles.map(async (f) => {
+      try { return await quickFingerprint(f); }
+      catch { return ''; }
+    }));
     const seenH = new Set();
     const contentDupes = [];
     const toQueue = [];
@@ -215,34 +219,57 @@ export function FileManager({ onPreview, onDataChanged }) {
     const uploadErrors = [];
     const total = queuedFiles.length;
 
-    for (let i = 0; i < total; i++) {
-      const f = queuedFiles[i];
-      setUploadPhaseLabel(`Uploading ${f.name}${total > 1 ? ` (${i + 1} of ${total})` : ''}…`);
+    const uploadPctByFile = {};
+    const updateAggregateProgress = () => {
+      const totalPct = queuedFiles.reduce((sum, f) => sum + (uploadPctByFile[f.name] || 0), 0);
+      const aggregate = total > 0 ? totalPct / total : 0;
+      safeSetProgress(aggregate * 55);
+    };
+
+    const maxConcurrentUploads = Math.max(2, Math.min(6, total >= 6 ? 5 : 3));
+    let nextIndex = 0;
+
+    const uploadOne = async (fileObj, index) => {
+      setUploadPhaseLabel(`Uploading ${fileObj.name}${total > 1 ? ` (${index + 1} of ${total})` : ''}…`);
       const formData = new FormData();
-      formData.append('file', f);
+      formData.append('file', fileObj);
       formData.append('upload_context', uploadContext || '');
       try {
         await axios.post('/api/upload', formData, {
           headers: { 'Content-Type': 'multipart/form-data' },
           onUploadProgress: (evt) => {
-            const base = (i / total) * 55;
-            const span = 55 / total;
-            const pct  = evt.total ? evt.loaded / evt.total : 0;
-            safeSetProgress(base + pct * span);
+            const pct = evt.total ? (evt.loaded / evt.total) : 0;
+            uploadPctByFile[fileObj.name] = Math.max(0, Math.min(1, pct));
+            updateAggregateProgress();
           },
         });
-        queued.push(f.name);
+        uploadPctByFile[fileObj.name] = 1;
+        queued.push(fileObj.name);
       } catch (err) {
+        uploadPctByFile[fileObj.name] = 1;
         const msg =
           err?.response?.data?.detail ||
           err?.response?.data?.message ||
           err?.message ||
           'Unknown upload error';
-        uploadErrors.push(`"${f.name}": ${msg}`);
-        // Continue uploading remaining files — don't abort the loop
+        uploadErrors.push(`"${fileObj.name}": ${msg}`);
+      } finally {
+        updateAggregateProgress();
       }
-      if (i < total - 1) await new Promise(r => setTimeout(r, 800));
-    }
+    };
+
+    const worker = async () => {
+      while (true) {
+        const current = nextIndex;
+        nextIndex += 1;
+        if (current >= total) break;
+        await uploadOne(queuedFiles[current], current);
+      }
+    };
+
+    await Promise.all(
+      Array.from({ length: Math.min(maxConcurrentUploads, total) }, () => worker())
+    );
 
     if (queued.length > 0) {
       setPendingUploads(prev => Array.from(new Set([...prev, ...queued])));
@@ -273,6 +300,55 @@ export function FileManager({ onPreview, onDataChanged }) {
     if (type === 'image') return <FileImage size={14} className="text-accent-main" />;
     return <FileText size={14} className="text-accent-main" />;
   };
+
+  const isBrainDumpFile = (file) => (
+    file?.is_brain_dump === true
+    || !!file?.note_id
+    || NOTE_FILENAME_RE.test(String(file?.name || '').trim())
+    || String(file?.name || '').toLowerCase().startsWith('brain_dump_')
+  );
+
+  const brainDumpFiles = files
+    .filter(isBrainDumpFile)
+    .sort((a, b) => {
+      const ai = Number.isFinite(a?.brain_dump_index) ? a.brain_dump_index : -1;
+      const bi = Number.isFinite(b?.brain_dump_index) ? b.brain_dump_index : -1;
+      if (ai !== bi) return bi - ai;
+      return String(a.display_name || a.name || '').localeCompare(String(b.display_name || b.name || ''), undefined, {
+        numeric: true,
+        sensitivity: 'base',
+      });
+    });
+
+  const regularFiles = files
+    .filter(f => !isBrainDumpFile(f))
+    .sort((a, b) => String(a.name || '').localeCompare(String(b.name || '')));
+
+  const renderFileRow = (file) => (
+    <div key={file.name} className="flex items-center justify-between p-3 rounded-xl bg-white/0 hover:bg-white/5 transition-all group border border-transparent hover:border-white/5">
+      <button
+        onClick={() => {
+          if (isBrainDumpFile(file) && onOpenBrainDumpNote) {
+            onOpenBrainDumpNote(file.note_id || null, file.name || null);
+            return;
+          }
+          if (onPreview) onPreview(file.name);
+        }}
+        className="flex-1 flex items-center gap-3 overflow-hidden text-gray-400 group-hover:text-white transition-colors"
+      >
+        <div className="p-1.5 bg-white/5 rounded-lg">{getIcon(file.type)}</div>
+        <span className="text-[13px] font-medium truncate text-left">{file.display_name || file.name}</span>
+      </button>
+      <button
+        onClick={() => handleDelete(file.name)}
+        className="p-2 text-gray-500 hover:text-red-400 transition-all opacity-90"
+        title="Delete file completely"
+        aria-label={`Delete ${file.name}`}
+      >
+        <Trash2 size={14} />
+      </button>
+    </div>
+  );
 
   const showProgress = isUploading || pendingUploads.length > 0 || uploadProgress > 0;
 
@@ -362,30 +438,32 @@ export function FileManager({ onPreview, onDataChanged }) {
       </div>
 
       <div className="flex-1 overflow-y-auto px-4 pb-4 space-y-1.5 scrollbar-none">
-        {files.length === 0 && !isUploading && (
+        {isLoading && (
+          <div className="text-center py-10">
+            <p className="text-[12px] text-gray-600 font-medium italic">Loading knowledge files…</p>
+          </div>
+        )}
+        {files.length === 0 && !isUploading && !isLoading && (
           <div className="text-center py-10">
             <p className="text-[12px] text-gray-600 font-medium italic">Empty knowledge landscape.</p>
           </div>
         )}
-        {files.map((file, i) => (
-          <div key={i} className="flex items-center justify-between p-3 rounded-xl bg-white/0 hover:bg-white/5 transition-all group border border-transparent hover:border-white/5">
-            <button
-              onClick={() => onPreview && onPreview(file.name)}
-              className="flex-1 flex items-center gap-3 overflow-hidden text-gray-400 group-hover:text-white transition-colors"
-            >
-              <div className="p-1.5 bg-white/5 rounded-lg">{getIcon(file.type)}</div>
-              <span className="text-[13px] font-medium truncate text-left">{file.name}</span>
-            </button>
-            <button
-              onClick={() => handleDelete(file.name)}
-              className="p-2 text-gray-500 hover:text-red-400 transition-all opacity-90"
-              title="Delete file completely"
-              aria-label={`Delete ${file.name}`}
-            >
-              <Trash2 size={14} />
-            </button>
+        {brainDumpFiles.length > 0 && (
+          <div className="pt-1">
+            <p className="px-1 pb-1 text-[10px] uppercase tracking-widest text-gray-500 font-semibold">Brain Dumps</p>
+            <div className="space-y-1.5">
+              {brainDumpFiles.map(renderFileRow)}
+            </div>
           </div>
-        ))}
+        )}
+        {regularFiles.length > 0 && (
+          <div className="pt-1">
+            <p className="px-1 pb-1 text-[10px] uppercase tracking-widest text-gray-500 font-semibold">Knowledge Files</p>
+            <div className="space-y-1.5">
+              {regularFiles.map(renderFileRow)}
+            </div>
+          </div>
+        )}
       </div>
 
       {deleteTarget && (
