@@ -46,7 +46,7 @@ The framework:
 - **Self-heals old knowledge** using startup backfills that enrich missing entities and video transcripts automatically
 - **Retrieves** grounded answers and information only from your knowledge with neuron-level evidence
 - **Integrates** with Claude MCP to find hidden information in files, retrieve trimmed timestamp-precise video clips, and get grounded answers from your knowledge base
-- **Supports dual chat intelligence** with both Gemini and connected Claude account modes in-app
+- **Supports** dual chat intelligence with both Gemini and connected Claude account modes in-app
 
 This is a **generously feature-rich free framework that you can adapt** to your projects, workflows, product development, knowledge management, customer support, personal learning, and team collaboration initiatives. In practice, this means local, unlimited ingestion, a unified multimodal semantic space, node-focused knowledge visualisation, token-efficient retrieval assembly, and Claude MCP as a native memory interface with source-based answers.
 
