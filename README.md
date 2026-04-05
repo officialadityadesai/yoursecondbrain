@@ -30,25 +30,24 @@
 
 ## 🎯 The Problem
 
-**Hitting your AI/API usage limits mid-conversation and losing context about everything is a problem you can't avoid...** Until now. You have a confusing dump of **files scattered everywhere**: PDFs, Word docs, images, videos, notes, etc. Every time you want to ask an AI a question or request about those files, you re-upload the same context, prompts, and files over and over again. Your scarce token budget bleeds away. You can't see how the files relate. You risk hallucinations and context rot with every message you send. You're trapped in a cycle of re-uploading, re-explaining, and re-sending.
+**Hitting your AI/API usage limits mid-conversation and losing context about everything is the biggest problem about Chat GPT, Claude, Gemini, and other AI tools.** You also have a confusing dump of **files scattered everywhere**: PDFs, Word docs, images, videos, notes. Every time you want to ask an AI a question or request about those files, you re-upload the same context, prompts, and files over and over again. Your token budget bleeds away. You can't see how the files relate. You risk hallucinations and context rot with every message you send. You're trapped in a cycle of re-uploading, re-explaining, and re-sending.
 
 **With "Your Second Brain", these will be problems of the past.**
 
 ## 💡 Core Idea
 
 **Upload your files once**. 
-The framework:
-- **Centralises** them in a unified multimodal local vector database
-- **Understands** them semantically across all modalities (text, images, video, documents, etc)
-- **Lets you steer memory formation** with upload context labels that shape embeddings and retrieval intent from day one
+The application:
+- **Centralises** them in a multimodal local vector database
+- **Understands** them semantically across all modalities (text, **images, video,** documents, etc)
+- **Allows** you to add context labels that shape embeddings and retrieval intent from uploading knowledge
 - **Visualises** relationships, ideas, and entities in an interactive nodal knowledge graph
-- **Protects memory quality** with duplicate-name and duplicate-content blocking before ingest
-- **Self-heals old knowledge** using startup backfills that enrich missing entities and video transcripts automatically
-- **Retrieves** grounded answers and information only from your knowledge with neuron-level evidence
+- **Protects** memory quality with duplicate-name and duplicate-content blocking before ingest
+- **Self-heals** old knowledge using startup backfills that enrich missing entities and video transcripts automatically
 - **Integrates** with Claude MCP to find hidden information in files, retrieve trimmed timestamp-precise video clips, and get grounded answers from your knowledge base
-- **Supports dual chat intelligence** with both Gemini and connected Claude account modes in-app
+- **Supports dual chat intelligence** with both Gemini API and connected Claude account modes
 
-This is a **generously feature-rich free framework that you can adapt** to your projects, workflows, product development, knowledge management, customer support, personal learning, and team collaboration initiatives. In practice, this means local, unlimited ingestion, a unified multimodal semantic space, node-focused knowedge visualisation, token-efficient retrieval assembly, and Claude MCP as a native memory interface with source-based answers.
+This is a **generously feature-rich free framework that you can adapt** to your projects, workflows, school/learning, product development, knowledge management, customer support, personal learning, and team collaboration initiatives. In practice, this means local, unlimited ingestion, a unified multimodal semantic space, node-focused knowedge visualisation, token-efficient retrieval assembly, and Claude MCP as a native memory interface with source-based answers.
 
 ## 🏗️ How It Works
 
