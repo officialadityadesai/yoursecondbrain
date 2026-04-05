@@ -14,6 +14,7 @@
                         <img src="https://img.shields.io/badge/Mode-Local-6D77BA?style=for-the-badge&logo=icloud&logoColor=white&labelColor=111827" alt="Local First" />
                 </a>
                 <a href="https://ai.google.dev/gemini-api/docs/embeddings">
+                
                         <img src="https://img.shields.io/badge/Embeddings-Gemini%20Embedding%202-6D77BA?style=for-the-badge&logo=google&logoColor=white&labelColor=111827" alt="Embeddings" />
                 </a>
                 <a href="https://lancedb.com">
@@ -158,28 +159,115 @@ This framework is adaptable across business IP, SOPs, research, studying, custom
 
 ### ⚠️ Important: Where Advanced Query Features Run
 
-The most advanced query capabilities run through **Claude Desktop + MCP tools**, not the default native Gemini chat pane.
-
-MCP-only advanced workflows include:
-- semantic video clip finding with auto-generated watch links
-- holistic one-call retrieval across semantic, keyword, full-content, and connected-topic paths
-- deeper entity and relationship tracing workflows with tool-level source discipline
-
-What users need to do:
-1. Start the app backend and open `http://127.0.0.1:8000`.
-2. Set up MCP: open Claude Desktop → **Settings → Developer → Edit Config** and add the `my-second-brain` server entry (see MCP section below for exact config).
-3. Fully quit and reopen Claude Desktop, then use tools-enabled chats for advanced retrieval flows.
+The most advanced query capabilities — semantic video clip finding, holistic retrieval, and deep entity tracing — run through **Claude Desktop + MCP**, not the built-in Gemini chat pane. Setup instructions are in the Quick Start and Manual Installation sections below.
 
 ## 🚀 Quick Start
+
+The easiest way to get set up — Claude Code installs everything, configures the app, and wires up Claude Desktop for you automatically. You just paste one prompt and answer one question.
+
+### What you need first
+
+**A Claude plan that includes Claude Code** — Pro, Max, Team, or Enterprise. Claude Code is not available on the free plan.
+
+If you're not sure which plan you have, go to [claude.ai](https://claude.ai) and check your account. To upgrade, visit [claude.ai/upgrade](https://claude.ai/upgrade).
+
+### Get Claude Code
+
+Claude Code works inside VS Code — install it as an extension:
+
+1. Open VS Code
+2. Click the Extensions icon in the left sidebar (or press `Ctrl+Shift+X` on Windows / `Cmd+Shift+X` on Mac)
+3. Search for **Claude Code**
+4. Click **Install**
+5. Once installed, click the Claude Code icon in the sidebar and sign in with your Anthropic account
+
+### Run the setup prompt
+
+Open Claude Code, start a new conversation, and paste this prompt exactly:
+
+```
+Clone this repo: https://github.com/officialadityadesai/yoursecondbrain — then read the CLAUDE-CODE-BLUEPRINT.md file in the root of the cloned repo and follow every step in it exactly to set up the app on my computer. Do everything yourself — I should only need to paste my Gemini API key when you ask for it. Walk me through anything you need from me in plain English.
+```
+
+Claude Code will:
+- Clone the repo
+- Detect your OS (Windows or macOS) and tailor everything to it
+- Install Python, Node.js, and FFmpeg if they're missing
+- Install all dependencies and build the app
+- Pause once to ask for your free Gemini API key, with step-by-step instructions on where to get it
+- Write your config, start the app, and open it in your browser
+- Set up auto-start so the app runs silently on every login
+- Configure Claude Desktop MCP if you have it installed (or walk you through installing it)
+
+When it's done, open **http://127.0.0.1:8000** — your second brain is ready.
+
+### Claude Desktop MCP (quick start)
+
+Claude Desktop is a separate free app that connects to your knowledge base so you can ask Claude questions about your files directly in chat. Claude Code sets this up automatically during the prompt above — but if you need to do it manually:
+
+> **Important:** This requires the [Claude Desktop app](https://claude.ai/download), not the Claude website. The website cannot connect to local MCP servers.
+
+**Windows:**
+
+1. Make sure the backend is running at `http://127.0.0.1:8000`
+2. Open Claude Desktop → **Settings → Developer** → **Edit Config**
+3. Add the following (replace `YourName` with your Windows username — run `where python` in PowerShell to find your exact Python path):
+
+```json
+{
+  "mcpServers": {
+    "my-second-brain": {
+      "command": "C:\\Users\\YourName\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+      "args": ["C:\\Users\\YourName\\yoursecondbrain\\backend\\mcp_server.py"]
+    }
+  }
+}
+```
+
+4. Save the file. Right-click the Claude icon in the system tray → **Quit** (closing the window is not enough). Reopen Claude Desktop.
+5. Start a new chat — look for the hammer icon (🔨) near the message box. Click it and **My Second Brain** will be listed.
+
+**macOS:**
+
+1. Make sure the backend is running at `http://127.0.0.1:8000`
+2. Open Claude Desktop → **Settings → Developer** → **Edit Config**
+3. Find your paths first — run these in Terminal:
+
+```bash
+which python3   # e.g. /Users/YourName/yoursecondbrain/.venv/bin/python
+pwd             # run from inside the yoursecondbrain folder
+```
+
+4. Add the following (substitute your actual paths):
+
+```json
+{
+  "mcpServers": {
+    "my-second-brain": {
+      "command": "/Users/YourName/yoursecondbrain/.venv/bin/python",
+      "args": ["/Users/YourName/yoursecondbrain/backend/mcp_server.py"]
+    }
+  }
+}
+```
+
+5. Save the file. Press **Cmd+Q** to fully quit Claude Desktop, then reopen it.
+6. Start a new chat — look for the hammer icon (🔨) near the message box. Click it and **My Second Brain** will be listed.
+
+> If your config already has other entries, keep them — only add the `mcpServers` block, don't replace the whole file.
+
+---
+
+## 🛠️ Manual Installation
+
+Prefer to set things up yourself? Follow the steps below for your OS.
 
 ### Prerequisites
 
 - Python 3.10+
 - Node.js 18+
 - Gemini API key: https://aistudio.google.com/app/apikey
-- FFmpeg available on PATH (required for video clipping)
-
-If you do not have these installed yet, use the quick setup below.
+- FFmpeg (required for video clipping)
 
 ### Install prerequisites (Windows)
 
@@ -190,8 +278,7 @@ If you do not have these installed yet, use the quick setup below.
 2. Install Node.js 18+:
         - Download LTS from: https://nodejs.org/en/download
 
-3. Install FFmpeg (for video clip generation):
-        - Easiest: install via winget in PowerShell:
+3. Install FFmpeg:
 
 ```powershell
 winget install Gyan.FFmpeg
@@ -205,32 +292,11 @@ node -v
 ffmpeg -version
 ```
 
-### Install prerequisites (macOS)
+### Windows (step-by-step)
 
-1. Install Homebrew (if not already installed):
-        - https://brew.sh
+Goal: after setup, open **http://127.0.0.1:8000** any time after login — no manual start needed.
 
-2. Install Python, Node.js, and FFmpeg:
-
-```bash
-brew install python node ffmpeg
-```
-
-3. Verify installation:
-
-```bash
-python3 -V
-node -v
-ffmpeg -version
-```
-
-If any command is not found, close and reopen Terminal and run the verify commands again.
-
-### Windows (Step-by-step setup + auto-start on login)
-
-Goal: After all setup is over, you should be able to open **http://127.0.0.1:8000** any time and the app should be running after login, without manually running `run.bat` every time.
-
-1. Open PowerShell in the correct folder (normal PowerShell, not Admin for this step):
+1. Open PowerShell and clone the repo:
 
 ```powershell
 cd "$env:USERPROFILE"
@@ -238,17 +304,13 @@ git clone https://github.com/officialadityadesai/yoursecondbrain.git
 cd .\yoursecondbrain
 ```
 
-Important: always run project commands from your repo folder (example: `C:\Users\YourName\yoursecondbrain`).
-
-2. Install backend/frontend dependencies and build frontend (one-time):
-
-PowerShell note: when running local scripts from the current folder, use the `./` or `.\` prefix.
+2. Install all dependencies and build the frontend:
 
 ```powershell
 .\install.bat
 ```
 
-3. Verify frontend build exists:
+3. Verify the frontend build exists:
 
 ```powershell
 Test-Path ".\frontend\dist\index.html"
@@ -264,114 +326,89 @@ cd ..
 
 4. Add your Gemini API key:
 
-- Go to your `yoursecondbrain` folder.
-- Open `.env.example` in a text editor.
-- Go to Google AI Studio and create/copy your Gemini API key (make sure your Google account profile is 18+).
-- Paste your key into the file as:
+```powershell
+Copy-Item .env.example .env
+```
+
+Open `.env` in a text editor and set:
 
 ```env
 GEMINI_API_KEY=your_key_here
 ```
 
-- Save the file as `.env` in the same folder.
-- Delete the old `.env.example` file to avoid confusion.
-
-5. Start once now (quick check):
+5. Start the app:
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File ".\scripts\start-background.ps1"
 ```
 
-This starts the app for your current session only.
-For automatic start after future logins/reboots, complete Step 6 (scheduled task).
-
-Open **http://127.0.0.1:8000** and confirm the app loads.
+Open **http://127.0.0.1:8000** and confirm it loads.
 
 6. Enable auto-start on login (one-time, Admin PowerShell):
-
-Open **PowerShell as Administrator**, then run:
 
 ```powershell
 cd "$env:USERPROFILE\yoursecondbrain"
 powershell -NoProfile -ExecutionPolicy Bypass -File ".\scripts\create-startup-task.ps1"
 ```
 
-Verify the scheduled task exists:
+Verify:
 
 ```powershell
 Get-ScheduledTask -TaskName "MySecondBrain"
 ```
 
-7. Daily use:
+### Windows — Claude Desktop MCP
 
-- Log into Windows.
-- Wait a few seconds.
-- Open **http://127.0.0.1:8000**.
-
-No manual `run.bat` should be needed for normal use.
-If you want to start it manually, run:
+1. Make sure the backend is running at `http://127.0.0.1:8000`
+2. Run the MCP setup script — it writes the config automatically:
 
 ```powershell
-.\run.bat
+python scripts\setup_mcp.py
 ```
 
-#### Windows troubleshooting (common issues)
+3. Right-click the Claude icon in the system tray → **Quit**. Reopen Claude Desktop.
+4. Start a new chat and look for the hammer icon (🔨) — **My Second Brain** will be listed.
 
-1. Error: `The argument 'scripts\create-startup-task.ps1' ... does not exist`
+#### Windows troubleshooting
 
-Cause: you ran the command from the wrong folder (for example `C:\Windows\System32`).
+**Error: `Register-ScheduledTask : Access is denied`**
+Reopen PowerShell as Administrator and rerun step 6.
 
-Fix:
-
-```powershell
-cd "$env:USERPROFILE\yoursecondbrain"
-powershell -NoProfile -ExecutionPolicy Bypass -File ".\scripts\create-startup-task.ps1"
-```
-
-2. Error: `Register-ScheduledTask : Access is denied`
-
-Cause: task creation was run in a non-admin PowerShell window.
-
-Fix: reopen PowerShell as Administrator and rerun Step 6.
-
-3. Browser shows: `{"status":"frontend_not_built",...}`
-
-Cause: frontend build files are missing.
-
-Fix:
+**Browser shows `{"status":"frontend_not_built"}`**
 
 ```powershell
 cd "$env:USERPROFILE\yoursecondbrain\frontend"
-npm install
-npm run build
+npm install && npm run build
 cd ..
 powershell -NoProfile -ExecutionPolicy Bypass -File ".\scripts\start-background.ps1"
 ```
 
-4. Optional health checks:
-
-```powershell
-Test-Path ".\frontend\dist\index.html"
-Get-NetTCPConnection -LocalPort 8000 -State Listen
-```
-
-Expected:
-
-- `Test-Path` returns `True`
-- port `8000` is in `Listen` state
-
-5. Error: `install.bat : The term 'install.bat' is not recognized...`
-
-Cause: in PowerShell, commands in the current directory are not executed unless prefixed.
-
-Fix:
+**Error: `install.bat is not recognized`**
 
 ```powershell
 cd "$env:USERPROFILE\yoursecondbrain"
 .\install.bat
 ```
 
-### macOS (Step-by-step)
+---
+
+### Install prerequisites (macOS)
+
+1. Install Homebrew if not already installed: https://brew.sh
+
+2. Install Python, Node.js, and FFmpeg:
+
+```bash
+brew install python node ffmpeg
+```
+
+3. Verify:
+
+```bash
+python3 -V && node -v && ffmpeg -version
+```
+
+### macOS (step-by-step)
 
 1. Open Terminal and clone the repo:
 
@@ -409,7 +446,7 @@ cd ..
 cp .env.example .env
 ```
 
-Then edit `.env` and set:
+Edit `.env` and set:
 
 ```env
 GEMINI_API_KEY=your_key_here
@@ -422,16 +459,9 @@ cd backend
 UVICORN_HOST=127.0.0.1 UVICORN_PORT=8000 python -m uvicorn main:app
 ```
 
-Open **http://127.0.0.1:8000** and confirm the app loads.
+Open **http://127.0.0.1:8000** and confirm it loads.
 
-In a second terminal (optional frontend dev mode):
-
-```bash
-cd frontend
-npm run dev
-```
-
-7. Optional: enable auto-start on login (so you do not run commands every time):
+7. Enable auto-start on login:
 
 ```bash
 mkdir -p "$HOME/Library/LaunchAgents"
@@ -468,147 +498,47 @@ launchctl enable "gui/$(id -u)"/com.yoursecondbrain.backend
 launchctl kickstart -k "gui/$(id -u)"/com.yoursecondbrain.backend
 ```
 
-Verify auto-start service:
+Verify:
 
 ```bash
 launchctl print "gui/$(id -u)/com.yoursecondbrain.backend" | grep state
 lsof -i :8000
 ```
 
-To disable auto-start later:
+### macOS — Claude Desktop MCP
+
+1. Make sure the backend is running at `http://127.0.0.1:8000`
+2. Run the MCP setup script — it writes the config automatically:
 
 ```bash
-launchctl bootout "gui/$(id -u)"/com.yoursecondbrain.backend
-rm "$HOME/Library/LaunchAgents/com.yoursecondbrain.backend.plist"
+.venv/bin/python scripts/setup_mcp.py
 ```
 
-#### macOS troubleshooting (common issues)
+3. Press **Cmd+Q** to fully quit Claude Desktop, then reopen it.
+4. Start a new chat and look for the hammer icon (🔨) — **My Second Brain** will be listed.
 
-1. Error: `python3: command not found`
+#### macOS troubleshooting
 
-Fix:
+**Error: `python3: command not found`**
 
 ```bash
 brew install python
 ```
 
-2. Error: `node: command not found` or `npm: command not found`
-
-Fix:
+**Error: `node: command not found`**
 
 ```bash
 brew install node
 ```
 
-3. Browser shows: `{"status":"frontend_not_built",...}`
-
-Fix:
+**Browser shows `{"status":"frontend_not_built"}`**
 
 ```bash
 cd "$HOME/yoursecondbrain/frontend"
-npm install
-npm run build
-cd ..
-cd backend
+npm install && npm run build
+cd ../backend
 UVICORN_HOST=127.0.0.1 UVICORN_PORT=8000 python -m uvicorn main:app
 ```
-
-4. Optional health checks:
-
-```bash
-test -f ./frontend/dist/index.html && echo "frontend build exists"
-lsof -i :8000
-```
-
-## 🤖 Claude MCP Integration
-
-Your Second Brain is a native MCP server. Claude Desktop can retrieve, search, connect, and generate clips directly from your local workspace.
-
-It is designed as a retrieval-first MCP layer with orchestration depth:
-- one-call holistic retrieval across semantic + keyword + full-content + connected-topic paths
-- strict source-block response discipline in tool outputs
-- dedicated clip-finding tool that builds watch-ready URLs from transcript evidence
-
-> **Important**: This only works with the **Claude Desktop app** (downloaded from claude.ai/download). It does not work with the Claude.ai website — the web version cannot access local MCP servers.
-
-### Windows Setup
-
-1. Make sure the backend is running at `http://127.0.0.1:8000`
-
-2. Open Claude Desktop → **Settings → Developer** → click **Edit Config**
-
-3. This opens the config file Claude Desktop actually reads. Replace the contents with:
-
-```json
-{
-  "mcpServers": {
-    "my-second-brain": {
-      "command": "C:\\Users\\YourName\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
-      "args": ["C:\\Users\\YourName\\yoursecondbrain\\backend\\mcp_server.py"]
-    }
-  }
-}
-```
-
-Replace `YourName` with your Windows username. To find your exact Python path, run `where python` in PowerShell.
-
-> If your config already has other keys (like `preferences`), keep them — only add the `mcpServers` block, don't replace the whole file.
-
-4. Save the file, then fully quit Claude Desktop - Close Claude Desktop, then open Task Manager, then search for Claude, then right click Claude, then click end task
-
-5. Reopen Claude Desktop and start a new chat. Go to settings, then developer. In the list, **My Second Brain** MCP will be listed there, and it should say "running"
-
-### macOS Setup
-
-1. Make sure the backend is running at `http://127.0.0.1:8000`
-
-2. Open Claude Desktop → **Settings → Developer** → click **Edit Config**
-
-3. Replace the contents with:
-
-```json
-{
-  "mcpServers": {
-    "my-second-brain": {
-      "command": "/absolute/path/to/python3",
-      "args": ["/absolute/path/to/yoursecondbrain/backend/mcp_server.py"]
-    }
-  }
-}
-```
-
-To find your paths, run in Terminal:
-```bash
-which python3
-pwd  # run this from inside the yoursecondbrain folder
-```
-
-Example:
-- command: `/opt/homebrew/bin/python3`
-- args: `/Users/YourName/yoursecondbrain/backend/mcp_server.py`
-
-4. Save the file, fully quit Claude Desktop (Cmd+Q or Claude menu → Quit), then reopen it.
-
-5. Reopen Claude Desktop and start a new chat. Go to settings, then developer. In the list, **My Second Brain** MCP will be listed there, and it should say "running"
-
-### What Claude Can Do via MCP
-
-- **Holistic multimodal search**: Find relevant content across all your files by semantic meaning
-- **Entity & connection tracing**: Explore relationships between people, organizations, and concepts
-- **Grounded answering**: Retrieve context and return answers with source citations
-- **Video clip generation**: From a semantic query, generate timestamp-precise, playable clips
-- **File exploration**: Browse your knowledge base structure, topics, and relationships
-
-### In-App Chat Modes
-
-- **Gemini mode**: Fast default local retrieval + generation path
-- **Connected Claude mode**: OAuth-connected Claude account support for chat responses inside the app
-
-**Example MCP Workflows:**
-- *"Search my knowledge base for documents about machine learning and show me how they connect"*
-- *"Find a clip from my video where someone discusses authentication, and timestamp it"*
-- *"What are the main entities mentioned across my research files, and which are most connected?"*
-- *"Retrieve the top 3 documents relevant to this question and cite them in your answer"*
 
 ## 🧩 Supported Content Types
 
