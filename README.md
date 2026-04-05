@@ -124,7 +124,7 @@ This framework is adaptable across business documents/IP, SOPs, research, studyi
 
 ### IMPORTANT NOTE
 
-**The most advanced query capabilities - semantic video clip finding, holistic retrieval, and deep entity tracing - run through Claude Desktop + MCP, not the built-in Gemini chat pane.** Setup instructions are in the Quick Start and Manual Installation sections below.
+**The most advanced query capabilities (semantic video clip finding, holistic retrieval, and deep entity tracing) run through Claude Desktop MCP, not the built-in Gemini chat pane.** Setup instructions are in the Quick Start and Manual Installation sections below.
 
 ## 🚀 Quick Start
 
