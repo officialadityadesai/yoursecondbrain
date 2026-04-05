@@ -188,7 +188,7 @@ Claude Desktop is a separate free app that connects to your knowledge base so yo
 
 1. Make sure the backend is running at `http://127.0.0.1:8000`
 2. Open Claude Desktop → **Settings → Developer** → **Edit Config**
-3. Add the following (replace `YourName` with your Windows username — run `where python` in PowerShell to find your exact Python path):
+3. Find your Python path — open CMD and run `where python`. It may show two results. Always use the **first one** (the path under `AppData\Local\Programs\Python\`). Ignore any result that contains `WindowsApps` — that's a fake stub, not a real Python.
 
 ```json
 {
