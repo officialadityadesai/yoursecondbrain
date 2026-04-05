@@ -46,7 +46,7 @@ The framework:
 - **Self-heals old knowledge** using startup backfills that enrich missing entities and video transcripts automatically
 - **Retrieves** grounded answers and information only from your knowledge with neuron-level evidence
 - **Integrates** with Claude MCP to find hidden information in files, retrieve trimmed timestamp-precise video clips, and get grounded answers from your knowledge base
-- **Supports** dual chat intelligence with both Gemini and connected Claude account modes in-app
+- **Supports dual chat intelligence** with both Gemini and connected Claude account modes in-app
 
 This is a **generously feature-rich free framework that you can adapt** to your projects, workflows, product development, knowledge management, customer support, personal learning, and team collaboration initiatives. In practice, this means local, unlimited ingestion, a unified multimodal semantic space, node-focused knowledge visualisation, token-efficient retrieval assembly, and Claude MCP as a native memory interface with source-based answers.
 
@@ -107,25 +107,16 @@ flowchart LR
 
 <div style="background: linear-gradient(135deg, #12151f 0%, #1d2230 100%); border-radius: 14px; padding: 22px; margin-top: 10px; border-left: 4px solid #6E78BF;">
 
-- **Multimodal Ingestion**: Text, PDFs, Word docs, images, and videos - one unified pipeline
-- **Context-Steered Ingestion**: Attach optional upload context per batch so the system indexes files with your intended meaning alongside raw content
-- **Memory Integrity Controls**: Duplicate filename and exact content-hash blocking keeps your graph clean and non-redundant
-- **Queue-Safe Processing**: Serialised ingestion with queued/processing/done states prevents rate-limit spikes and keeps ingestion stable at scale
-- **Knowledge Graph Visualisation**: See relationships between files and concepts in an interactive Obsidian-style nodal graph
-- **Entity Relationship Intelligence**: Auto-extracted people, organisations, tools, concepts, and explicit relationships are linked across files
-- **Semantic Retrieval**: Find relevant content by meaning and keyword signals across all file types
-- **Holistic Retrieval Engine**: Semantic search, keyword exact matches, full-file reconstruction, and topic-neighbour expansion in one retrieval flow
-- **Citation-Grounded Answers**: Chat interface returns answers with linked sources and citations
-- **Claude MCP Integration**: The app becomes your second brain. Claude is your voice - search by description, retrieve timestamp-precise clips, trace connections, and get grounded answers from your entire knowledge base in chat
-- **Self-Healing Enrichment**: On startup, the system backfills missing entities/transcripts for previously ingested files
-- **Token Optimisation**: Intelligent chunking, context blending, and retrieval discipline to minimise token waste and limit usage
-- **Video Retrieval**: Automated transcript timestamps, semantic line matching, and allows you to retrieve trimmed clips from longer video uploads to find specific moments with natural language
-- **Private by Design**: Everything stays local - no re-uploading, no external indexing
-- **Brain Dump Workspace**: In-app markdown note editor with a toolbar, autosave every 5 seconds, and automatic indexing into your knowledge base so your own written notes are fully searchable and connected in the graph alongside your uploaded files
-- **Interactive Graph Control Surface**: Tune node distance, center force, repel force, link thickness, and label visibility in real time from a panel inside the graph
-- **Shareable Node Deep-Links**: Open specific knowledge nodes directly via URL, useful for sharing or bookmarking a specific file or concept in your brain
-- **Rich Multimodal Preview Layer**: PDF, DOCX (HTML conversion), image, and video previews in a single modal workspace, with rename support built in
-- **Evidence Explorer**: Every answer includes linked citations that open the exact source file and surface the relevant passage directly, so you never have to hunt for where something came from or take an answer on faith
+- **One Pipeline for Everything**: Upload text files, PDFs, Word docs, images, and videos together - the system processes each one correctly without any setup changes per file type
+- **Context-Steered Indexing**: Attach a label to any upload batch describing what the files are for, and the system indexes them with that intent baked in, so searches return results that match your meaning, not just your words
+- **Knowledge Graph Visualisation**: Every file, concept, person, and relationship in your knowledge base is mapped as an interactive visual graph you can explore and navigate, making it easy to see how ideas and files connect across your entire library
+- **Intelligent Retrieval**: Ask a question and the system searches by meaning across all file types at once, pulling the most relevant content whether it lives in a PDF, an image description, or a video transcript
+- **Answers with Proof**: Every response in the chat comes with linked citations that open the exact source file and show you the specific passage the answer came from, so you can verify anything instantly without digging
+- **Claude MCP Integration**: Connect your knowledge base directly to Claude Desktop so you can ask Claude questions about your files in natural language, retrieve exact video clips by describing what happens in them, and get answers grounded in your own content - without re-uploading anything
+- **Video Clip Retrieval**: Upload a long video once and ask for specific moments in plain language. The system finds the right timestamp and returns a trimmed, playable clip - no manual scrubbing needed
+- **Brain Dump Workspace**: Write notes directly in the app and they are automatically indexed into your knowledge base, searchable, and connected in the graph alongside your uploaded files
+- **Self-Maintaining Knowledge**: The system detects files that are missing entities or video transcripts and enriches them automatically in the background, so your knowledge base stays complete without any manual re-processing
+- **Fully Private**: Everything runs on your machine. No files leave your computer, no content is indexed externally, and nothing is re-uploaded between sessions
 
 </div>
 
@@ -215,8 +206,6 @@ python scripts\setup_mcp.py
 
 > If your config already has other entries, keep them - only add the `mcpServers` block, don't replace the whole file.
 
----
-
 ## 🛠️ Manual Installation
 
 Prefer to set things up yourself? Follow the steps below for your OS.
@@ -227,8 +216,6 @@ Prefer to set things up yourself? Follow the steps below for your OS.
 - Node.js 18+
 - Gemini API key: https://aistudio.google.com/app/apikey
 - FFmpeg (required for video clipping)
-
----
 
 ### Windows
 
@@ -352,8 +339,6 @@ powershell -NoProfile -ExecutionPolicy Bypass -File ".\scripts\start-background.
 cd "$env:USERPROFILE\yoursecondbrain"
 .\install.bat
 ```
-
----
 
 ### macOS
 
@@ -536,8 +521,6 @@ cat "$HOME/yoursecondbrain/scripts/macos-backend.err.log"
 **MCP hammer icon not showing in Claude Desktop**
 
 Make sure you pressed **Cmd+Q** to fully quit Claude Desktop, not just closed the window. Reopen it and start a fresh chat.
-
----
 
 ## 🧩 Supported Content Types
 
