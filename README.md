@@ -1,8 +1,8 @@
 <div align="center">
 
-<img src="./Gradient%20lightning%20bolt%20design.png" alt="Your Second Brain" width="140" />
+<img src="./mainbrainicon.png" alt="Your Second Brain" width="140" />
 
-# Your Second Brain: The First Multimodal Knowledge Visualisation & Semantic Retrieval Framework
+# Your Second Brain: A Free, Local Multimodal Knowledge Visualisation & Semantic Retrieval Framework
 
 <div align="center">
         <img src="https://readme-typing-svg.herokuapp.com?font=Share+Tech+Mono&size=24&duration=2800&pause=850&color=7A86C8&center=true&vCenter=true&width=1200&lines=Multimodal+Knowledge+Retrieval+Reimagined;Semantic+Search+Across+Multimodal+Inputs+-+Text%2C+Images%2C+Video%2C+and+Documents;Visualise+Relationships+Between+Ideas+As+An+Interactive+Nodal+Network;Ingest+Once%2C+Query+Forever+Without+Re-uploading+Context;Retrieve+Trimmed+Video+Clips+From+Natural+Language+Queries;Cross-Modal+Intelligence%3A+Find+Connections+Across+All+Content+Types" alt="Typing Animation" />
@@ -30,7 +30,7 @@
 
 ## 🎯 The Problem
 
-**Hitting your AI/API usage limits mid-conversation and losing context about everything is a problem you can't avoid...** Until now. You have a confusing dump of **files scattered everywhere**: PDFs, Word docs, images, videos, notes, etc. Every time you want to ask an AI a question or request about those files, you re-upload the same context, prompts, and files over and over again. Your scarce token budget bleeds away. You can't see how the files relate. You risk hallucinations and context rot with every message you send. You're trapped in a cycle of re-uploading, re-explaining, and re-sending.
+**Hitting your AI/API usage limits mid-conversation and losing context about everything is the biggest problem with ChatGPT, Claude, Gemini, and other popular AI tools.** You also have a confusing dump of **files scattered everywhere**: PDFs, notes, images, videos, and every time you want to ask AI a question/request about those files, you re-upload the same context, prompts, and files over and over again. Your scarce token budget bleeds away. You can't see how the files relate. You risk hallucinations and context rot with every message you send. You're trapped in a cycle of re-uploading, re-explaining, and re-sending.
 
 **With "Your Second Brain", these will be problems of the past.**
 
@@ -40,13 +40,13 @@
 The framework:
 - **Centralises** them in a unified multimodal local vector database
 - **Understands** them semantically across all modalities (text, images, video, documents, etc)
-- **Lets you steer memory formation** with upload context labels that shape embeddings and retrieval intent from day one
+- **Allows** uploading context labels that shape embeddings and retrieval intent from the first upload
 - **Visualises** relationships, ideas, and entities in an interactive nodal knowledge graph
-- **Protects memory quality** with duplicate-name and duplicate-content blocking before ingest
-- **Self-heals old knowledge** using startup backfills that enrich missing entities and video transcripts automatically
+- **Protects** memory quality with duplicate-name and duplicate-content blocking before ingest
+- **Self-heals** old knowledg using startup backfills that enrich missing entities and video transcripts automatically
 - **Retrieves** grounded answers and information only from your knowledge with neuron-level evidence
 - **Integrates** with Claude MCP to find hidden information in files, retrieve trimmed timestamp-precise video clips, and get grounded answers from your knowledge base
-- **Supports dual chat intelligence** with both Gemini and connected Claude account modes in-app
+- **Supports** dual chat intelligence with both Gemini and connected Claude account modes
 
 This is a **generously feature-rich free framework that you can adapt** to your projects, workflows, product development, knowledge management, customer support, personal learning, and team collaboration initiatives. In practice, this means local, unlimited ingestion, a unified multimodal semantic space, node-focused knowledge visualisation, token-efficient retrieval assembly, and Claude MCP as a native memory interface with source-based answers.
 
@@ -107,24 +107,24 @@ flowchart LR
 
 <div style="background: linear-gradient(135deg, #12151f 0%, #1d2230 100%); border-radius: 14px; padding: 22px; margin-top: 10px; border-left: 4px solid #6E78BF;">
 
-- **Multimodal Ingestion Pipeline**: Upload text files, PDFs, Word docs, images, and videos together - the system processes each one correctly without any setup changes per file type
-- **Context-Steered Indexing**: Attach a label to any upload batch describing what the files are for, and the system indexes them with that intent baked in, so searches return results that match your meaning, not just your words
-- **Knowledge Graph Visualisation**: Every file, concept, person, and relationship in your knowledge base is mapped as an interactive visual graph you can explore and navigate, making it easy to see how ideas and files connect across your entire library
-- **Intelligent Retrieval**: Ask a question and the system searches by meaning across all file types at once, pulling the most relevant content whether it lives in a PDF, an image description, or a video transcript
-- **Answers with Proof**: Every response in the chat comes with linked citations that open the exact source file and show you the specific passage the answer came from, so you can verify anything instantly without digging
-- **Claude MCP Integration**: Connect your knowledge base directly to Claude Desktop so you can ask Claude questions about your files in natural language, retrieve exact video clips by describing what happens in them, and get answers grounded in your own content - without re-uploading anything
+- **Multimodal Ingestion Pipeline**: Upload text files, PDFs, Word docs, images, and videos together - the system processes them, regardless of mode, semantically without any setup changes per file type
+- **Context-Steered Indexing**: Attach a label/caption to any upload batch describing what the files are for, and the system indexes them with that intent baked in, so searches return results that match your meaning, not just the words or pixels in the files
+- **Nodal Knowledge Graph Visualisation**: Every file, concept, person, and relationship in your knowledge base is mapped as an interactive visual graph (Just like in Obsidian, but with almost any file type) you can explore and navigate, making it easy to see how ideas and files connect across your entire library
+- **Semantic Retrieval**: Ask a question and the system searches by meaning across all file types at once, pulling the most relevant content whether it lives in a PDF, an image, or a video
+- **Answers with Proof**: Every response in the chat comes with linked citations that open the exact source file and show you the specific passages the answer came from, so you can verify anything instantly without digging
+- **Claude MCP Integration**: Connect your knowledge base directly to Claude Desktop so you can ask Claude questions about your files in natural language, retrieve exact, auto-trimmed video clips by describing what happens in them, and get answers grounded in your own content - without re-uploading anything
 - **Video Clip Retrieval**: Upload a long video once and ask for specific moments in plain language. The system finds the right timestamp and returns a trimmed, playable clip - no manual scrubbing needed
 - **Brain Dump Workspace**: Write notes directly in the app and they are automatically indexed into your knowledge base, searchable, and connected in the graph alongside your uploaded files
-- **Self-Maintaining Knowledge**: The system detects files that are missing entities or video transcripts and enriches them automatically in the background, so your knowledge base stays complete without any manual re-processing
-- **Fully Private**: Everything runs on your machine. No files leave your computer, no content is indexed externally, and nothing is re-uploaded between sessions
+- **Self-Maintaining Knowledge**: The system detects files that are missing entities or metadata and enriches them automatically in the background, so your knowledge base stays complete without any manual re-processing
+- **Local, Private, and Free to Run**: Everything runs on your machine at no cost beyond your free Gemini API key. No files leave your computer, no content is indexed externally, and nothing needs to be re-uploaded between sessions
 
 </div>
 
-This framework is adaptable across business IP, SOPs, research, studying, customer support, personal knowledge management, team collaboration, media analysis, and compliance-heavy workflows where persistent multimodal retrieval and explainable evidence matter.
+This framework is adaptable across business documents/IP, SOPs, research, studying, customer support, personal knowledge management, team collaboration, media analysis, and compliance-heavy workflows where persistent multimodal retrieval and explainable evidence matter.
 
-### Where Advanced Query Features Run
+### IMPORTANT NOTE
 
-The most advanced query capabilities - semantic video clip finding, holistic retrieval, and deep entity tracing - run through **Claude Desktop + MCP**, not the built-in Gemini chat pane. Setup instructions are in the Quick Start and Manual Installation sections below.
+**The most advanced query capabilities - semantic video clip finding, holistic retrieval, and deep entity tracing - run through Claude Desktop + MCP, not the built-in Gemini chat pane.** Setup instructions are in the Quick Start and Manual Installation sections below.
 
 ## 🚀 Quick Start
 
@@ -132,9 +132,7 @@ The easiest way to get set up - Claude Code installs everything, configures the 
 
 ### What you need first
 
-**A Claude plan that includes Claude Code** - Pro, Max, Team, or Enterprise. Claude Code is not available on the free plan.
-
-If you're not sure which plan you have, go to [claude.ai](https://claude.ai) and check your account. To upgrade, visit [claude.ai/upgrade](https://claude.ai/upgrade).
+**A Claude plan that includes Claude Code** - Pro, Max, Team, or Enterprise. Claude Code is not available on the free plan. If you're not sure which plan you have, go to [claude.ai](https://claude.ai) and check your account. To upgrade, visit [claude.ai/upgrade](https://claude.ai/upgrade).
 
 ### Get Claude Code
 
@@ -151,7 +149,7 @@ Claude Code works inside VS Code - install it as an extension:
 Open Claude Code, start a new conversation, and paste this prompt exactly:
 
 ```
-Clone this repo: https://github.com/officialadityadesai/yoursecondbrain — then read the CLAUDE-CODE-BLUEPRINT.md file in the root of the cloned repo and follow every step in it exactly to set up the app on my computer. Do everything yourself — I should only need to paste my Gemini API key when you ask for it. Walk me through anything you need from me in plain English.
+Clone this repo: https://github.com/officialadityadesai/yoursecondbrain - then read the CLAUDE-CODE-BLUEPRINT.md file in the root of the cloned repo and follow every step in it exactly to set up the app on my computer. Do everything yourself - I should only need to paste my Gemini API key when you ask for it. Walk me through anything you need from me in plain English.
 ```
 
 Claude Code will:
@@ -164,7 +162,7 @@ Claude Code will:
 - Set up auto-start so the app runs silently on every login
 - Configure Claude Desktop MCP if you have it installed (or walk you through installing it)
 
-When it's done, open **http://127.0.0.1:8000** - your second brain is ready.
+When it's done, open **http://127.0.0.1:8000**, and your second brain is ready.
 
 ### Claude Desktop MCP (quick start)
 
