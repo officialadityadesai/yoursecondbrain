@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="./mainbrainicon.png" alt="Your Second Brain" width="140" />
+<img src="./mainbrainicon.png" alt="Your Second Brain" width="80" />
 
 # Your Second Brain: A Free, Local Multimodal Knowledge Visualisation & Semantic Retrieval Framework
 
