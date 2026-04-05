@@ -30,24 +30,25 @@
 
 ## 🎯 The Problem
 
-**Hitting your AI/API usage limits mid-conversation and losing context about everything is the biggest problem about ChatGPT, Claude, Gemini, and other AI tools.** You also have a confusing dump of **files scattered everywhere**: PDFs, Word docs, images, videos, notes. Every time you want to ask an AI a question or request about those files, you re-upload the same context, prompts, and files over and over again. Your token budget bleeds away. You can't see how the files relate. You risk hallucinations and context rot with every message you send. You're trapped in a cycle of re-uploading, re-explaining, and re-sending.
+**Hitting your AI/API usage limits mid-conversation and losing context about everything is a problem you can't avoid...** Until now. You have a confusing dump of **files scattered everywhere**: PDFs, Word docs, images, videos, notes, etc. Every time you want to ask an AI a question or request about those files, you re-upload the same context, prompts, and files over and over again. Your scarce token budget bleeds away. You can't see how the files relate. You risk hallucinations and context rot with every message you send. You're trapped in a cycle of re-uploading, re-explaining, and re-sending.
 
 **With "Your Second Brain", these will be problems of the past.**
 
 ## 💡 Core Idea
 
-**Upload your files once**. 
-The application:
-- **Centralises** them in a multimodal local vector database
-- **Understands** them semantically across all modalities (text, **images, video,** documents, etc)
-- **Allows** you to add context labels that shape embeddings and retrieval intent from uploading knowledge
+**Upload your files once**.
+The framework:
+- **Centralises** them in a unified multimodal local vector database
+- **Understands** them semantically across all modalities (text, images, video, documents, etc)
+- **Lets you steer memory formation** with upload context labels that shape embeddings and retrieval intent from day one
 - **Visualises** relationships, ideas, and entities in an interactive nodal knowledge graph
-- **Protects** memory quality with duplicate-name and duplicate-content blocking before ingest
-- **Self-heals** old knowledge using startup backfills that enrich missing entities and video transcripts automatically
+- **Protects memory quality** with duplicate-name and duplicate-content blocking before ingest
+- **Self-heals old knowledge** using startup backfills that enrich missing entities and video transcripts automatically
+- **Retrieves** grounded answers and information only from your knowledge with neuron-level evidence
 - **Integrates** with Claude MCP to find hidden information in files, retrieve trimmed timestamp-precise video clips, and get grounded answers from your knowledge base
-- **Supports dual chat intelligence** with both Gemini API and connected Claude account modes
+- **Supports dual chat intelligence** with both Gemini and connected Claude account modes in-app
 
-This is a **generously feature-rich free framework that you can adapt** to your projects, workflows, school/learning, product development, knowledge management, customer support, personal learning, and team collaboration initiatives. In practice, this means local, unlimited ingestion, a unified multimodal semantic space, node-focused knowedge visualisation, token-efficient retrieval assembly, and Claude MCP as a native memory interface with source-based answers.
+This is a **generously feature-rich free framework that you can adapt** to your projects, workflows, product development, knowledge management, customer support, personal learning, and team collaboration initiatives. In practice, this means local, unlimited ingestion, a unified multimodal semantic space, node-focused knowledge visualisation, token-efficient retrieval assembly, and Claude MCP as a native memory interface with source-based answers.
 
 ## 🏗️ How It Works
 
@@ -106,50 +107,47 @@ flowchart LR
 
 <div style="background: linear-gradient(135deg, #12151f 0%, #1d2230 100%); border-radius: 14px; padding: 22px; margin-top: 10px; border-left: 4px solid #6E78BF;">
 
-- **🔄 Multimodal Ingestion**: Text, PDFs, Word docs, images, and videos - one unified pipeline
-- **🧭 Context-Steered Ingestion**: Attach optional upload context per batch so the system indexes files with your intended meaning alongside raw content
-- **🛡️ Memory Integrity Controls**: Duplicate filename and exact content-hash blocking keeps your graph clean and non-redundant
-- **⛓️ Queue-Safe Processing**: Serialised ingestion with queued/processing/done states prevents rate-limit spikes and keeps ingestion stable at scale
-- **🧠 Knowledge Graph Visualization**: See relationships between files and concepts in an interactive Obsidian-style nodal graph
-- **🕸️ Entity Relationship Intelligence**: Auto-extracted people, organisations, tools, concepts, and explicit relationships are linked across files
-- **🔍 Semantic Retrieval**: Find relevant content by meaning and keyword signals across all file types
-- **🧾 Holistic Retrieval Engine**: Semantic search, keyword exact matches, full-file reconstruction, and topic-neighbour expansion in one retrieval flow
-- **📝 Citation-Grounded Answers**: Chat interface returns answers with linked sources and citations
-- **🤝 Claude MCP Integration**: The app becomes your second brain. Claude is your voice - search by description, retrieve timestamp-precise clips, trace connections, and get grounded answers from your entire knowledge base in chat
-- **🔁 Self-Healing Enrichment**: On startup, the system backfills missing entities/transcripts for previously ingested files
-- **⚡ Token Optimization**: Intelligent chunking, context blending, and retrieval discipline to minimise token waste and limit usage
-- **🎬 Video Retrieval**: Automated transcript timestamps, semantic line matching, and allows you to retrieve trimmed clips from longer video uploads to find specific moments with natural language
-- **🔒 Private by Design**: Everything stays local - no re-uploading, no external indexing
+- **Multimodal Ingestion**: Text, PDFs, Word docs, images, and videos - one unified pipeline
+- **Context-Steered Ingestion**: Attach optional upload context per batch so the system indexes files with your intended meaning alongside raw content
+- **Memory Integrity Controls**: Duplicate filename and exact content-hash blocking keeps your graph clean and non-redundant
+- **Queue-Safe Processing**: Serialised ingestion with queued/processing/done states prevents rate-limit spikes and keeps ingestion stable at scale
+- **Knowledge Graph Visualisation**: See relationships between files and concepts in an interactive Obsidian-style nodal graph
+- **Entity Relationship Intelligence**: Auto-extracted people, organisations, tools, concepts, and explicit relationships are linked across files
+- **Semantic Retrieval**: Find relevant content by meaning and keyword signals across all file types
+- **Holistic Retrieval Engine**: Semantic search, keyword exact matches, full-file reconstruction, and topic-neighbour expansion in one retrieval flow
+- **Citation-Grounded Answers**: Chat interface returns answers with linked sources and citations
+- **Claude MCP Integration**: The app becomes your second brain. Claude is your voice - search by description, retrieve timestamp-precise clips, trace connections, and get grounded answers from your entire knowledge base in chat
+- **Self-Healing Enrichment**: On startup, the system backfills missing entities/transcripts for previously ingested files
+- **Token Optimisation**: Intelligent chunking, context blending, and retrieval discipline to minimise token waste and limit usage
+- **Video Retrieval**: Automated transcript timestamps, semantic line matching, and allows you to retrieve trimmed clips from longer video uploads to find specific moments with natural language
+- **Private by Design**: Everything stays local - no re-uploading, no external indexing
+- **Brain Dump Workspace**: In-app markdown note editor with a toolbar, autosave every 5 seconds, and automatic indexing into your knowledge base so your own written notes are fully searchable and connected in the graph alongside your uploaded files
+- **Interactive Graph Control Surface**: Tune node distance, center force, repel force, link thickness, and label visibility in real time from a panel inside the graph
+- **Shareable Node Deep-Links**: Open specific knowledge nodes directly via URL, useful for sharing or bookmarking a specific file or concept in your brain
+- **Rich Multimodal Preview Layer**: PDF, DOCX (HTML conversion), image, and video previews in a single modal workspace, with rename support built in
+- **Evidence Explorer**: Every answer includes linked citations that open the exact source file and surface the relevant passage directly, so you never have to hunt for where something came from or take an answer on faith
 
 </div>
 
 This framework is adaptable across business IP, SOPs, research, studying, customer support, personal knowledge management, team collaboration, media analysis, and compliance-heavy workflows where persistent multimodal retrieval and explainable evidence matter.
 
-### 🧩 Additional Power Features Already In The App
+### Where Advanced Query Features Run
 
-- **Interactive graph control surface**: tune node distance, center force, repel force, link thickness, and label visibility in real time
-- **Persistent graph state**: layout and graph settings are saved and restored between sessions
-- **Shareable node deep-links**: open specific knowledge nodes directly via URL path/query links
-- **Rich multimodal preview layer**: PDF, DOCX (HTML conversion), image, and video previews in a single modal workspace
-- **Evidence explorer UX**: citations open source previews with highlighted quotes for rapid verification
-
-### ⚠️ Important: Where Advanced Query Features Run
-
-The most advanced query capabilities — semantic video clip finding, holistic retrieval, and deep entity tracing — run through **Claude Desktop + MCP**, not the built-in Gemini chat pane. Setup instructions are in the Quick Start and Manual Installation sections below.
+The most advanced query capabilities - semantic video clip finding, holistic retrieval, and deep entity tracing - run through **Claude Desktop + MCP**, not the built-in Gemini chat pane. Setup instructions are in the Quick Start and Manual Installation sections below.
 
 ## 🚀 Quick Start
 
-The easiest way to get set up — Claude Code installs everything, configures the app, and wires up Claude Desktop for you automatically. You just paste one prompt and answer one question.
+The easiest way to get set up - Claude Code installs everything, configures the app, and wires up Claude Desktop for you automatically. You just paste one prompt and answer one question.
 
 ### What you need first
 
-**A Claude plan that includes Claude Code** — Pro, Max, Team, or Enterprise. Claude Code is not available on the free plan.
+**A Claude plan that includes Claude Code** - Pro, Max, Team, or Enterprise. Claude Code is not available on the free plan.
 
 If you're not sure which plan you have, go to [claude.ai](https://claude.ai) and check your account. To upgrade, visit [claude.ai/upgrade](https://claude.ai/upgrade).
 
 ### Get Claude Code
 
-Claude Code works inside VS Code — install it as an extension:
+Claude Code works inside VS Code - install it as an extension:
 
 1. Open VS Code
 2. Click the Extensions icon in the left sidebar (or press `Ctrl+Shift+X` on Windows / `Cmd+Shift+X` on Mac)
@@ -175,46 +173,31 @@ Claude Code will:
 - Set up auto-start so the app runs silently on every login
 - Configure Claude Desktop MCP if you have it installed (or walk you through installing it)
 
-When it's done, open **http://127.0.0.1:8000** — your second brain is ready.
+When it's done, open **http://127.0.0.1:8000** - your second brain is ready.
 
 ### Claude Desktop MCP (quick start)
 
-Claude Desktop is a separate free app that connects to your knowledge base so you can ask Claude questions about your files directly in chat. Claude Code sets this up automatically during the prompt above — but if you need to do it manually:
+Claude Desktop is a separate free app that connects to your knowledge base so you can ask Claude questions about your files directly in chat. Claude Code sets this up automatically during the prompt above - but if you need to do it manually:
 
 > **Important:** This requires the [Claude Desktop app](https://claude.ai/download), not the Claude website. The website cannot connect to local MCP servers.
 
 **Windows:**
 
 1. Make sure the backend is running at `http://127.0.0.1:8000`
-2. Open Claude Desktop → **Settings → Developer** → **Edit Config**
-3. Find your Python path — open CMD and run `where python`. It may show two results. Always use the **first one** (the path under `AppData\Local\Programs\Python\`). Ignore any result that contains `WindowsApps` — that's a fake stub, not a real Python.
+2. Open CMD and run:
 
-```json
-{
-  "mcpServers": {
-    "my-second-brain": {
-      "command": "C:\\Users\\YourName\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
-      "args": ["C:\\Users\\YourName\\yoursecondbrain\\backend\\mcp_server.py"]
-    }
-  }
-}
+```cmd
+python scripts\setup_mcp.py
 ```
 
-4. Save the file. Right-click the Claude icon in the system tray → **Quit** (closing the window is not enough). Reopen Claude Desktop.
-5. Start a new chat — look for the hammer icon (🔨) near the message box. Click it and **My Second Brain** will be listed.
+3. Right-click the Claude icon in the system tray, click **Quit** (closing the window is not enough). Reopen Claude Desktop.
+4. Start a new chat - look for the hammer icon (🔨) near the message box. Click it and **My Second Brain** will be listed.
 
 **macOS:**
 
 1. Make sure the backend is running at `http://127.0.0.1:8000`
-2. Open Claude Desktop → **Settings → Developer** → **Edit Config**
-3. Find your paths first — run these in Terminal:
-
-```bash
-which python3   # e.g. /Users/YourName/yoursecondbrain/.venv/bin/python
-pwd             # run from inside the yoursecondbrain folder
-```
-
-4. Add the following (substitute your actual paths):
+2. Open Claude Desktop, go to **Settings - Developer**, and click **Edit Config**
+3. Add the following, replacing `YourName` with your actual macOS username:
 
 ```json
 {
@@ -227,10 +210,10 @@ pwd             # run from inside the yoursecondbrain folder
 }
 ```
 
-5. Save the file. Press **Cmd+Q** to fully quit Claude Desktop, then reopen it.
-6. Start a new chat — look for the hammer icon (🔨) near the message box. Click it and **My Second Brain** will be listed.
+4. Press **Cmd+Q** to fully quit Claude Desktop, then reopen it.
+5. Start a new chat - look for the hammer icon (🔨) near the message box. Click it and **My Second Brain** will be listed.
 
-> If your config already has other entries, keep them — only add the `mcpServers` block, don't replace the whole file.
+> If your config already has other entries, keep them - only add the `mcpServers` block, don't replace the whole file.
 
 ---
 
@@ -245,14 +228,18 @@ Prefer to set things up yourself? Follow the steps below for your OS.
 - Gemini API key: https://aistudio.google.com/app/apikey
 - FFmpeg (required for video clipping)
 
-### Install prerequisites (Windows)
+---
+
+### Windows
+
+#### Install prerequisites
 
 1. Install Python 3.10+:
-        - Download from: https://www.python.org/downloads/windows/
-        - During install, tick **Add Python to PATH**.
+   - Download from: https://www.python.org/downloads/windows/
+   - During install, tick **Add Python to PATH**.
 
 2. Install Node.js 18+:
-        - Download LTS from: https://nodejs.org/en/download
+   - Download LTS from: https://nodejs.org/en/download
 
 3. Install FFmpeg:
 
@@ -268,9 +255,9 @@ node -v
 ffmpeg -version
 ```
 
-### Windows (step-by-step)
+#### Setup
 
-Goal: after setup, open **http://127.0.0.1:8000** any time after login — no manual start needed.
+Goal: after setup, open **http://127.0.0.1:8000** any time after login - no manual start needed.
 
 1. Open PowerShell and clone the repo:
 
@@ -333,19 +320,19 @@ Verify:
 Get-ScheduledTask -TaskName "MySecondBrain"
 ```
 
-### Windows — Claude Desktop MCP
+#### Claude Desktop MCP
 
 1. Make sure the backend is running at `http://127.0.0.1:8000`
-2. Run the MCP setup script — it writes the config automatically:
+2. Run the MCP setup script - it writes the config automatically:
 
 ```powershell
 python scripts\setup_mcp.py
 ```
 
-3. Right-click the Claude icon in the system tray → **Quit**. Reopen Claude Desktop.
-4. Start a new chat and look for the hammer icon (🔨) — **My Second Brain** will be listed.
+3. Right-click the Claude icon in the system tray, click **Quit**. Reopen Claude Desktop.
+4. Start a new chat and look for the hammer icon (🔨) - **My Second Brain** will be listed.
 
-#### Windows troubleshooting
+#### Troubleshooting
 
 **Error: `Register-ScheduledTask : Access is denied`**
 Reopen PowerShell as Administrator and rerun step 6.
@@ -368,7 +355,9 @@ cd "$env:USERPROFILE\yoursecondbrain"
 
 ---
 
-### Install prerequisites (macOS)
+### macOS
+
+#### Install prerequisites
 
 1. Install Homebrew if not already installed: https://brew.sh
 
@@ -384,7 +373,9 @@ brew install python node ffmpeg
 python3 -V && node -v && ffmpeg -version
 ```
 
-### macOS (step-by-step)
+#### Setup
+
+Goal: after setup, open **http://127.0.0.1:8000** any time after login - no manual start needed.
 
 1. Open Terminal and clone the repo:
 
@@ -394,20 +385,15 @@ git clone https://github.com/officialadityadesai/yoursecondbrain.git
 cd yoursecondbrain
 ```
 
-2. Create and activate a virtual environment:
+2. Create a virtual environment and install backend dependencies:
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
+pip install -r backend/requirements.txt
 ```
 
-3. Install backend dependencies:
-
-```bash
-python3 -m pip install -r backend/requirements.txt
-```
-
-4. Install frontend dependencies and build:
+3. Install frontend dependencies and build:
 
 ```bash
 cd frontend
@@ -416,7 +402,7 @@ npm run build
 cd ..
 ```
 
-5. Add your Gemini API key:
+4. Add your Gemini API key:
 
 ```bash
 cp .env.example .env
@@ -428,20 +414,23 @@ Edit `.env` and set:
 GEMINI_API_KEY=your_key_here
 ```
 
-6. Start the backend:
+5. Start the backend:
 
 ```bash
+source .venv/bin/activate
 cd backend
-UVICORN_HOST=127.0.0.1 UVICORN_PORT=8000 python -m uvicorn main:app
+uvicorn main:app --host 127.0.0.1 --port 8000
 ```
 
-Open **http://127.0.0.1:8000** and confirm it loads.
+Open **http://127.0.0.1:8000** and confirm it loads. Press `Ctrl+C` to stop once confirmed.
 
-7. Enable auto-start on login:
+6. Enable auto-start on login. Run this entire block in one go from the repo root (not from inside `backend/`):
 
 ```bash
+REPO="$HOME/yoursecondbrain"
 mkdir -p "$HOME/Library/LaunchAgents"
-cat > "$HOME/Library/LaunchAgents/com.yoursecondbrain.backend.plist" <<'PLIST'
+
+cat > "$HOME/Library/LaunchAgents/com.yoursecondbrain.backend.plist" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -450,50 +439,70 @@ cat > "$HOME/Library/LaunchAgents/com.yoursecondbrain.backend.plist" <<'PLIST'
         <string>com.yoursecondbrain.backend</string>
         <key>ProgramArguments</key>
         <array>
-                <string>/bin/zsh</string>
-                <string>-lc</string>
-                <string>cd "$HOME/yoursecondbrain/backend"; source "$HOME/yoursecondbrain/.venv/bin/activate"; UVICORN_HOST=127.0.0.1 UVICORN_PORT=8000 python -m uvicorn main:app</string>
+                <string>$REPO/.venv/bin/python</string>
+                <string>-m</string>
+                <string>uvicorn</string>
+                <string>main:app</string>
+                <string>--host</string>
+                <string>127.0.0.1</string>
+                <string>--port</string>
+                <string>8000</string>
         </array>
+        <key>WorkingDirectory</key>
+        <string>$REPO/backend</string>
+        <key>EnvironmentVariables</key>
+        <dict>
+                <key>GEMINI_API_KEY</key>
+                <string>$(grep GEMINI_API_KEY "$REPO/.env" | cut -d= -f2- | tr -d '[:space:]')</string>
+        </dict>
         <key>RunAtLoad</key>
         <true/>
         <key>KeepAlive</key>
         <true/>
-        <key>WorkingDirectory</key>
-        <string>$HOME/yoursecondbrain/backend</string>
         <key>StandardOutPath</key>
-        <string>$HOME/yoursecondbrain/scripts/macos-backend.out.log</string>
+        <string>$REPO/scripts/macos-backend.out.log</string>
         <key>StandardErrorPath</key>
-        <string>$HOME/yoursecondbrain/scripts/macos-backend.err.log</string>
+        <string>$REPO/scripts/macos-backend.err.log</string>
 </dict>
 </plist>
 PLIST
 
-launchctl bootout "gui/$(id -u)"/com.yoursecondbrain.backend 2>/dev/null || true
+launchctl bootout "gui/$(id -u)/com.yoursecondbrain.backend" 2>/dev/null || true
 launchctl bootstrap "gui/$(id -u)" "$HOME/Library/LaunchAgents/com.yoursecondbrain.backend.plist"
-launchctl enable "gui/$(id -u)"/com.yoursecondbrain.backend
-launchctl kickstart -k "gui/$(id -u)"/com.yoursecondbrain.backend
+launchctl enable "gui/$(id -u)/com.yoursecondbrain.backend"
+launchctl kickstart -k "gui/$(id -u)/com.yoursecondbrain.backend"
 ```
 
-Verify:
+Verify it started:
 
 ```bash
-launchctl print "gui/$(id -u)/com.yoursecondbrain.backend" | grep state
+sleep 3
 lsof -i :8000
 ```
 
-### macOS — Claude Desktop MCP
+You should see a Python process listening on port 8000. Open **http://127.0.0.1:8000** to confirm.
+
+#### Claude Desktop MCP
 
 1. Make sure the backend is running at `http://127.0.0.1:8000`
-2. Run the MCP setup script — it writes the config automatically:
+2. Open Claude Desktop, go to **Settings - Developer**, and click **Edit Config**
+3. Add the following, replacing `YourName` with your actual macOS username (run `echo $USER` in Terminal if unsure):
 
-```bash
-.venv/bin/python scripts/setup_mcp.py
+```json
+{
+  "mcpServers": {
+    "my-second-brain": {
+      "command": "/Users/YourName/yoursecondbrain/.venv/bin/python",
+      "args": ["/Users/YourName/yoursecondbrain/backend/mcp_server.py"]
+    }
+  }
+}
 ```
 
-3. Press **Cmd+Q** to fully quit Claude Desktop, then reopen it.
-4. Start a new chat and look for the hammer icon (🔨) — **My Second Brain** will be listed.
+4. Press **Cmd+Q** to fully quit Claude Desktop, then reopen it.
+5. Start a new chat and look for the hammer icon (🔨) - **My Second Brain** will be listed.
 
-#### macOS troubleshooting
+#### Troubleshooting
 
 **Error: `python3: command not found`**
 
@@ -512,9 +521,23 @@ brew install node
 ```bash
 cd "$HOME/yoursecondbrain/frontend"
 npm install && npm run build
-cd ../backend
-UVICORN_HOST=127.0.0.1 UVICORN_PORT=8000 python -m uvicorn main:app
 ```
+
+Then restart the backend.
+
+**LaunchAgent started but app not loading**
+
+Check the error log:
+
+```bash
+cat "$HOME/yoursecondbrain/scripts/macos-backend.err.log"
+```
+
+**MCP hammer icon not showing in Claude Desktop**
+
+Make sure you pressed **Cmd+Q** to fully quit Claude Desktop, not just closed the window. Reopen it and start a fresh chat.
+
+---
 
 ## 🧩 Supported Content Types
 
@@ -546,14 +569,14 @@ yoursecondbrain/
 │   ├── main.py
 │   ├── ingest.py
 │   ├── db.py
-│   ├── watcher.py
 │   └── mcp_server.py
 ├── frontend/
 │   └── src/components/
 │       ├── ChatInterface.jsx
 │       ├── FileManager.jsx
 │       ├── KnowledgeGraph.jsx
-│       └── PreviewModal.jsx
+│       ├── PreviewModal.jsx
+│       └── BrainDumpWorkspace.jsx
 ├── brain_data/
 ├── scripts/
 ├── install.bat
