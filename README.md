@@ -128,399 +128,221 @@ This framework is adaptable across business documents/IP, SOPs, research, studyi
 
 ## 🚀 Quick Start
 
-The easiest way to get set up - Claude Code installs everything, configures the app, and wires up Claude Desktop for you automatically. You just paste one prompt and answer one question.
+The easiest way to get set up. Claude Code walks you through every step — you only need to answer two questions (Docker ready? and your Gemini API key). Everything else is handled for you.
 
-### What you need first
+### What you need
 
-**A Claude plan that includes Claude Code** - Pro, Max, Team, or Enterprise. Claude Code is not available on the free plan. If you're not sure which plan you have, go to [claude.ai](https://claude.ai) and check your account. To upgrade, visit [claude.ai/upgrade](https://claude.ai/upgrade).
+**A Claude plan that includes Claude Code** — Pro, Max, Team, or Enterprise. Claude Code is not available on the free plan. Check your plan at [claude.ai](https://claude.ai) or upgrade at [claude.ai/upgrade](https://claude.ai/upgrade).
 
-If you don't have a paid Claude Plan, scroll down to the Manual Installation section.
+If you don't have a paid Claude plan, use the Manual Installation section below.
 
 ### Get Claude Code
 
-Claude Code works inside VS Code - install it as an extension:
+Claude Code works as a VS Code extension:
 
 1. Open VS Code
-2. Click the Extensions icon in the left sidebar (or press `Ctrl+Shift+X` on Windows / `Cmd+Shift+X` on Mac)
-3. Search for **Claude Code**
-4. Click **Install**
-5. Once installed, click the Claude Code icon in the sidebar and sign in with your Anthropic account
+2. Press `Ctrl+Shift+X` (Windows) or `Cmd+Shift+X` (Mac) to open Extensions
+3. Search for **Claude Code** and click **Install**
+4. Click the Claude Code icon in the sidebar and sign in with your Anthropic account
 
-### Run the setup prompt
+### Run the setup
 
-Open Claude Code, start a new conversation, and paste this prompt exactly:
+Open Claude Code, start a new conversation, and paste this prompt:
 
 ```
-Clone this repo: https://github.com/officialadityadesai/yoursecondbrain - then read the CLAUDE-CODE-BLUEPRINT.md file in the root of the cloned repo and follow every step in it exactly to set up the app on my computer. Do everything yourself - I should only need to paste my Gemini API key when you ask for it. Walk me through anything you need from me in plain English.
+Clone this repo: https://github.com/officialadityadesai/yoursecondbrain - then read the CLAUDE-CODE-BLUEPRINT.md file in the root of the cloned repo and follow every step in it exactly to set up the app on my computer. Walk me through anything you need from me in plain English.
 ```
 
-Claude Code will:
-- Clone the repo
-- Detect your OS (Windows or macOS) and tailor everything to it
-- Install Python, Node.js, and FFmpeg if they're missing
-- Install all dependencies and build the app
-- Pause once to ask for your free Gemini API key, with step-by-step instructions on where to get it
-- Write your config, start the app, and open it in your browser
-- Set up auto-start so the app runs silently on every login
-- Configure Claude Desktop MCP if you have it installed (or walk you through installing it)
-
-When it's done, open **http://127.0.0.1:8000**, and your second brain is ready.
-
-### Claude Desktop MCP (quick start)
-
-Claude Desktop is a separate free app that connects to your knowledge base so you can ask Claude questions about your files directly in chat. Claude Code sets this up automatically during the prompt above - but if you need to do it manually:
-
-> **Important:** This requires the [Claude Desktop app](https://claude.ai/download), not the Claude website. The website cannot connect to local MCP servers.
-
-**Windows:**
-
-1. Make sure the backend is running at `http://127.0.0.1:8000`
-2. Open CMD and run:
-
-```cmd
-python scripts\setup_mcp.py
-```
-
-3. Right-click the Claude icon in the system tray, click **Quit** (closing the window is not enough). Reopen Claude Desktop.
-4. Start a new chat - look for the hammer icon (🔨) near the message box. Click it and **My Second Brain** will be listed.
-
-**macOS:**
-
-1. Make sure the backend is running at `http://127.0.0.1:8000`
-2. Open Claude Desktop, go to **Settings - Developer**, and click **Edit Config**
-3. Add the following, replacing `YourName` with your actual macOS username:
-
-```json
-{
-  "mcpServers": {
-    "my-second-brain": {
-      "command": "/Users/YourName/yoursecondbrain/.venv/bin/python",
-      "args": ["/Users/YourName/yoursecondbrain/backend/mcp_server.py"]
-    }
-  }
-}
-```
-
-4. Press **Cmd+Q** to fully quit Claude Desktop, then reopen it.
-5. Start a new chat - look for the hammer icon (🔨) near the message box. Click it and **My Second Brain** will be listed.
-
-> If your config already has other entries, keep them - only add the `mcpServers` block, don't replace the whole file.
+Claude Code will guide you through installing Docker Desktop (the only prerequisite), cloning the repo, setting up your API key, starting the app, and wiring up Claude Desktop MCP. When it's done, open **http://localhost:8000** and your second brain is ready.
 
 ## 🛠️ Manual Installation
 
-Prefer to set things up yourself? Follow the steps below for your OS.
+No Python, Node.js, or FFmpeg required. The entire app runs inside Docker — Docker Desktop is the only thing you install.
 
-### Prerequisites
+**Works on Windows, macOS, and Linux.**
 
-- Python 3.10+
-- Node.js 18+
-- Gemini API key: https://aistudio.google.com/app/apikey
-- FFmpeg (required for video clipping)
+### Step 1 — Install Docker Desktop
 
-### Windows
+Download and install Docker Desktop from **https://www.docker.com/products/docker-desktop/**
 
-#### Install prerequisites
+- Windows: run the installer, restart your computer when prompted, then open Docker Desktop from the Start menu
+- Mac: drag Docker to Applications, open it, follow the setup prompts
+- Linux: follow the instructions at https://docs.docker.com/desktop/install/linux/
 
-1. Install Python 3.10+:
-   - Download from: https://www.python.org/downloads/windows/
-   - During install, tick **Add Python to PATH**.
+Wait until Docker Desktop shows a green **"Engine running"** status in the bottom-left of its window, or until the whale icon in your system tray (Windows) or menu bar (Mac) appears. This means Docker is ready.
 
-2. Install Node.js 18+:
-   - Download LTS from: https://nodejs.org/en/download
+> Docker Desktop installs everything needed to run containers — you don't need to install Python, Node.js, FFmpeg, or any other dependencies separately.
 
-3. Install FFmpeg:
+### Step 2 — Clone the Repo
 
+Open a terminal and run:
+
+**Windows (PowerShell):**
 ```powershell
-winget install Gyan.FFmpeg
+git clone https://github.com/officialadityadesai/yoursecondbrain.git "$env:USERPROFILE\yoursecondbrain"
+cd "$env:USERPROFILE\yoursecondbrain"
 ```
 
-4. Restart PowerShell, then verify:
-
-```powershell
-python -V
-node -v
-ffmpeg -version
+**macOS / Linux:**
+```bash
+git clone https://github.com/officialadityadesai/yoursecondbrain.git ~/yoursecondbrain
+cd ~/yoursecondbrain
 ```
 
-#### Setup
+If git is not installed:
+- Windows: download from https://git-scm.com/download/win, install with default settings, then reopen PowerShell and retry
+- Mac: running `git` will prompt you to install Xcode Command Line Tools — click Install, wait for it, then retry
 
-Goal: after setup, open **http://127.0.0.1:8000** any time after login - no manual start needed.
+### Step 3 — Add Your Gemini API Key
 
-1. Open PowerShell and clone the repo:
+Get a free Gemini API key from **https://aistudio.google.com/app/apikey** (sign in with a Google account, click Create API key, copy it).
 
-```powershell
-cd "$env:USERPROFILE"
-git clone https://github.com/officialadityadesai/yoursecondbrain.git
-cd .\yoursecondbrain
-```
+Then create your config file:
 
-2. Install all dependencies and build the frontend:
-
-```powershell
-.\install.bat
-```
-
-3. Verify the frontend build exists:
-
-```powershell
-Test-Path ".\frontend\dist\index.html"
-```
-
-If it returns `False`, run:
-
-```powershell
-cd .\frontend
-npm run build
-cd ..
-```
-
-4. Add your Gemini API key:
-
+**Windows:**
 ```powershell
 Copy-Item .env.example .env
 ```
 
-Open `.env` in a text editor and set:
-
-```env
-GEMINI_API_KEY=your_key_here
-```
-
-5. Start the app:
-
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File ".\scripts\start-background.ps1"
-```
-
-Open **http://127.0.0.1:8000** and confirm it loads.
-
-6. Enable auto-start on login (one-time, Admin PowerShell):
-
-```powershell
-cd "$env:USERPROFILE\yoursecondbrain"
-powershell -NoProfile -ExecutionPolicy Bypass -File ".\scripts\create-startup-task.ps1"
-```
-
-Verify:
-
-```powershell
-Get-ScheduledTask -TaskName "MySecondBrain"
-```
-
-#### Claude Desktop MCP
-
-1. Make sure the backend is running at `http://127.0.0.1:8000`
-2. Run the MCP setup script - it writes the config automatically:
-
-```powershell
-python scripts\setup_mcp.py
-```
-
-3. Right-click the Claude icon in the system tray, click **Quit**. Reopen Claude Desktop.
-4. Start a new chat and look for the hammer icon (🔨) - **My Second Brain** will be listed.
-
-#### Troubleshooting
-
-**Error: `Register-ScheduledTask : Access is denied`**
-Reopen PowerShell as Administrator and rerun step 6.
-
-**Browser shows `{"status":"frontend_not_built"}`**
-
-```powershell
-cd "$env:USERPROFILE\yoursecondbrain\frontend"
-npm install && npm run build
-cd ..
-powershell -NoProfile -ExecutionPolicy Bypass -File ".\scripts\start-background.ps1"
-```
-
-**Error: `install.bat is not recognized`**
-
-```powershell
-cd "$env:USERPROFILE\yoursecondbrain"
-.\install.bat
-```
-
-### macOS
-
-#### Install prerequisites
-
-1. Install Homebrew if not already installed: https://brew.sh
-
-2. Install Python, Node.js, and FFmpeg:
-
-```bash
-brew install python node ffmpeg
-```
-
-3. Verify:
-
-```bash
-python3 -V && node -v && ffmpeg -version
-```
-
-#### Setup
-
-Goal: after setup, open **http://127.0.0.1:8000** any time after login - no manual start needed.
-
-1. Open Terminal and clone the repo:
-
-```bash
-cd "$HOME"
-git clone https://github.com/officialadityadesai/yoursecondbrain.git
-cd yoursecondbrain
-```
-
-2. Create a virtual environment and install backend dependencies:
-
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r backend/requirements.txt
-```
-
-3. Install frontend dependencies and build:
-
-```bash
-cd frontend
-npm install
-npm run build
-cd ..
-```
-
-4. Add your Gemini API key:
-
+**macOS / Linux:**
 ```bash
 cp .env.example .env
 ```
 
-Edit `.env` and set:
+Open the `.env` file in any text editor (Notepad, TextEdit, VS Code — anything works) and set your key:
 
-```env
+```
 GEMINI_API_KEY=your_key_here
 ```
 
-5. Start the backend:
+Save and close the file.
 
-```bash
-source .venv/bin/activate
-cd backend
-uvicorn main:app --host 127.0.0.1 --port 8000
+### Step 4 — Start the App
+
+Run this single command from inside the repo folder:
+
+```
+docker compose up -d
 ```
 
-Open **http://127.0.0.1:8000** and confirm it loads. Press `Ctrl+C` to stop once confirmed.
+The `-d` flag runs the app in the background. On first run, Docker downloads the pre-built image — this takes 2–5 minutes depending on your internet speed. You'll see download progress in the terminal. When the command finishes and returns you to the prompt, the app is running.
 
-6. Enable auto-start on login. Run this entire block in one go from the repo root (not from inside `backend/`):
+Verify it's working:
 
-```bash
-REPO="$HOME/yoursecondbrain"
-mkdir -p "$HOME/Library/LaunchAgents"
-
-cat > "$HOME/Library/LaunchAgents/com.yoursecondbrain.backend.plist" <<PLIST
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-        <key>Label</key>
-        <string>com.yoursecondbrain.backend</string>
-        <key>ProgramArguments</key>
-        <array>
-                <string>$REPO/.venv/bin/python</string>
-                <string>-m</string>
-                <string>uvicorn</string>
-                <string>main:app</string>
-                <string>--host</string>
-                <string>127.0.0.1</string>
-                <string>--port</string>
-                <string>8000</string>
-        </array>
-        <key>WorkingDirectory</key>
-        <string>$REPO/backend</string>
-        <key>EnvironmentVariables</key>
-        <dict>
-                <key>GEMINI_API_KEY</key>
-                <string>$(grep GEMINI_API_KEY "$REPO/.env" | cut -d= -f2- | tr -d '[:space:]')</string>
-        </dict>
-        <key>RunAtLoad</key>
-        <true/>
-        <key>KeepAlive</key>
-        <true/>
-        <key>StandardOutPath</key>
-        <string>$REPO/scripts/macos-backend.out.log</string>
-        <key>StandardErrorPath</key>
-        <string>$REPO/scripts/macos-backend.err.log</string>
-</dict>
-</plist>
-PLIST
-
-launchctl bootout "gui/$(id -u)/com.yoursecondbrain.backend" 2>/dev/null || true
-launchctl bootstrap "gui/$(id -u)" "$HOME/Library/LaunchAgents/com.yoursecondbrain.backend.plist"
-launchctl enable "gui/$(id -u)/com.yoursecondbrain.backend"
-launchctl kickstart -k "gui/$(id -u)/com.yoursecondbrain.backend"
+```
+docker compose ps
 ```
 
-Verify it started:
+You should see one container with status `running`. Then open **http://localhost:8000** in your browser — the full app loads with the knowledge graph, chat, file manager, and Brain Dump workspace.
 
-```bash
-sleep 3
-lsof -i :8000
+> **Auto-restart:** because the app runs with `docker compose up -d`, Docker restarts it automatically every time Docker Desktop starts. On Windows and Mac, Docker Desktop starts on login by default. This means after your first setup, the app is just always available at http://localhost:8000 — you don't need to run any commands.
+
+### Step 5 — Set Up Claude Desktop MCP
+
+This connects your knowledge base to Claude Desktop so you can ask Claude questions about your files in any chat, retrieve auto-trimmed video clips, and get grounded answers with citations — without re-uploading anything.
+
+> **Important:** This requires the [Claude Desktop app](https://claude.ai/download), not the Claude website. The website cannot connect to local MCP servers.
+
+The MCP server runs on your machine (outside Docker) and talks to the Docker backend at http://127.0.0.1:8000. It requires Python on your host machine. Check if you have it:
+
+```
+python --version
 ```
 
-You should see a Python process listening on port 8000. Open **http://127.0.0.1:8000** to confirm.
+or
 
-#### Claude Desktop MCP
+```
+python3 --version
+```
 
-1. Make sure the backend is running at `http://127.0.0.1:8000`
-2. Open Claude Desktop, go to **Settings - Developer**, and click **Edit Config**
-3. Add the following, replacing `YourName` with your actual macOS username (run `echo $USER` in Terminal if unsure):
+**If Python is available**, make sure the app is running at http://localhost:8000, then run the setup script from inside the repo folder:
+
+**Windows:**
+```
+python scripts\setup_mcp.py
+```
+
+**macOS / Linux:**
+```
+python3 scripts/setup_mcp.py
+```
+
+The script detects your OS automatically and writes the correct config to Claude Desktop's config file. It will print `[OK] Config written successfully!` when done.
+
+**If Python is not available on your host machine**, you can configure it manually. Find the Claude Desktop config file for your OS:
+
+- Windows: `C:\Users\YourName\AppData\Roaming\Claude\claude_desktop_config.json`
+- macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- Linux: `~/.config/Claude/claude_desktop_config.json`
+
+Create the file if it doesn't exist, or open it if it does. Add the following (if there are already other entries, keep them and only add the `my-second-brain` entry inside `mcpServers`):
 
 ```json
 {
   "mcpServers": {
     "my-second-brain": {
-      "command": "/Users/YourName/yoursecondbrain/.venv/bin/python",
-      "args": ["/Users/YourName/yoursecondbrain/backend/mcp_server.py"]
+      "command": "python",
+      "args": ["FULL_PATH_TO_REPO/backend/mcp_server.py"],
+      "env": { "MSB_BACKEND_URL": "http://127.0.0.1:8000" }
     }
   }
 }
 ```
 
-4. Press **Cmd+Q** to fully quit Claude Desktop, then reopen it.
-5. Start a new chat and look for the hammer icon (🔨) - **My Second Brain** will be listed.
+Replace `FULL_PATH_TO_REPO` with the full path to where you cloned the repo (e.g. `C:\Users\YourName\yoursecondbrain` on Windows or `/Users/YourName/yoursecondbrain` on Mac).
 
-#### Troubleshooting
+After running the script or editing the config manually:
 
-**Error: `python3: command not found`**
+1. **Fully quit Claude Desktop** — this is important, closing the window is not enough:
+   - Windows: right-click the Claude icon in the system tray (bottom-right of taskbar) → **Quit**
+   - Mac: press **Cmd+Q** while Claude Desktop is focused
+2. **Reopen Claude Desktop**
+3. Start a new chat — click the **hammer icon (🔨)** near the message box → **My Second Brain** will be listed with its tools
 
-```bash
-brew install python
+### Step 6 — Verify Everything Works
+
+- Open **http://localhost:8000** — the knowledge graph UI loads
+- Open Claude Desktop, start a new chat, click the hammer icon — **My Second Brain** is listed
+
+Setup is complete.
+
+### Day-to-Day Usage
+
+| Task | How |
+|---|---|
+| Open the app | http://localhost:8000 |
+| Start in background | `docker compose up -d` |
+| Stop | `docker compose down` |
+| View logs | `docker compose logs -f` |
+| Update to latest version | `docker compose pull && docker compose up -d` |
+
+Your files in `brain_data/` and the vector database in `lancedb_data/` live on your machine and survive every restart and update.
+
+### Troubleshooting
+
+**http://localhost:8000 shows `{"status":"frontend_not_built"}`**
+
+The image needs updating. Run:
+```
+docker compose pull && docker compose up -d
 ```
 
-**Error: `node: command not found`**
+**Container exits immediately on startup**
 
-```bash
-brew install node
+Check the logs:
+```
+docker compose logs
 ```
 
-**Browser shows `{"status":"frontend_not_built"}`**
+The most common cause is a missing or invalid Gemini API key in `.env`. Make sure the file exists in the repo root and contains a valid key with no extra spaces.
 
-```bash
-cd "$HOME/yoursecondbrain/frontend"
-npm install && npm run build
-```
+**Port 8000 is already in use**
 
-Then restart the backend.
-
-**LaunchAgent started but app not loading**
-
-Check the error log:
-
-```bash
-cat "$HOME/yoursecondbrain/scripts/macos-backend.err.log"
-```
+Another process is using port 8000. Find and stop it, or open `docker-compose.yml` and change `"8000:8000"` to `"8001:8000"`, then access the app at http://localhost:8001 instead.
 
 **MCP hammer icon not showing in Claude Desktop**
 
-Make sure you pressed **Cmd+Q** to fully quit Claude Desktop, not just closed the window. Reopen it and start a fresh chat.
+Make sure Claude Desktop was fully quit (not just window closed) and reopened. On Windows this means system tray → Quit. On Mac this means Cmd+Q. Then open a fresh chat.
 
 ## 🧩 Supported Content Types
 
