@@ -128,11 +128,11 @@ This framework is adaptable across business documents/IP, SOPs, research, studyi
 
 ## 🚀 Quick Start
 
-The easiest way to get set up. Claude Code walks you through every step — you only need to answer two questions (Docker ready? and your Gemini API key). Everything else is handled for you.
+The easiest way to get set up. Claude Code walks you through every step. You only need to answer two questions (Docker ready? and your Gemini API key). Everything else is handled for you.
 
 ### What you need
 
-**A Claude plan that includes Claude Code** — Pro, Max, Team, or Enterprise. Claude Code is not available on the free plan. Check your plan at [claude.ai](https://claude.ai) or upgrade at [claude.ai/upgrade](https://claude.ai/upgrade).
+**A Claude plan that includes Claude Code** (Pro, Max, Team, or Enterprise). Claude Code is not available on the free plan. Check your plan at [claude.ai](https://claude.ai) or upgrade at [claude.ai/upgrade](https://claude.ai/upgrade).
 
 If you don't have a paid Claude plan, use the Manual Installation section below.
 
@@ -157,11 +157,11 @@ Claude Code will guide you through installing Docker Desktop (the only prerequis
 
 ## 🛠️ Manual Installation
 
-No Python, Node.js, or FFmpeg required. The entire app runs inside Docker — Docker Desktop is the only thing you install.
+No Python, Node.js, or FFmpeg required. The entire app runs inside Docker. Docker Desktop is the only thing you install.
 
 **Works on Windows, macOS, and Linux.**
 
-### Step 1 — Install Docker Desktop
+### Step 1 - Install Docker Desktop
 
 Download and install Docker Desktop from **https://www.docker.com/products/docker-desktop/**
 
@@ -171,9 +171,9 @@ Download and install Docker Desktop from **https://www.docker.com/products/docke
 
 Wait until Docker Desktop shows a green **"Engine running"** status in the bottom-left of its window, or until the whale icon in your system tray (Windows) or menu bar (Mac) appears. This means Docker is ready.
 
-> Docker Desktop installs everything needed to run containers — you don't need to install Python, Node.js, FFmpeg, or any other dependencies separately.
+> Docker Desktop installs everything needed to run containers. You don't need to install Python, Node.js, FFmpeg, or any other dependencies separately.
 
-### Step 2 — Clone the Repo
+### Step 2 - Clone the Repo
 
 Open a terminal and run:
 
@@ -191,9 +191,9 @@ cd ~/yoursecondbrain
 
 If git is not installed:
 - Windows: download from https://git-scm.com/download/win, install with default settings, then reopen PowerShell and retry
-- Mac: running `git` will prompt you to install Xcode Command Line Tools — click Install, wait for it, then retry
+- Mac: running `git` will prompt you to install Xcode Command Line Tools. Click Install, wait for it, then retry.
 
-### Step 3 — Add Your Gemini API Key
+### Step 3 - Add Your Gemini API Key
 
 Get a free Gemini API key from **https://aistudio.google.com/app/apikey** (sign in with a Google account, click Create API key, copy it).
 
@@ -209,7 +209,7 @@ Copy-Item .env.example .env
 cp .env.example .env
 ```
 
-Open the `.env` file in any text editor (Notepad, TextEdit, VS Code — anything works) and set your key:
+Open the `.env` file in any text editor (Notepad, TextEdit, VS Code, anything works) and set your key:
 
 ```
 GEMINI_API_KEY=your_key_here
@@ -217,7 +217,7 @@ GEMINI_API_KEY=your_key_here
 
 Save and close the file.
 
-### Step 4 — Start the App
+### Step 4 - Start the App
 
 Run this single command from inside the repo folder:
 
@@ -225,7 +225,7 @@ Run this single command from inside the repo folder:
 docker compose up -d
 ```
 
-The `-d` flag runs the app in the background. On first run, Docker downloads the pre-built image — this takes 2–5 minutes depending on your internet speed. You'll see download progress in the terminal. When the command finishes and returns you to the prompt, the app is running.
+The `-d` flag runs the app in the background. On first run, Docker downloads the pre-built image. This takes 2-5 minutes depending on your internet speed. You'll see download progress in the terminal. When the command finishes and returns you to the prompt, the app is running.
 
 Verify it's working:
 
@@ -233,13 +233,13 @@ Verify it's working:
 docker compose ps
 ```
 
-You should see one container with status `running`. Then open **http://localhost:8000** in your browser — the full app loads with the knowledge graph, chat, file manager, and Brain Dump workspace.
+You should see one container with status `running`. Then open **http://localhost:8000** in your browser. The full app loads with the knowledge graph, chat, file manager, and Brain Dump workspace.
 
-> **Auto-restart:** because the app runs with `docker compose up -d`, Docker restarts it automatically every time Docker Desktop starts. On Windows and Mac, Docker Desktop starts on login by default. This means after your first setup, the app is just always available at http://localhost:8000 — you don't need to run any commands.
+> **Auto-restart:** because the app runs with `docker compose up -d`, Docker restarts it automatically every time Docker Desktop starts. On Windows and Mac, Docker Desktop starts on login by default. This means after your first setup, the app is always available at http://localhost:8000. You don't need to run any commands.
 
-### Step 5 — Set Up Claude Desktop MCP
+### Step 5 - Set Up Claude Desktop MCP
 
-This connects your knowledge base to Claude Desktop so you can ask Claude questions about your files in any chat, retrieve auto-trimmed video clips, and get grounded answers with citations — without re-uploading anything.
+This connects your knowledge base to Claude Desktop so you can ask Claude questions about your files in any chat, retrieve auto-trimmed video clips, and get grounded answers with citations, without re-uploading anything.
 
 > **Important:** This requires the [Claude Desktop app](https://claude.ai/download), not the Claude website. The website cannot connect to local MCP servers.
 
@@ -289,20 +289,25 @@ Create the file if it doesn't exist, or open it if it does. Add the following (i
 }
 ```
 
-Replace `FULL_PATH_TO_REPO` with the full path to where you cloned the repo (e.g. `C:\Users\YourName\yoursecondbrain` on Windows or `/Users/YourName/yoursecondbrain` on Mac).
+To find the full path to the repo, open a terminal, navigate into the repo folder, and run:
+
+- Windows: `cd` (just type cd and press Enter - it prints the current path)
+- Mac / Linux: `pwd`
+
+Copy that output and paste it in place of `FULL_PATH_TO_REPO`.
 
 After running the script or editing the config manually:
 
-1. **Fully quit Claude Desktop** — this is important, closing the window is not enough:
-   - Windows: right-click the Claude icon in the system tray (bottom-right of taskbar) → **Quit**
+1. **Fully quit Claude Desktop** (closing the window is not enough):
+   - Windows: right-click the Claude icon in the system tray (bottom-right of taskbar) and click **Quit**
    - Mac: press **Cmd+Q** while Claude Desktop is focused
 2. **Reopen Claude Desktop**
-3. Start a new chat — click the **hammer icon (🔨)** near the message box → **My Second Brain** will be listed with its tools
+3. Start a new chat, click the **hammer icon (🔨)** near the message box, and **My Second Brain** will be listed with its tools
 
-### Step 6 — Verify Everything Works
+### Step 6 - Verify Everything Works
 
-- Open **http://localhost:8000** — the knowledge graph UI loads
-- Open Claude Desktop, start a new chat, click the hammer icon — **My Second Brain** is listed
+- Open **http://localhost:8000** and confirm the knowledge graph UI loads
+- Open Claude Desktop, start a new chat, click the hammer icon, and confirm **My Second Brain** is listed
 
 Setup is complete.
 
