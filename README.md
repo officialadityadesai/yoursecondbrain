@@ -241,7 +241,7 @@ The app uses Google's Gemini AI to understand and search your files. You need a 
 2. Sign in with a Google account
 3. If you get redirected to a page about account verification instead of the API key page, look for a blue link that says **"verified your age"** and click it. Follow the steps to verify your age with Google, then go back to the API key link above.
 4. Click **Create API key**
-5. A long key will appear (it starts with `AIza...`). Click the copy button next to it to copy it. Keep this browser tab open — you'll need to paste this key in the next step.
+5. A long key will appear. Click the copy button next to it to copy it. Keep this browser tab open as you'll need to paste this key in the next step.
 
 ---
 
@@ -263,7 +263,7 @@ notepad .env
 ```
 GEMINI_API_KEY=AIzaYourKeyHere
 ```
-4. Press `Ctrl + S` to save, then close Notepad.
+4. Press File, then Save As, then save it as ".env". Delete the old ".env.example" file.
 
 **Mac:**
 
@@ -297,62 +297,108 @@ To confirm the app is running, open your browser and go to:
 
 **http://localhost:8000**
 
-You should see the Your Second Brain app load with a visual knowledge graph. If it loads, you're all set.
+You should see the Your Second Brain app open. If it loads, you're all set.
 
 > From now on, you never need to run this command again. Every time you start your computer and Docker Desktop opens, the app starts automatically in the background. Just go to http://localhost:8000 whenever you want to use it.
 
 ---
 
-### Step 7 - Set Up Claude Desktop MCP (Optional but Recommended)
+### Step 7 - Set Up Claude Desktop MCP
 
 This step connects your knowledge base to the Claude Desktop app so you can ask Claude questions about your files directly in any Claude chat, get cited answers from your own content, and even retrieve trimmed video clips just by describing what's in them.
 
-> This requires the **Claude Desktop app** (the downloadable app from https://claude.ai/download), not the Claude website. The website cannot connect to local tools like this.
+> This requires the **Claude Desktop app** (the downloadable app from https://claude.ai/download), not the Claude website. **The website cannot connect to local tools like this.**
 
 **First, install Claude Desktop if you haven't already:**
 1. Go to **https://claude.ai/download**
 2. Download and install the app for your OS
 3. Open Claude Desktop and sign in with your Anthropic account
 
-**Then run the setup script:**
+**Then connect it to your knowledge base:**
 
-The setup script automatically configures Claude Desktop to connect to your knowledge base. It needs Python to run. Check if Python is already on your computer by opening your terminal and typing:
+Claude Desktop has a built-in config file where you tell it which tools to connect to. You're going to add Your Second Brain to that file.
 
+1. Open Claude Desktop
+2. Click **Claude** in the top menu bar (Mac) or the hamburger menu (Windows), then go to **Settings**
+3. Click the **Developer** tab
+4. Click **Edit Config** — this opens a file called `claude_desktop_config.json` in a text editor
+
+The file will either be empty or already have some content in it. Either way, you need to add the Your Second Brain entry inside the `"mcpServers"` section.
+
+**If the file is empty**, paste in the entire block below:
+
+```json
+{
+  "mcpServers": {
+    "my-second-brain": {
+      "command": "PYTHON_PATH",
+      "args": ["REPO_PATH\\backend\\mcp_server.py"]
+    }
+  }
+}
 ```
-python --version
+
+**If the file already has content**, find the `"mcpServers": {` line and add the `"my-second-brain"` entry inside it alongside anything already there. Only add what's inside the curly braces - don't replace the whole file.
+
+You need to replace two placeholders in that block:
+
+- `PYTHON_PATH` — the full path to Python on your computer
+- `REPO_PATH` — the full path to the yoursecondbrain folder
+
+**To find your Python path:**
+
+- Windows: open PowerShell and run `where python` — copy the path it prints (e.g. `C:\Users\YourName\AppData\Local\Programs\Python\Python313\python.exe`)
+- Mac: open Terminal and run `which python3` — copy the path it prints (e.g. `/usr/local/bin/python3`)
+
+**To find your repo path:**
+
+- Windows: open PowerShell, run `cd "$env:USERPROFILE\yoursecondbrain"` then run `cd` and copy the path it prints (e.g. `C:\Users\YourName\yoursecondbrain`)
+- Mac: open Terminal, run `cd ~/yoursecondbrain` then run `pwd` and copy the path it prints (e.g. `/Users/YourName/yoursecondbrain`)
+
+Once you've replaced both placeholders, the entry should look something like this (your actual paths will be different):
+
+**Windows example:**
+```json
+{
+  "mcpServers": {
+    "my-second-brain": {
+      "command": "C:\\Users\\YourName\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+      "args": ["C:\\Users\\YourName\\yoursecondbrain\\backend\\mcp_server.py"]
+    }
+  }
+}
 ```
 
-Press Enter. If you see a version number (like `Python 3.11.0`), Python is installed. If you get an error, try:
-
+**Mac example:**
+```json
+{
+  "mcpServers": {
+    "my-second-brain": {
+      "command": "/usr/local/bin/python3",
+      "args": ["/Users/YourName/yoursecondbrain/backend/mcp_server.py"]
+    }
+  }
+}
 ```
-python3 --version
-```
 
-**If either of those shows a version number**, run the setup script. Make sure you're still in the app folder in your terminal (if you closed it, re-open it and run the `cd` command from Step 3 again), then paste this command:
+> On Windows, every backslash in a path must be written as two backslashes (`\\`) inside the JSON file. This is normal — don't remove them.
 
-- Windows: `python scripts\setup_mcp.py`
-- Mac: `python3 scripts/setup_mcp.py`
+Save the file once you're done.
 
-Press Enter. The script will run and print `[OK] Config written successfully!` when it's done.
+**Finally, fully quit and reopen Claude Desktop:**
 
-**If Python is not installed**, install it first:
-- Windows: go to https://www.python.org/downloads/, download the installer, run it, and make sure to tick **"Add Python to PATH"** during install. Then reopen PowerShell and run the script above.
-- Mac: open Terminal and run `brew install python` (if you have Homebrew) or download from https://www.python.org/downloads/
-
-**Finally, restart Claude Desktop:**
-
-Closing the window is not enough — you need to fully quit and reopen it:
-- Windows: find the Claude icon in the bottom-right of your taskbar (click the `^` arrow if you don't see it), right-click it, and click **Quit**. Then reopen Claude Desktop from the Start menu.
+Closing the window is not enough. You need to fully quit it and reopen it:
+- Windows: find the Claude icon in the bottom-right of your taskbar (click the `^` arrow if you don't see it), right-click it, and click **Quit**. Then, open Task Manager, search Claude, right click Claude, then click "Quit". Then reopen Claude Desktop from the Start menu.
 - Mac: press **Cmd + Q** while Claude Desktop is the active window. Then reopen it from your Applications folder.
 
-Once Claude Desktop is back open, start a new chat. You'll see a small **hammer icon (🔨)** near the message box at the bottom. Click it and **My Second Brain** will appear in the list. That means it's connected and working.
+Once Claude Desktop is back open, go to **Settings > Developer** and you should see **my-second-brain** listed there with a blue "running" status indicator. That means it's connected and working.
 
 ---
 
 ### Step 8 - Verify Everything Works
 
-- Open **http://localhost:8000** in your browser — the knowledge graph loads with the full app UI
-- Open Claude Desktop, start a new chat, click the hammer icon, and confirm **My Second Brain** is listed
+- Open **http://localhost:8000** in your browser and confirm the knowledge graph loads
+- Open Claude Desktop, go to **Settings > Developer**, and confirm **my-second-brain** is listed
 
 Setup is complete. Your knowledge base is ready to use.
 
