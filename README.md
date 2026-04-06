@@ -56,56 +56,9 @@ This is a **generously feature-rich free framework that you can adapt** to your 
 
 ## 🏗️ How It Works
 
-```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#1F2535', 'primaryTextColor': '#D7DBF4', 'primaryBorderColor': '#6E78BF', 'lineColor': '#7E6FAF', 'secondaryColor': '#181C27', 'tertiaryColor': '#12151C', 'background': '#0B0D12'}}}%%
-flowchart LR
-                Q[Your Files & Questions]:::entry
-
-                subgraph S1[Stage 1: Ingestion]
-                        U1[Upload Panel / brain_data folder]
-                        U2[File Router by Type]
-                        U3[Parse & Chunk]
-                        U1 --> U2 --> U3
-                end
-
-                subgraph S2[Stage 2: Understanding]
-                        E1[Semantic Embeddings]
-                        E2[Entity & Topic Extraction]
-                        E3[Video Transcription]
-                        E1 --> E2
-                        E1 --> E3
-                end
-
-                subgraph S3[Stage 3: Memory]
-                        K1[Vector Index]
-                        K2[Knowledge Graph]
-                        K3[Citation Metadata]
-                        K1 --> K2
-                        K1 --> K3
-                end
-
-                subgraph S4[Stage 4: Retrieval & Action]
-                        R1[Semantic Search]
-                        R2[Chat with Citations]
-                        R3[Claude MCP Tools]
-                        R1 --> R2
-                        R1 --> R3
-                end
-
-                Q --> U1
-                U3 --> E1
-                E2 --> K1
-                K2 --> R1
-
-                classDef entry fill:#2A3150,stroke:#8B79C4,color:#E6E9FF,stroke-width:2px;
-```
-
-**Process:**
-1. Upload files (documents, images, videos) once.
-2. System parses them, generates semantic embeddings, and extracts entities, topics, and ideas.
-3. Everything is indexed and connected in a multimodal nodal knowledge graph.
-4. Ask questions, and get answers grounded in your actual files with citations.
-5. Use Claude MCP to extend it into your current AI operations.
+<div align="center">
+<img src="./processdiagram.png" alt="How Your Second Brain Works" width="100%" />
+</div>
 
 ## ✨ Core Capabilities
 
@@ -500,3 +453,4 @@ MIT
                 <img src="https://img.shields.io/badge/Owner%20%26%20Creator-Aditya%20Desai-6E78BF?style=for-the-badge&logo=instagram&logoColor=white&labelColor=111827" alt="Owner and Creator: Aditya Desai" />
         </a>
 </div>
+
