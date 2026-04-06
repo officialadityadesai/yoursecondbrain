@@ -391,7 +391,7 @@ Closing the window is not enough. You need to fully quit it and reopen it:
 - Windows: find the Claude icon in the bottom-right of your taskbar (click the `^` arrow if you don't see it), right-click it, and click **Quit**. Then, open Task Manager, search Claude, right click Claude, then click "Quit". Then reopen Claude Desktop from the Start menu.
 - Mac: press **Cmd + Q** while Claude Desktop is the active window. Then reopen it from your Applications folder.
 
-Once Claude Desktop is back open, go to **Settings > Developer** and you should see **my-second-brain** listed there with a blue "running" status indicator. That means it's connected and working.
+Once Claude Desktop is back open, go to **Settings > Developer** and you should see **my-second-brain** listed there with a green status indicator. That means it's connected and working.
 
 ---
 
@@ -441,9 +441,9 @@ This updates the app to the latest version.
 
 Something else on your computer is using port 8000. Open `docker-compose.yml` in a text editor, find the line that says `"8000:8000"` and change it to `"8001:8000"`, save the file, then run `docker compose up -d` again. Access the app at http://localhost:8001 instead.
 
-**The hammer icon is not showing in Claude Desktop**
+**My Second Brain is not showing in Claude Desktop Settings > Developer**
 
-Make sure you fully quit Claude Desktop (not just closed the window) and reopened it. On Windows, use the system tray icon to Quit. On Mac, use Cmd+Q. Then open a fresh chat and look for the hammer icon again.
+Make sure you fully quit Claude Desktop (not just closed the window) and reopened it. On Windows, use the system tray icon to Quit. On Mac, use Cmd+Q. Then reopen Claude Desktop and check Settings > Developer again.
 
 ## 🧩 Supported Content Types
 
