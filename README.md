@@ -5,7 +5,7 @@
 # Your Second Brain: A Free, Local Multimodal Knowledge Visualisation & Semantic Retrieval Framework
 
 <div align="center">
-        <img src="https://readme-typing-svg.herokuapp.com?font=Share+Tech+Mono&size=24&duration=2800&pause=1500&color=7A86C8&center=true&vCenter=true&width=1200&lines=Multimodal+Knowledge+Retrieval+Reimagined;Semantic+Search+Across+Multimodal+Inputs+-+Text%2C+Images%2C+Video%2C+and+Documents;Visualise+Relationships+Between+Ideas+As+An+Interactive+Nodal+Network;Ingest+Once%2C+Query+Forever+Without+Re-uploading+Context;Retrieve+Trimmed+Video+Clips+From+Natural+Language+Queries;Cross-Modal+Intelligence%3A+Find+Connections+Across+All+Content+Types" alt="Typing Animation" />
+        <img src="https://readme-typing-svg.herokuapp.com?font=Share+Tech+Mono&size=24&duration=2800&pause=1900&color=7A86C8&center=true&vCenter=true&width=1200&lines=Multimodal+Knowledge+Retrieval+Reimagined;Semantic+Search+Across+Multimodal+Inputs+-+Text%2C+Images%2C+Video%2C+and+Documents;Visualise+Relationships+Between+Ideas+As+An+Interactive+Nodal+Network;Ingest+Once%2C+Query+Forever+Without+Re-uploading+Context;Retrieve+Trimmed+Video+Clips+From+Natural+Language+Queries;Cross-Modal+Intelligence%3A+Find+Connections+Across+All+Content+Types" alt="Typing Animation" />
 </div>
 
 <div align="center">
@@ -30,7 +30,11 @@
 
 ## 🎯 The Problem
 
-**Hitting your AI/API usage limits mid-conversation and losing context about everything is the biggest problem with ChatGPT, Claude, Gemini, and other popular AI tools.** You also have a confusing dump of **files scattered everywhere**: PDFs, notes, images, videos, and every time you want to ask AI a question/request about those files, you re-upload the same context, prompts, and files over and over again. Your scarce token budget bleeds away. You can't see how the files relate. You risk hallucinations and context rot with every message you send. You're trapped in a cycle of re-uploading, re-explaining, and re-sending.
+**Hitting your AI/API usage limits mid-conversation and losing context about everything is the biggest problem with ChatGPT, Claude, Gemini, and other popular AI tools.** 
+
+Current knowledge management tools like Notion, Obsidian, or Sticky Notes try to fix this, however, they still require you to manually organise, tag, and link everything yourself, and none of them can actually understand your files, search across different file types by describing content in them, or accurely answer questions from your content directly. You end up with a better organised mess, not a smarter one.
+
+Every time you want to ask AI a question/request about your files, you re-upload the same context, prompts, and files over and over again. Your scarce token budget bleeds away. You can't see how the files relate. You risk hallucinations and context rot with every message you send. You're trapped in a cycle of re-uploading, re-explaining, and re-sending.
 
 **With "Your Second Brain", these will be problems of the past.**
 
@@ -124,7 +128,9 @@ This framework is adaptable across business documents/IP, SOPs, research, studyi
 
 ### IMPORTANT NOTE
 
-**The most advanced query capabilities (semantic video clip finding, holistic retrieval, and deep entity tracing) run through Claude Desktop MCP, not the built-in Gemini chat pane.** Setup instructions are in the Quick Start and Manual Installation sections below.
+**The most advanced query capabilities (semantic video clip finding, holistic retrieval, and deep entity tracing) run through Claude Desktop MCP, not the built-in Gemini chat pane.** 
+
+Setup instructions are in the Quick Start and Manual Installation sections below.
 
 ## 🚀 Quick Start
 
@@ -157,197 +163,241 @@ Claude Code will guide you through installing Docker Desktop (the only prerequis
 
 ## 🛠️ Manual Installation
 
-No Python, Node.js, or FFmpeg required. The entire app runs inside Docker. Docker Desktop is the only thing you install.
+No programming knowledge required. The only thing you install is Docker Desktop, which is a free app that handles all the "backend" for you automatically. Follow every step below exactly as written.
 
-**Works on Windows, macOS, and Linux.**
+**Works on Windows, MacOS, and Linux.**
+
+---
 
 ### Step 1 - Install Docker Desktop
 
-Download and install Docker Desktop from **https://www.docker.com/products/docker-desktop/**
+Docker Desktop is a free app that runs Your Second Brain for you. You don't need to install Python, Node.js, or anything else - Docker handles all of that inside itself.
 
-- Windows: run the installer, restart your computer when prompted, then open Docker Desktop from the Start menu
-- Mac: drag Docker to Applications, open it, follow the setup prompts
-- Linux: follow the instructions at https://docs.docker.com/desktop/install/linux/
+1. Go to **https://www.docker.com/products/docker-desktop/** in your browser
+2. Click the download button for your operating system (Windows or Mac)
+3. Once the file downloads, open it and run the installer
+   - Windows: double-click the `.exe` file and follow the prompts. When it asks you to restart your computer, click yes and let it restart.
+   - Mac: open the `.dmg` file, then drag the Docker icon into your Applications folder. Open Docker from your Applications folder and follow the setup prompts.
+4. After your computer restarts (Windows) or after opening Docker (Mac), wait for Docker Desktop to finish starting up. You'll know it's ready when:
+   - Windows: a small whale icon appears in the bottom-right of your taskbar (in the system tray). If you don't see it, click the little arrow `^` in the taskbar to show hidden icons.
+   - Mac: a whale icon appears in the menu bar at the top of your screen.
+5. Click that whale icon and make sure it says **"Docker Desktop is running"**. If it's still starting up, wait another minute and check again.
 
-Wait until Docker Desktop shows a green **"Engine running"** status in the bottom-left of its window, or until the whale icon in your system tray (Windows) or menu bar (Mac) appears. This means Docker is ready.
+Once you see "Docker Desktop is running", you're ready for the next step.
 
-> Docker Desktop installs everything needed to run containers. You don't need to install Python, Node.js, FFmpeg, or any other dependencies separately.
+---
 
-### Step 2 - Clone the Repo
+### Step 2 - Download the App Files
 
-Open a terminal and run:
+You need to download the app's files onto your computer. You'll do this using a terminal (a text-based window where you type commands).
 
-**Windows (PowerShell):**
-```powershell
-git clone https://github.com/officialadityadesai/yoursecondbrain.git "$env:USERPROFILE\yoursecondbrain"
-cd "$env:USERPROFILE\yoursecondbrain"
-```
+**How to open a terminal:**
+- Windows: press the Windows key, type `PowerShell`, and click **Windows PowerShell** to open it
+- Mac: press `Cmd + Space`, type `Terminal`, and press Enter to open it
 
-**macOS / Linux:**
-```bash
-git clone https://github.com/officialadityadesai/yoursecondbrain.git ~/yoursecondbrain
-cd ~/yoursecondbrain
-```
-
-If git is not installed:
-- Windows: download from https://git-scm.com/download/win, install with default settings, then reopen PowerShell and retry
-- Mac: running `git` will prompt you to install Xcode Command Line Tools. Click Install, wait for it, then retry.
-
-### Step 3 - Add Your Gemini API Key
-
-Get a free Gemini API key from **https://aistudio.google.com/app/apikey** (sign in with a Google account, click Create API key, copy it).
-
-Then create your config file:
+Once your terminal is open, copy and paste the command below for your operating system.
 
 **Windows:**
 ```powershell
-Copy-Item .env.example .env
+git clone https://github.com/officialadityadesai/yoursecondbrain.git "$env:USERPROFILE\yoursecondbrain"
 ```
 
-**macOS / Linux:**
+**Mac:**
+```bash
+git clone https://github.com/officialadityadesai/yoursecondbrain.git ~/yoursecondbrain
+```
+
+Press Enter. You'll see some text appear as the files download. Wait for it to finish. You'll know it's done when a new line appears with a blinking cursor waiting for your next command.
+
+**If you see an error saying `git` is not recognised or not found:**
+- Windows: go to https://git-scm.com/download/win, download the installer, run it with all default settings, then close and reopen PowerShell and try the command again
+- Mac: a popup will appear asking you to install developer tools — click Install, wait for it to finish, then try the command again
+
+---
+
+### Step 3 - Navigate Into the App Folder
+
+After downloading, you need to tell the terminal to work inside the app folder you just downloaded. Copy and paste this command:
+
+**Windows:**
+```powershell
+cd "$env:USERPROFILE\yoursecondbrain"
+```
+
+**Mac:**
+```bash
+cd ~/yoursecondbrain
+```
+
+Press Enter. The terminal is now pointed at your app folder. Keep this terminal open as you'll need it for the next steps.
+
+---
+
+### Step 4 - Get Your Free Gemini API Key
+
+The app uses Google's Gemini AI to understand and search your files. You need a free API key (think of it as a password that lets the app use Gemini).
+
+1. Go to **https://aistudio.google.com/app/apikey** in your browser
+2. Sign in with a Google account
+3. If you get redirected to a page about account verification instead of the API key page, look for a blue link that says **"verified your age"** and click it. Follow the steps to verify your age with Google, then go back to the API key link above.
+4. Click **Create API key**
+5. A long key will appear (it starts with `AIza...`). Click the copy button next to it to copy it. Keep this browser tab open — you'll need to paste this key in the next step.
+
+---
+
+### Step 5 - Add Your API Key to the App
+
+The app reads its settings from a file called `.env`. You need to create that file and put your API key in it.
+
+**Windows:**
+
+1. In your PowerShell window, paste this command and press Enter:
+```powershell
+Copy-Item .env.example .env
+```
+2. Now open the file in Notepad by pasting this command and pressing Enter:
+```powershell
+notepad .env
+```
+3. Notepad will open. You'll see a line that says `GEMINI_API_KEY=`. Click at the end of that line (after the `=` sign) and paste your API key there so it looks like:
+```
+GEMINI_API_KEY=AIzaYourKeyHere
+```
+4. Press `Ctrl + S` to save, then close Notepad.
+
+**Mac:**
+
+1. In your Terminal window, paste this command and press Enter:
 ```bash
 cp .env.example .env
 ```
-
-Open the `.env` file in any text editor (Notepad, TextEdit, VS Code, anything works) and set your key:
-
+2. Now open the file in TextEdit by pasting this command and pressing Enter:
+```bash
+open -e .env
 ```
-GEMINI_API_KEY=your_key_here
+3. TextEdit will open. You'll see a line that says `GEMINI_API_KEY=`. Click at the end of that line (after the `=` sign) and paste your API key there so it looks like:
 ```
+GEMINI_API_KEY=AIzaYourKeyHere
+```
+4. Press `Cmd + S` to save, then close TextEdit.
 
-Save and close the file.
+---
 
-### Step 4 - Start the App
+### Step 6 - Start the App
 
-Run this single command from inside the repo folder:
+Make sure Docker Desktop is still running (the whale icon is visible in your taskbar or menu bar). Then, in your terminal, paste this command and press Enter:
 
 ```
 docker compose up -d
 ```
 
-The `-d` flag runs the app in the background. On first run, Docker downloads the pre-built image. This takes 2-5 minutes depending on your internet speed. You'll see download progress in the terminal. When the command finishes and returns you to the prompt, the app is running.
+This tells Docker to download and start the app. The first time you run this, it will download the app — this takes roughly 3-5 minutes depending on your internet speed. You'll see a lot of text scrolling past, which is normal. When it's finished, you'll see a line that says something like `Container yoursecondbrain... Started` and then a new blinking cursor.
 
-Verify it's working:
+To confirm the app is running, open your browser and go to:
 
-```
-docker compose ps
-```
+**http://localhost:8000**
 
-You should see one container with status `running`. Then open **http://localhost:8000** in your browser. The full app loads with the knowledge graph, chat, file manager, and Brain Dump workspace.
+You should see the Your Second Brain app load with a visual knowledge graph. If it loads, you're all set.
 
-> **Auto-restart:** because the app runs with `docker compose up -d`, Docker restarts it automatically every time Docker Desktop starts. On Windows and Mac, Docker Desktop starts on login by default. This means after your first setup, the app is always available at http://localhost:8000. You don't need to run any commands.
+> From now on, you never need to run this command again. Every time you start your computer and Docker Desktop opens, the app starts automatically in the background. Just go to http://localhost:8000 whenever you want to use it.
 
-### Step 5 - Set Up Claude Desktop MCP
+---
 
-This connects your knowledge base to Claude Desktop so you can ask Claude questions about your files in any chat, retrieve auto-trimmed video clips, and get grounded answers with citations, without re-uploading anything.
+### Step 7 - Set Up Claude Desktop MCP (Optional but Recommended)
 
-> **Important:** This requires the [Claude Desktop app](https://claude.ai/download), not the Claude website. The website cannot connect to local MCP servers.
+This step connects your knowledge base to the Claude Desktop app so you can ask Claude questions about your files directly in any Claude chat, get cited answers from your own content, and even retrieve trimmed video clips just by describing what's in them.
 
-The MCP server runs on your machine (outside Docker) and talks to the Docker backend at http://127.0.0.1:8000. It requires Python on your host machine. Check if you have it:
+> This requires the **Claude Desktop app** (the downloadable app from https://claude.ai/download), not the Claude website. The website cannot connect to local tools like this.
+
+**First, install Claude Desktop if you haven't already:**
+1. Go to **https://claude.ai/download**
+2. Download and install the app for your OS
+3. Open Claude Desktop and sign in with your Anthropic account
+
+**Then run the setup script:**
+
+The setup script automatically configures Claude Desktop to connect to your knowledge base. It needs Python to run. Check if Python is already on your computer by opening your terminal and typing:
 
 ```
 python --version
 ```
 
-or
+Press Enter. If you see a version number (like `Python 3.11.0`), Python is installed. If you get an error, try:
 
 ```
 python3 --version
 ```
 
-**If Python is available**, make sure the app is running at http://localhost:8000, then run the setup script from inside the repo folder:
+**If either of those shows a version number**, run the setup script. Make sure you're still in the app folder in your terminal (if you closed it, re-open it and run the `cd` command from Step 3 again), then paste this command:
 
-**Windows:**
-```
-python scripts\setup_mcp.py
-```
+- Windows: `python scripts\setup_mcp.py`
+- Mac: `python3 scripts/setup_mcp.py`
 
-**macOS / Linux:**
-```
-python3 scripts/setup_mcp.py
-```
+Press Enter. The script will run and print `[OK] Config written successfully!` when it's done.
 
-The script detects your OS automatically and writes the correct config to Claude Desktop's config file. It will print `[OK] Config written successfully!` when done.
+**If Python is not installed**, install it first:
+- Windows: go to https://www.python.org/downloads/, download the installer, run it, and make sure to tick **"Add Python to PATH"** during install. Then reopen PowerShell and run the script above.
+- Mac: open Terminal and run `brew install python` (if you have Homebrew) or download from https://www.python.org/downloads/
 
-**If Python is not available on your host machine**, you can configure it manually. Find the Claude Desktop config file for your OS:
+**Finally, restart Claude Desktop:**
 
-- Windows: `C:\Users\YourName\AppData\Roaming\Claude\claude_desktop_config.json`
-- macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
-- Linux: `~/.config/Claude/claude_desktop_config.json`
+Closing the window is not enough — you need to fully quit and reopen it:
+- Windows: find the Claude icon in the bottom-right of your taskbar (click the `^` arrow if you don't see it), right-click it, and click **Quit**. Then reopen Claude Desktop from the Start menu.
+- Mac: press **Cmd + Q** while Claude Desktop is the active window. Then reopen it from your Applications folder.
 
-Create the file if it doesn't exist, or open it if it does. Add the following (if there are already other entries, keep them and only add the `my-second-brain` entry inside `mcpServers`):
+Once Claude Desktop is back open, start a new chat. You'll see a small **hammer icon (🔨)** near the message box at the bottom. Click it and **My Second Brain** will appear in the list. That means it's connected and working.
 
-```json
-{
-  "mcpServers": {
-    "my-second-brain": {
-      "command": "python",
-      "args": ["FULL_PATH_TO_REPO/backend/mcp_server.py"],
-      "env": { "MSB_BACKEND_URL": "http://127.0.0.1:8000" }
-    }
-  }
-}
-```
+---
 
-To find the full path to the repo, open a terminal, navigate into the repo folder, and run:
+### Step 8 - Verify Everything Works
 
-- Windows: `cd` (just type cd and press Enter - it prints the current path)
-- Mac / Linux: `pwd`
-
-Copy that output and paste it in place of `FULL_PATH_TO_REPO`.
-
-After running the script or editing the config manually:
-
-1. **Fully quit Claude Desktop** (closing the window is not enough):
-   - Windows: right-click the Claude icon in the system tray (bottom-right of taskbar) and click **Quit**
-   - Mac: press **Cmd+Q** while Claude Desktop is focused
-2. **Reopen Claude Desktop**
-3. Start a new chat, click the **hammer icon (🔨)** near the message box, and **My Second Brain** will be listed with its tools
-
-### Step 6 - Verify Everything Works
-
-- Open **http://localhost:8000** and confirm the knowledge graph UI loads
+- Open **http://localhost:8000** in your browser — the knowledge graph loads with the full app UI
 - Open Claude Desktop, start a new chat, click the hammer icon, and confirm **My Second Brain** is listed
 
-Setup is complete.
+Setup is complete. Your knowledge base is ready to use.
+
+---
 
 ### Day-to-Day Usage
 
+Once set up, you don't need to do anything. The app runs automatically every time Docker Desktop starts, which itself starts when you log in to your computer. Just open http://localhost:8000 or use Claude Desktop.
+
 | Task | How |
 |---|---|
-| Open the app | http://localhost:8000 |
-| Start in background | `docker compose up -d` |
-| Stop | `docker compose down` |
-| View logs | `docker compose logs -f` |
-| Update to latest version | `docker compose pull && docker compose up -d` |
+| Open the app | Go to http://localhost:8000 in your browser |
+| Stop the app | Open your terminal, navigate to the app folder, and run `docker compose down` |
+| Start it again manually | Run `docker compose up -d` in the app folder |
+| Update to a newer version | Run `docker compose pull && docker compose up -d` in the app folder |
 
-Your files in `brain_data/` and the vector database in `lancedb_data/` live on your machine and survive every restart and update.
+Your uploaded files and your entire knowledge base are stored in the `yoursecondbrain` folder on your computer. They are never deleted when you stop or update the app.
+
+---
 
 ### Troubleshooting
 
-**http://localhost:8000 shows `{"status":"frontend_not_built"}`**
+**The page at http://localhost:8000 won't load**
 
-The image needs updating. Run:
-```
-docker compose pull && docker compose up -d
-```
-
-**Container exits immediately on startup**
-
-Check the logs:
+Make sure Docker Desktop is open and running (look for the whale icon). If Docker is running but the page still won't load, open your terminal, navigate to the app folder, and run:
 ```
 docker compose logs
 ```
+This shows what's happening inside the app. The most common cause is a missing or incorrect API key in the `.env` file — go back to Step 5 and double-check the key was saved correctly with no extra spaces.
 
-The most common cause is a missing or invalid Gemini API key in `.env`. Make sure the file exists in the repo root and contains a valid key with no extra spaces.
+**The app started but shows a JSON error instead of the UI**
+
+Run this in your terminal from the app folder:
+```
+docker compose pull && docker compose up -d
+```
+This updates the app to the latest version.
 
 **Port 8000 is already in use**
 
-Another process is using port 8000. Find and stop it, or open `docker-compose.yml` and change `"8000:8000"` to `"8001:8000"`, then access the app at http://localhost:8001 instead.
+Something else on your computer is using port 8000. Open `docker-compose.yml` in a text editor, find the line that says `"8000:8000"` and change it to `"8001:8000"`, save the file, then run `docker compose up -d` again. Access the app at http://localhost:8001 instead.
 
-**MCP hammer icon not showing in Claude Desktop**
+**The hammer icon is not showing in Claude Desktop**
 
-Make sure Claude Desktop was fully quit (not just window closed) and reopened. On Windows this means system tray → Quit. On Mac this means Cmd+Q. Then open a fresh chat.
+Make sure you fully quit Claude Desktop (not just closed the window) and reopened it. On Windows, use the system tray icon to Quit. On Mac, use Cmd+Q. Then open a fresh chat and look for the hammer icon again.
 
 ## 🧩 Supported Content Types
 
