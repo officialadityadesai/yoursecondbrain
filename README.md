@@ -398,7 +398,7 @@ Once Claude Desktop is back open, go to **Settings > Developer** and you should 
 ### Step 8 - Verify Everything Works
 
 - Open **http://localhost:8000** in your browser and confirm the knowledge graph loads
-- Open Claude Desktop, go to **Settings > Developer**, and confirm **my-second-brain** is listed
+- Open Claude Desktop, go to **Settings > Developer**, and confirm **my-second-brain** is listed and running
 
 Setup is complete. Your knowledge base is ready to use.
 
