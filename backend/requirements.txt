@@ -8,7 +8,7 @@ watchdog
 PyMuPDF
 python-docx
 pandas
-opencv-python
+opencv-python-headless
 requests
 keyring
 mcp

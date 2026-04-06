@@ -1,0 +1,23 @@
+services:
+  yoursecondbrain:
+    image: officialadityadesai/yoursecondbrain:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      # Relative paths work identically on Windows, Mac, and Linux
+      - ./brain_data:/app/brain_data
+      - ./lancedb_data:/app/lancedb_data
+    env_file:
+      - .env
+    environment:
+      - PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/"]
+      interval: 15s
+      timeout: 5s
+      retries: 4
+      start_period: 60s

@@ -518,6 +518,7 @@ mcp = FastMCP(
         "5. Semantic match is sufficient — if the user asks for X and the closest match is tagged or described as something related, treat it as the answer. Provide the link immediately and note the semantic difference in one short sentence (e.g. 'This is tagged as Y rather than X, but it appears to be the closest match').\n"
         "6. Never ask for confirmation before providing a link. If a relevant file exists, link it immediately.\n"
         "7. Never suggest the user look elsewhere (Google Drive, camera roll, etc.) when a plausible match exists in the brain — show what you have first.\n"
+        "8. MEDIA TYPE MISMATCH: If the user asked specifically for an image/photo but only a video was found (or vice versa), you MUST explicitly say you couldn't find the specific media type requested before offering what you did find. Example: 'I couldn't find an image of Mark Cuban in your Second Brain, but I did find a video — here's the relevant clip.' Never silently substitute a video for a requested image or an image for a requested video.\n"
         "</link_policy>\n\n"
 
         "<answer_quality>\n"
@@ -799,10 +800,13 @@ def holistic_search(query: str) -> str:
 
     _record_holistic_decision(query, False)
 
+    _media_type_mismatch = False  # default; overwritten below if evidence_files block runs
+
     lines = [
         "MODE: primary_holistic",
         f"QUERY: {query}",
         "FALLBACK_REQUIRED=no",
+        f"MEDIA_TYPE_MISMATCH={'yes' if _media_type_mismatch else 'no'}",
         "",
         "ORCHESTRATION CONTRACT",
         "answer_first=yes",
@@ -1111,14 +1115,25 @@ def holistic_search(query: str) -> str:
         _candidates.sort(key=lambda x: -x["conf"])
 
         # Detect visual (media-retrieval) vs informational query intent
-        _visual_words = {"photo", "picture", "image", "screenshot", "video", "clip", "recording",
-                         "birthday", "party", "event", "scene", "watch", "visual"}
+        _image_words = {"photo", "picture", "image", "screenshot", "pic", "snap", "photograph"}
+        _video_words = {"video", "clip", "recording", "watch", "footage", "film"}
+        _visual_words = _image_words | _video_words | {"birthday", "party", "event", "scene", "visual"}
         _query_words = set(w.strip("?.,!").lower() for w in query.split())
         _has_visual = bool(_query_words & _visual_words)
+        _wants_image = bool(_query_words & _image_words)
+        _wants_video = bool(_query_words & _video_words)
 
         # Check if any media files exist in results
         _media_files = [c for c in _candidates if c["stype"] in ("IMAGE", "VIDEO")]
         _has_media_results = bool(_media_files)
+        _has_image_results = any(c["stype"] == "IMAGE" for c in _candidates)
+        _has_video_results = any(c["stype"] == "VIDEO" for c in _candidates)
+
+        # Detect media type mismatch (user asked for image but only video found, or vice versa)
+        _media_type_mismatch = (
+            (_wants_image and not _wants_video and _has_video_results and not _has_image_results) or
+            (_wants_video and not _wants_image and _has_image_results and not _has_video_results)
+        )
 
         top_conf = _candidates[0]["conf"] if _candidates else 0
 

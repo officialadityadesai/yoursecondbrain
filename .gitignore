@@ -37,7 +37,6 @@ supabase/
 HANDOFF.md
 tmp/
 handover_to_claude.md
-CLAUDE-CODE-BLUEPRINT.md
 canary_test.py
 mcp_output*.txt
 test_output.txt
@@ -45,3 +44,5 @@ test_read.txt
 test_mcp_output.py
 Claudeloginbutton.png
 assets/docs/
+demo_files/
+dockerimplementationplan.md

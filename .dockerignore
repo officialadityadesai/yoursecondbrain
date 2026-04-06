@@ -1,0 +1,44 @@
+# User data — volume-mounted at runtime, never baked into image
+brain_data/*
+!brain_data/.gitkeep
+lancedb_data/
+
+# Python
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+
+# Node
+frontend/node_modules/
+node_modules/
+
+# Frontend build — rebuilt inside Docker
+frontend/dist/
+
+# Secrets — never bake into image
+.env
+
+# Dev / IDE
+.git/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+scripts/*.log
+
+# Misc
+tmp/
+supabase/
+HANDOFF.md
+handover_to_claude.md
+canary_test.py
+test_output.txt
+mcp_output*.txt
+demo_files/
