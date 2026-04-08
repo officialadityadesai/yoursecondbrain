@@ -3,6 +3,7 @@
 <img src="./mainbrainicon.png" alt="Your Second Brain" width="80" />
 
 # Your Second Brain: Turn All Your Files Into A Queryable Knowledge Graph (Self-Learning Memory + Multimodal Knowledge Visualisation Framework)
+
         <img src="https://readme-typing-svg.herokuapp.com?font=Share+Tech+Mono&size=24&duration=2800&pause=1900&color=7A86C8&center=true&vCenter=true&width=1200&lines=Multimodal+Knowledge+Retrieval+Reimagined;Semantic+Search+Across+Multimodal+Inputs+-+Text%2C+Images%2C+Video%2C+and+Documents;Visualise+Relationships+Between+Ideas+As+An+Interactive+Nodal+Network;Ingest+Once%2C+Query+Forever+Without+Re-uploading+Context;Retrieve+Trimmed+Video+Clips+From+Natural+Language+Queries;Cross-Modal+Intelligence%3A+Find+Connections+Across+All+Content+Types" alt="Typing Animation" />
 </div>
 
